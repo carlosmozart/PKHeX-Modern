@@ -6,6 +6,21 @@ Ao adicionar uma função, anote em "Próxima versão"; na release, troque o tí
 Formato: "## versão — data", "### seção", "- item".
 -->
 
+## 0.4.30 — 2026-10-19
+
+### 🔄 PKHeX atualizado
+- **PKHeX de 18/10/2026:** transferências do FireRed/LeafGreen do Virtual Console para o HOME passam a ser reconhecidas, com mais verificações de golpes de ovo; na Gen 3 e 4, os EVs são conferidos contra a experiência ganha; o Greninja do WCS 2026 deixou de ser tratado como evento expirado; flags dos bolsos de itens do Legends: Z-A.
+
+### 🎨 Interface
+- **Lista inteira na espécie e no item:** no editor (e nas espécies da Caçada shiny), tocar ou clicar na caixa mostra a lista completa, com o nome atual selecionado; digitar substitui o nome e filtra por qualquer parte dele (“chu” acha Pichu, Pikachu e Raichu). Antes, a lista só aparecia depois da primeira letra.
+
+### 🐛 Correções
+- **Formas no editor:** trocar a forma (ex.: Meowth para Alola ou Galar) deixava a caixa de forma em branco, porque a troca também mudava as listas de bola e habilidade. Agora só a caixa da lista que mudou se atualiza.
+- **Legalizar depois da atualização do PKHeX:** as versões novas que o PKHeX acabou de listar (Pokémon Winds e Waves) ainda não têm encontros e quebravam a busca: trocar a forma no modo legal dava “erro (context None)”. Elas ficam de fora até o PKHeX tratá-las.
+- **App travado ao trazer Pokémon de geração mais nova para a Gen 3:** com a atualização do PKHeX, levar um Pokémon da Gen 7 (ou mais nova) para um save de FireRed, Emerald ou outro da Gen 3 (pelo Bank, pelo outro save ou importando arquivo) entrava num laço sem fim. Agora o app recusa na hora, como antes (“sem rota de transferência”).
+- **Evoluir no Let's Go e no Legends: Arceus:** o PKHeX novo confere a altura e o peso guardados, e evoluir (ou trocar a espécie ou a forma) deixava o Pokémon ilegal (“Calculated Height/Weight does not match”). Agora os dois são recalculados junto.
+- **Celular:** a barra “Selecionar / Mover” das Caixas ficava por baixo das abas dos saves; agora fica logo abaixo delas.
+
 ## 0.4.29 — 2026-10-17
 
 ### ✨ Caçada shiny

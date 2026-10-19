@@ -709,8 +709,8 @@
                     <Image Source="{Binding TargetSprite}" Stretch="Uniform" Margin="6" />
                   </Border>
                   <StackPanel Grid.Column="1" Spacing="6" VerticalAlignment="Center">
-                    <AutoCompleteBox Text="{Binding TargetName}" ItemsSource="{Binding SpeciesNames}" FilterMode="StartsWith"
-                                     Watermark="Digite a espécie (ex.: Ralts)" MinimumPrefixLength="1" />
+                    <c:FullListAutoComplete Text="{Binding TargetName}" ItemsSource="{Binding SpeciesNames}" MaxDropDownHeight="320"
+                                            Watermark="Toque ou digite" />
                     <Button Classes="small" Content="Nova caçada" Command="{Binding NewHuntCommand}" HorizontalAlignment="Left"
                             ToolTip.Tip="Apaga a caçada atual (contador e tempo) para escolher outro alvo" />
                   </StackPanel>
@@ -769,8 +769,8 @@
                   <StackPanel Spacing="6">
                     <TextBlock Text="Saiu um shiny que não era o alvo?" FontSize="12" FontWeight="SemiBold" />
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
-                      <AutoCompleteBox Text="{Binding PhaseSpeciesName}" ItemsSource="{Binding SpeciesNames}" FilterMode="StartsWith" MinimumPrefixLength="1"
-                                       Watermark="Espécie (opcional)" />
+                      <c:FullListAutoComplete Text="{Binding PhaseSpeciesName}" ItemsSource="{Binding SpeciesNames}" MaxDropDownHeight="320"
+                                              Watermark="Espécie (opcional)" />
                       <Button Grid.Column="1" Content="✨ Registrar fase" Command="{Binding LogPhaseCommand}"
                               ToolTip.Tip="Guarda o shiny como fase no encontro atual, sem zerar a caçada" />
                     </Grid>
@@ -866,8 +866,8 @@
                           <TextBlock Text="{Binding Where}" Classes="muted" FontSize="11" IsVisible="{Binding HasWhere}" />
                         </StackPanel>
                       </StackPanel>
-                      <AutoCompleteBox Grid.Column="1" Text="{Binding SpeciesName}" ItemsSource="{Binding SpeciesNames}" FilterMode="StartsWith"
-                                       MinimumPrefixLength="1" Watermark="Qual shiny?" VerticalAlignment="Center" />
+                      <c:FullListAutoComplete Grid.Column="1" Text="{Binding SpeciesName}" ItemsSource="{Binding SpeciesNames}" MaxDropDownHeight="320"
+                                              Watermark="Qual shiny?" VerticalAlignment="Center" />
                       <Button Grid.Column="2" Classes="small" Content="✕" Command="{Binding RemoveCommand}" VerticalAlignment="Center"
                               ToolTip.Tip="Remove esta fase" />
                     </Grid>

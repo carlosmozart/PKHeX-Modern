@@ -716,12 +716,18 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
     /// <summary>Bolas do jogo; no modo legal, so as permitidas para o encontro (mais a atual).</summary>
     public IReadOnlyList<ComboItem> BallList { get; private set; } = [];
     private object? _ballKey;
-    private bool _ballReselect;
+    /// <summary>
+    /// Listas trocadas que ainda esperam a nova seleção (BallList, AbilityOptions, FormOptions, TeraOptions). Só a caixa da
+    /// lista trocada responde "nenhum" nesse intervalo: antes valia para todas, e trocar a forma (que muda bolas e
+    /// habilidades) deixava a caixa de forma em branco no meio do clique (Meowth de Alola/Galar).
+    /// </summary>
+    private HashSet<string> _reselect = [];
+    private bool Reselecting(string list) => _reselect.Contains(list);
     public IReadOnlyList<ComboItem> MetLocationList { get; }
     public ComboItem? Ball
     {
-        get => _ballReselect ? null : Find(BallList, _pk.Ball);
-        set { if (value is not null && !_ballReselect) { _pk.Ball = (byte)value.Value; Refresh(); } }
+        get => Reselecting(nameof(BallList)) ? null : Find(BallList, _pk.Ball);
+        set { if (value is not null && !Reselecting(nameof(BallList))) { _pk.Ball = (byte)value.Value; Refresh(); } }
     }
 
     /// <summary>
@@ -773,11 +779,11 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
             return;
         }
         // Ignora o que a ComboBox devolver enquanto troca de lista; depois do layout, seleciona de novo.
-        _ballReselect = true;
+        _reselect = [.. changed];
         foreach (var p in changed)
             Raise(p);
         RaiseSelections();
-        Avalonia.Threading.Dispatcher.UIThread.Post(() => { _ballReselect = false; RaiseSelections(); }, Avalonia.Threading.DispatcherPriority.Background);
+        Avalonia.Threading.Dispatcher.UIThread.Post(() => { _reselect = []; RaiseSelections(); }, Avalonia.Threading.DispatcherPriority.Background);
     }
 
     private static bool SameItems(IReadOnlyList<FormOption> a, IReadOnlyList<FormOption> b)
@@ -817,10 +823,10 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
     public IReadOnlyList<ComboItem> AbilityOptions { get; private set; } = [];
     public ComboItem? SelectedAbility
     {
-        get => _ballReselect ? null : Find(AbilityOptions, CoreAdapter.GetAbilityIndex(_pk));
+        get => Reselecting(nameof(AbilityOptions)) ? null : Find(AbilityOptions, CoreAdapter.GetAbilityIndex(_pk));
         set
         {
-            if (value is null || _ballReselect || value.Value == CoreAdapter.GetAbilityIndex(_pk))
+            if (value is null || Reselecting(nameof(AbilityOptions)) || value.Value == CoreAdapter.GetAbilityIndex(_pk))
                 return;
             CoreAdapter.SetAbilityIndex(_pk, value.Value);
             RaiseAll();
@@ -872,10 +878,10 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
 
     public FormOption? SelectedForm
     {
-        get => _ballReselect ? null : FormOptions.FirstOrDefault(f => f.Value == _pk.Form);
+        get => Reselecting(nameof(FormOptions)) ? null : FormOptions.FirstOrDefault(f => f.Value == _pk.Form);
         set
         {
-            if (value is null || _ballReselect || value.Value == _pk.Form)
+            if (value is null || Reselecting(nameof(FormOptions)) || value.Value == _pk.Form)
                 return;
             // Outra forma costuma ser outro encontro: no modo legal, gera de novo (ou volta se nao der).
             var before = _pk.Clone();
@@ -892,10 +898,10 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
     public bool HasTera => TeraOptions.Count > 0;
     public ComboItem? SelectedTera
     {
-        get => _ballReselect ? null : Find(TeraOptions, CoreAdapter.GetTeraType(_pk));
+        get => Reselecting(nameof(TeraOptions)) ? null : Find(TeraOptions, CoreAdapter.GetTeraType(_pk));
         set
         {
-            if (value is null || _ballReselect || value.Value == CoreAdapter.GetTeraType(_pk))
+            if (value is null || Reselecting(nameof(TeraOptions)) || value.Value == CoreAdapter.GetTeraType(_pk))
                 return;
             CoreAdapter.SetTeraType(_pk, value.Value);
             Refresh();

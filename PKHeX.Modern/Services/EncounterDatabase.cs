@@ -21,7 +21,7 @@ public static partial class EncounterDatabase
     public static IReadOnlyList<IEncounterInfo> SearchEncounters(SaveFile sav, ushort species, bool onlyThisGame, CancellationToken token = default)
     {
         var settings = new SearchSettings { Context = sav.Context, Generation = sav.Generation, Species = species };
-        var versions = onlyThisGame ? settings.GetVersions(sav) : GameUtil.GameVersions;
+        var versions = Supported(onlyThisGame ? settings.GetVersions(sav) : GameUtil.GameVersions);
         var pk = sav.BlankPKM;
 
         var pi = sav.Personal.GetFormEntry(species, 0);
@@ -59,6 +59,14 @@ public static partial class EncounterDatabase
         return result;
     }
 
+    /// <summary>
+    /// Só as versões que o gerador de encontros do Core já sabe tratar. Versões novas que ainda não têm contexto
+    /// (Pokémon Winds/Waves, no PKHeX de 18/10/2026) fazem o gerador lançar uma exceção e derrubam a busca inteira,
+    /// inclusive o Legalizar e o Banco de encontros.
+    /// </summary>
+    private static ReadOnlyMemory<GameVersion> Supported(ReadOnlyMemory<GameVersion> versions)
+        => versions.ToArray().Where(v => v.Context != EntityContext.None).ToArray();
+
     /// <summary>Todos os Mystery Gifts conhecidos; <paramref name="onlyThisGame"/> mantem so os que existem neste jogo.</summary>
     /// <remarks>
     /// O banco de Mystery Gift do PKHeX (<see cref="EncounterEvent.GetAllEvents"/>) so tem eventos da Gen 4 em diante.
@@ -90,7 +98,7 @@ public static partial class EncounterDatabase
     private static List<IEncounterInfo> GetClassicGifts(SaveFile sav, CancellationToken token)
     {
         var settings = new SearchSettings { Context = sav.Context, Generation = sav.Generation, Species = 0 };
-        var versions = settings.GetVersions(sav);
+        var versions = Supported(settings.GetVersions(sav));
         var pk = sav.BlankPKM;
         var seen = new HashSet<IEncounterInfo>(ReferenceEqualityComparer.Instance);
         var result = new List<IEncounterInfo>();
@@ -131,7 +139,7 @@ public static partial class EncounterDatabase
             // Roamer de RS/FRLG: o Core sempre escolhe IVs zerados; sorteia como o jogo.
             if (RoamerIVs3.IsTruncated(enc) && temp is PK3 roamer)
                 RoamerIVs3.Reroll(roamer, criteria);
-            var pk = EntityConverter.ConvertToType(temp, sav.PKMType, out var result);
+            var pk = CoreAdapter.ConvertToType(temp, sav.PKMType, out var result);
             if (pk is null)
             {
                 error = result.GetDisplayString(temp, sav.PKMType);

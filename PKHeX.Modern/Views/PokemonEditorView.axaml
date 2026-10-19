@@ -103,10 +103,10 @@
                 <TextBlock Text="Apelido" VerticalAlignment="Center" />
                 <TextBox Grid.Column="1" Text="{Binding Nickname}" />
                 <TextBlock Grid.Row="1" Text="Espécie" VerticalAlignment="Center" />
-                <AutoCompleteBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding SpeciesNames}"
-                                 SelectedItem="{Binding SelectedSpeciesName}" FilterMode="ContainsOrdinal" MinimumPrefixLength="1"
-                                 MaxDropDownHeight="320" Watermark="Digite para buscar a espécie"
-                                 ToolTip.Tip="Digite parte do nome (ex.: chu) e escolha na lista" />
+                <!-- Lista inteira ao tocar; digitar filtra (contém, ex.: chu) -->
+                <c:FullListAutoComplete Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding SpeciesNames}"
+                                        SelectedItem="{Binding SelectedSpeciesName}" MaxDropDownHeight="320" Watermark="Toque ou digite"
+                                        ToolTip.Tip="Toque para ver todas as espécies; digite parte do nome (ex.: chu) para filtrar" />
                 <TextBlock Grid.Row="2" Text="Nível" VerticalAlignment="Center" />
                 <Grid Grid.Row="2" Grid.Column="1" ColumnDefinitions="*,Auto" ColumnSpacing="8">
                   <Slider Minimum="1" Maximum="100" Value="{Binding Level}" IsSnapToTickEnabled="True" TickFrequency="1" />
@@ -119,15 +119,16 @@
                 <Grid Grid.Row="4" Grid.Column="1" ColumnDefinitions="Auto,*,Auto" ColumnSpacing="6">
                   <Image Source="{Binding HeldItemIcon}" Width="24" Height="24" IsVisible="{Binding HasItem}" VerticalAlignment="Center"
                          ToolTip.Tip="{Binding HeldItemTip}" />
-                  <AutoCompleteBox Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding ItemOptions}" SelectedItem="{Binding SelectedItem}"
-                                   ValueMemberBinding="{Binding Text, x:DataType=core:ComboItem}" FilterMode="ContainsOrdinal"
-                                   MinimumPrefixLength="1" MaxDropDownHeight="320" Watermark="Digite para buscar">
-                    <AutoCompleteBox.ItemTemplate>
+                  <c:FullListAutoComplete Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding ItemOptions}" SelectedItem="{Binding SelectedItem}"
+                                          ValueMemberBinding="{Binding Text, x:DataType=core:ComboItem}" MaxDropDownHeight="320"
+                                          Watermark="Toque ou digite"
+                                          ToolTip.Tip="Toque para ver todos os itens; digite parte do nome para filtrar">
+                    <c:FullListAutoComplete.ItemTemplate>
                       <DataTemplate x:DataType="core:ComboItem">
                         <TextBlock Text="{Binding Text}" />
                       </DataTemplate>
-                    </AutoCompleteBox.ItemTemplate>
-                  </AutoCompleteBox>
+                    </c:FullListAutoComplete.ItemTemplate>
+                  </c:FullListAutoComplete>
                   <Button Grid.Column="2" Classes="ghost small" Content="✕" Command="{Binding ClearItemCommand}"
                           IsVisible="{Binding HasItem}" ToolTip.Tip="Remover item" />
                 </Grid>

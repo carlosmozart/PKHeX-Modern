@@ -68,7 +68,7 @@ $suites = [ordered]@{
     'SaveManager' = @{}
     'Layout'   = @{ 'fr.sav' = 'fire red.sav'; 'hg.sav' = 'Pokemon Heart Gold Version.sav'; 'sh.sav' = 'shield' }
     'Shiny'    = @{ 's.sav' = 'Sapphire.sav'; 'sh.sav' = 'shield' }
-    'Forms'    = @{ 'sa.sav' = 'Sapphire.sav'; 'sh.sav' = 'shield'; 'em.sav' = 'Pokemon Emerald Version.sav' }
+    'Forms'    = @{ 'sa.sav' = 'Sapphire.sav'; 'sh.sav' = 'shield'; 'em.sav' = 'Pokemon Emerald Version.sav'; 'sv.sav' = 'Scarlet' }
     'Yellow'   = @{ 'y.sav' = 'Yellow.sav' }
     'Tabs'     = @{ 'fr.sav' = 'fire red.sav'; 'hg.sav' = 'Pokemon Heart Gold Version.sav'; 'em.sav' = 'Pokemon Emerald Version.sav' }
     'Variants' = @{ 'fr.sav' = 'fire red.sav' }

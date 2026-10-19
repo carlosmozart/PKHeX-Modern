@@ -493,6 +493,23 @@ public static class CoreAdapter
     public static IReadOnlyList<PKM> Sort(IEnumerable<PKM> list, BoxSortOption option)
         => [.. option.Sorter(list.Where(pk => !IsEmpty(pk)))];
 
+    /// <summary>
+    /// Conversão para outro formato pelo PKHeX, sem cair no laço infinito do Core de 18/10/2026: com a volta para a
+    /// Gen 3 pelo HOME (Virtual Console do FireRed/LeafGreen), um Pokémon da Gen 7 levado para a Gen 3 desce pelo HOME,
+    /// sobe de novo Gen 4 → 5 → 6 → 7 e repete para sempre. De uma geração mais nova para uma de até a Gen 6 o PKHeX nunca
+    /// converteu (só Gen 2 → Gen 1): recusa antes, com o mesmo resultado de antes ("sem rota de transferência").
+    /// </summary>
+    public static PKM? ConvertToType(PKM pk, Type destType, out EntityConverterResult result)
+    {
+        int destGeneration = destType.Name[^1] - '0';
+        if (destGeneration is >= 1 and <= 6 && pk.Format > destGeneration && !(pk.Format <= 2 && destGeneration <= 2))
+        {
+            result = EntityConverterResult.NoTransferRoute;
+            return null;
+        }
+        return EntityConverter.ConvertToType(pk, destType, out result);
+    }
+
     /// <summary>Carrega um arquivo .pk* e converte para o formato do save. Retorna null se nao for compativel.</summary>
     public static PKM? LoadEntityFile(SaveFile sav, string path)
     {
@@ -503,7 +520,7 @@ public static class CoreAdapter
             return null;
         if (pk.GetType() == sav.PKMType)
             return pk;
-        return EntityConverter.ConvertToType(pk, sav.PKMType, out _);
+        return ConvertToType(pk, sav.PKMType, out _);
     }
 
     /// <summary>
@@ -518,7 +535,7 @@ public static class CoreAdapter
             var clone = pk.Clone();
             if (clone.GetType() == sav.PKMType)
                 return clone;
-            var converted = EntityConverter.ConvertToType(clone, sav.PKMType, out var result);
+            var converted = ConvertToType(clone, sav.PKMType, out var result);
             if (converted is null)
             {
                 error = string.Join(" ", result.GetDisplayString(clone, sav.PKMType).Split('\n', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
@@ -858,6 +875,20 @@ public static class CoreAdapter
         pk.Form = form;
         pk.RefreshAbility(slot);
         pk.Gender = pk.GetSaneGender();
+        RefreshSize(pk);
+    }
+
+    /// <summary>
+    /// Recalcula a altura e o peso guardados (Let's Go e Legends: Arceus guardam o valor absoluto, que depende da
+    /// espécie e da forma). Sem isso, evoluir ou trocar a forma deixa o Pokémon ilegal no PKHeX de 18/10/2026 em diante
+    /// ("Calculated Height/Weight does not match").
+    /// </summary>
+    public static void RefreshSize(PKM pk)
+    {
+        if (pk is not IScaledSizeValue size)
+            return;
+        size.ResetHeight();
+        size.ResetWeight();
     }
 
     /// <summary>Tera Types (18 tipos + Stellar), valor = numero do tipo.</summary>
@@ -915,6 +946,7 @@ public static class CoreAdapter
             pk.ClearNickname();
         pk.RefreshAbility(abilitySlot);
         pk.Gender = pk.GetSaneGender();
+        RefreshSize(pk);
     }
 
     // Evoluir por troca
@@ -1138,6 +1170,7 @@ public static class CoreAdapter
         if (!nicknamed)
             pk.ClearNickname();
         pk.RefreshAbility(abilitySlot);
+        RefreshSize(pk);
         pk.ResetPartyStats();
         pk.RefreshChecksum();
         return $"{from} evoluiu para {evo.Name} ({evo.Requirement})";
@@ -1164,6 +1197,7 @@ public static class CoreAdapter
         bool consumed = evo.ItemId > 0 && pk.HeldItem == evo.ItemId;
         if (consumed)
             pk.HeldItem = 0;
+        RefreshSize(pk);
         pk.ResetPartyStats();
 
         if (simulateTrade)

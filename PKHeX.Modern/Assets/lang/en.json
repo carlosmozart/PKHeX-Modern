@@ -2486,5 +2486,10 @@
   "Em andamento": "In progress",
   "Fase": "Phase",
   "a identificar": "to identify",
-  "Começou": "Started"
+  "Começou": "Started",
+  "Espécie e item mostram a lista inteira ao tocar ou clicar, com o nome atual selecionado; ao digitar, a lista filtra por qualquer parte do nome (ex.: chu acha Pichu, Pikachu e Raichu). Os golpes têm sugestões, e os que o Pokémon aprende aparecem em verde, no topo da lista.": "Species and item show the whole list when you tap or click, with the current name selected; as you type, the list filters by any part of the name (e.g. chu finds Pichu, Pikachu and Raichu). Moves have suggestions, and the ones the Pokémon learns appear in green, at the top of the list.",
+  "Toque para ver a lista ou digite": "Tap to see the list or type",
+  "Toque para ver todas as espécies; digite parte do nome (ex.: chu) para filtrar": "Tap to see every species; type part of the name (e.g. chu) to filter",
+  "Toque para ver todos os itens; digite parte do nome para filtrar": "Tap to see every item; type part of the name to filter",
+  "Toque ou digite": "Tap or type"
 }

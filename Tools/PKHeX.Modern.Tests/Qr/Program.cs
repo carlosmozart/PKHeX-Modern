@@ -19,7 +19,7 @@ var sav = CoreAdapter.LoadSave(Path.Combine(work, "moon.sav"))!; CoreAdapter.Act
 var pk = (PK7)sav.BoxData.Concat(sav.PartyData).First(p => p.Species > 0); var original = pk.Data.ToArray();
 var message = QrImages.Message(pk, 2, 4, 1);
 var decoded = QRMessageUtil.GetPKM(message, EntityContext.Gen7);
-Check("Moon mensagem preserva espécie PID e IVs", decoded is PK7 && decoded.Species == pk.Species && decoded.PID == pk.PID && decoded.IVs.SequenceEqual(pk.IVs));
+Check("Moon mensagem preserva espécie PID e IVs", decoded is PK7 && decoded.Species == pk.Species && decoded.PID == pk.PID && decoded.GetIVs() == pk.GetIVs());
 Check("QR inclui posição e cópias", message.Length == QR7.SIZE && message[8] == 2 && message[12] == 4 && message[16] == 1);
 Check("gerar não altera Pokémon", pk.Data.SequenceEqual(original));
 var png = QrImages.Png(message); File.WriteAllBytes(Path.Combine(work, "moon-qr-private.png"), png);
