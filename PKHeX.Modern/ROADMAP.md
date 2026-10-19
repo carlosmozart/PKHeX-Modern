@@ -99,6 +99,36 @@ Ideias escolhidas, na ordem combinada. O PKVault também usa o PKHeX.Core; o có
 - [x] **Multiplataforma** (0.4.6: Linux e macOS): (1) ~~sprites sem `System.Drawing`~~ feito (0.4.6: `PKHeX.Modern.Sprites`, idêntico pixel a pixel); (2) ~~`net10.0` sem `-windows`~~ feito (0.4.6; testes também, menos o `SpriteParity`); (3) CI com pacotes Windows/Linux/macOS e atualização automática por sistema; (4) testes headless no Linux/macOS pelo GitHub Actions.
 - [x] **Android** (0.4.7): APK assinado na release; mesma interface do desktop em paisagem (`MobileShell` reduz para caber em celulares), arquivos pelo seletor SAF (`MobileDocuments`). Atualização automática no Android (0.4.9: baixa o APK, confere o SHA-256 e abre o instalador do sistema via FileProvider). Bank em pasta externa (0.4.9: cópia privada sincronizada com a pasta do seletor, `MobileBankFolders`). Falta: testar em mais aparelhos. Pasta de saves no Android (0.4.10; resumo da leitura na 0.4.12).
 
+## 0.5.0: identidade visual própria (planejado em 18/10/2026)
+Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent genérico. Inspirar-se nos jogos (cores, formas, a ideia da Pokédex) sem copiar telas, logos ou artes oficiais. Antes de implementar, mostrar prévias renderizadas sem janela para o usuário escolher.
+
+**Identidade (maior impacto)**
+- [ ] **Elementos de Pokédex/Pokébola no layout:** topo vermelho e “lente” azul da Pokédex clássica na barra lateral, ou divisórias que lembram a linha da Pokébola. Um ou dois detalhes marcantes, sem exagero.
+- [ ] **Cartões de slot com a cor do tipo:** faixa ou brilho suave da cor do tipo principal em cada cartão das caixas e da equipe. (Sugestão de começo, junto com o próximo item.)
+- [ ] **Fundo das caixas fiel ao jogo:** o papel de parede real de cada caixa do save em destaque, no lugar do cinza neutro.
+- [ ] **Cor do jogo do save:** a cor e o mascote do jogo aberto tingindo levemente a interface (vermelho no Scarlet, azul no Sapphire...).
+- [ ] **“Modo jogo”:** um tema que junta tudo isso (cores do jogo, papel de parede, faixas de tipo, animações); o tema atual continua como opção “limpa”.
+
+**Acabamento**
+- [ ] **Animações curtas e próprias:** Pokébola abrindo ao carregar um save, slot “pulando” ao receber um Pokémon, brilho ✦ ao legalizar ou ao ficar shiny. Leves, por causa do Android.
+- [ ] **Ícones próprios com traço de jogo:** Pokébola, Pokédex, mochila, PC (evolução dos ícones de traço em `Controls/LineIcon.cs`).
+- [ ] **Tipografia com personalidade nos títulos:** fonte mais marcante só nos títulos, Inter no texto.
+- [ ] **Shiny com brilho:** um ✦ animado discreto nos shiny das caixas.
+
+**Telas novas**
+- [ ] **Cartão do Pokémon estilo “ficha de treinador”** no topo do editor: sprite grande, tipos, natureza, bola de captura e selo do jogo de origem.
+- [ ] **Hexágono de atributos estilo SwSh/SV:** o radar atual com a cor do tipo e os EVs como segunda camada.
+- [ ] **Vitrine da equipe:** os 6 Pokémon grandes lado a lado, com item, golpes e tipos, pensada para print e compartilhamento.
+- [ ] **Linha do tempo do save no Início:** o que mudou desde a última vez (Pokémon novos, shinies, insígnias, horas), a partir dos backups.
+- [ ] **Estados vazios ilustrados:** “nenhum save”, “caixa vazia” etc. com uma ilustração simples e a dica do que fazer (primeira impressão).
+
+**Uso**
+- [ ] **Paleta de comandos (Ctrl+K):** digitar “legalizar”, “ir para caixa 5”, “Pikachu”, “exportar” e o app executa.
+- [ ] **Arrastar com prévia:** sprite flutuando sob o cursor, destino destacado e animação curta ao soltar.
+- [ ] **Gestos no Android:** deslizar entre caixas, segurar um Pokémon para um resumo rápido, puxar para baixo para reler os saves.
+
+Prioridade sugerida: faixa de tipo + papel de parede do jogo; depois paleta de comandos, vitrine da equipe e estados vazios ilustrados.
+
 ## Conhecido / observações
 - Em saves com a equipe cheia, ainda não foi testado colocar um Pokémon num slot vazio da equipe. Ele entra na próxima posição livre.
 - Em Scarlet/Violet e Legends Z-A, o item da mochila não é editável, só a quantidade (mesma regra do PKHeX original).
