@@ -36,7 +36,13 @@ Este arquivo reúne o que o Claude sabia do projeto e do usuário (antes guardad
    - `PKHeX.Modern.Android/PKHeX.Modern.Android.csproj` (`<ApplicationVersion>`, ex.: 0.4.18 → `41801`).
 2. No `CHANGELOG.md`, troque `## Próxima versão` por `## X.Y.Z — AAAA-MM-DD`. No `CONTINUAR.md`, atualize a linha "Última release".
 3. Faça o commit, crie a tag `modern-vX.Y.Z` e faça o push do branch e da tag. O workflow `modern-build.yml` gera os 4 zips de desktop na release.
-4. Com o build pronto, publique as notas (a seção da versão no CHANGELOG mais o link "Full Changelog"):
+4. Com o build pronto, publique as notas **em português e em inglês**, no formato da 0.4.29 e da 0.4.30 (veja com `gh release view modern-v0.4.30 -R carlosmozart/PKHeX-Modern`):
+   - no topo, `🇧🇷 **Português** · 🇺🇸 [English below](#english)`;
+   - em português: `## Novidades` (as subseções da versão no CHANGELOG), `## Como instalar` (a tabela com o arquivo de cada sistema e a frase de que o app se atualiza sozinho) e `### 🍎 macOS` (extrair e arrastar para Aplicativos, abrir uma vez, “Abrir Mesmo Assim” em Ajustes do Sistema › Privacidade e Segurança, e o `xattr -dr com.apple.quarantine "/Applications/PKHeX Modern.app"` para o aviso de “danificado”), mais o lembrete de backup;
+   - depois de um `---` e de `<a id="english"></a>`, o mesmo em inglês (`## What's new`, `## How to install`, `### 🍎 macOS`);
+   - no fim, o link "Full Changelog" (`compare/modern-vANTERIOR...modern-vX.Y.Z`).
+
+   A parte de instalação muda pouco: copie da release anterior e só ajuste se algo mudou (sistemas, nomes dos arquivos, passos do Mac).
    `gh release edit modern-vX.Y.Z -R carlosmozart/PKHeX-Modern --title "PKHeX Modern X.Y.Z" --notes-file <notas> --latest`
 5. Anexe o APK assinado, **só depois que o build da tag terminar** (o anexo precisa da release criada por ele; na 0.4.28 o APK ficou pronto antes e falhou com "release not found"):
    `gh workflow run modern-android.yml -R carlosmozart/PKHeX-Modern --ref modern-ui -f signed_release=true -f release_tag=modern-vX.Y.Z`
