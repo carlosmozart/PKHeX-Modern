@@ -107,7 +107,7 @@
             <Button Classes="ghost small helpNav" Classes.selected="{Binding IsHelpOpen}" HorizontalAlignment="Stretch" Content="Ajuda" Command="{Binding OpenHelpCommand}"
                     ToolTip.Tip="Todas as funções explicadas, o que mudou em cada versão e Sobre (F1)" />
             <Button Grid.Column="1" Classes="ghost small" Content="⌨" IsVisible="{x:Static local:App.ShowShortcuts}"
-                    ToolTip.Tip="Atalhos do teclado&#10;Ctrl+F buscar · Q / E trocar página&#10;Esc voltar · Del excluir&#10;Ctrl+clique seleciona vários&#10;Ctrl+Z desfazer · Ctrl+Y refazer&#10;Ctrl+O abrir · Ctrl+S salvar" />
+                    ToolTip.Tip="Atalhos do teclado&#10;Ctrl+K comandos · Ctrl+F buscar · Q / E trocar página&#10;Esc voltar · Del excluir&#10;Ctrl+clique seleciona vários&#10;Ctrl+Z desfazer · Ctrl+Y refazer&#10;Ctrl+O abrir · Ctrl+S salvar" />
             <Button Grid.Column="2" Classes="ghost small" Content="◐" Command="{Binding ToggleThemeCommand}" ToolTip.Tip="Alternar tema claro/escuro" />
             <Button Grid.Column="3" x:Name="PrefsButton" Classes="ghost small" Content="⚙" ToolTip.Tip="Aparência e preferências: tema, cor de destaque, idioma e abrir o último save ao iniciar">
               <Button.Flyout>
@@ -188,11 +188,13 @@
 
         <!-- Busca global (Ctrl+F) -->
         <StackPanel DockPanel.Dock="Top" Spacing="6" Margin="0,0,0,6" IsVisible="{Binding HasSave}">
-          <Grid ColumnDefinitions="*,Auto">
+          <Grid ColumnDefinitions="*,Auto,Auto">
             <TextBox x:Name="SearchBox" Text="{Binding SearchText}" Watermark="🔍  Buscar (Ctrl+F)"
                      ToolTip.Tip="Espécie, apelido, golpe ou item em todas as caixas e na equipe. Também: shiny, ovo" />
             <Button Grid.Column="1" Classes="ghost small" Content="✕" Margin="4,0,0,0" Command="{Binding ClearSearchCommand}"
                     IsVisible="{Binding HasSearch}" ToolTip.Tip="Limpar busca" />
+            <Button Grid.Column="2" Classes="ghost small" Content="⌘" Margin="4,0,0,0" Command="{Binding OpenPaletteCommand}"
+                    IsVisible="{Binding !HasSearch}" ToolTip.Tip="Paleta de comandos (Ctrl+K): digite uma ação, página, caixa ou Pokémon" />
           </Grid>
           <TextBlock Text="{Binding SearchSummary}" Classes="muted" FontSize="11" IsVisible="{Binding HasSearch}" />
           <ScrollViewer MaxHeight="260" IsVisible="{Binding HasSearch}">
@@ -447,6 +449,14 @@
                     IsVisible="{Binding Help.IsReadyToRestart}" />
           </StackPanel>
         </StackPanel>
+      </Border>
+    </Border>
+
+    <!-- Paleta de comandos (Ctrl+K): clicar fora ou Esc fecha -->
+    <Border x:Name="PaletteBackdrop" Grid.ColumnSpan="3" Grid.RowSpan="2" Classes="dialogBackdrop" IsVisible="{Binding HasPalette}">
+      <Border Classes="card dialog" Width="640" MaxWidth="{Binding $parent[Border].Bounds.Width}" Margin="16,72,16,16"
+              HorizontalAlignment="Center" VerticalAlignment="Top">
+        <views:CommandPaletteView x:Name="PaletteView" DataContext="{Binding Palette}" />
       </Border>
     </Border>
 

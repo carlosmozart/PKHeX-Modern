@@ -33,10 +33,12 @@
   </UserControl.DataTemplates>
   <StackPanel Spacing="12">
 
-    <!-- Cabecalho -->
-    <Border Classes="card hero">
+    <!-- Cabecalho: ficha do Pokemon (brilho do tipo, nivel e natureza, bola e jogo de origem) -->
+    <Border Classes="card hero" ClipToBounds="True">
+      <Panel>
+      <Border Background="{Binding CardGlow}" Margin="-12" IsHitTestVisible="False" />
       <Grid ColumnDefinitions="Auto,*">
-        <Border Classes="spriteWell" Width="112" Height="100">
+        <Border Classes="spriteWell" Width="112" Height="100" VerticalAlignment="Top">
           <Image Source="{Binding Sprite}" Stretch="Uniform" />
         </Border>
         <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="6">
@@ -53,18 +55,33 @@
                     IsEnabled="{Binding CanToggleShiny}" Click="OnShinyClick" VerticalAlignment="Center"
                     ToolTip.Tip="{Binding ShinyShortcutsTip}" ToolTip.ShowOnDisabled="True" />
           </Grid>
-          <ItemsControl ItemsSource="{Binding Types}">
-            <ItemsControl.ItemsPanel>
-              <ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="6" /></ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-              <DataTemplate x:DataType="vm:TypeChip">
-                <Border Classes="chip" Background="{Binding Brush}" ToolTip.Tip="Tipo">
-                  <TextBlock Text="{Binding Name}" />
-                </Border>
-              </DataTemplate>
-            </ItemsControl.ItemTemplate>
-          </ItemsControl>
+          <WrapPanel ItemSpacing="6" LineSpacing="4">
+            <ItemsControl ItemsSource="{Binding Types}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="6" /></ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:TypeChip">
+                  <Border Classes="chip" Background="{Binding Brush}" ToolTip.Tip="Tipo">
+                    <TextBlock Text="{Binding Name}" />
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Border Classes="chip" Background="{Binding CardTera.Brush}" BorderBrush="White" BorderThickness="1" IsVisible="{Binding HasCardTera}" ToolTip.Tip="Tera Type">
+              <TextBlock Text="{Binding CardTera.Name, StringFormat='Tera {0}'}" />
+            </Border>
+          </WrapPanel>
+          <TextBlock Text="{Binding CardLine}" FontSize="13" Classes="muted" TextTrimming="CharacterEllipsis" />
+          <WrapPanel ItemSpacing="10" LineSpacing="4">
+            <StackPanel Orientation="Horizontal" Spacing="4" IsVisible="{Binding HasCardBall}" ToolTip.Tip="Bola de captura">
+              <Image Source="{Binding CardBallSprite}" Width="18" Height="18" />
+              <TextBlock Text="{Binding CardBallName}" FontSize="12" VerticalAlignment="Center" />
+            </StackPanel>
+            <Border Classes="chip originChip" IsVisible="{Binding HasCardOrigin}" ToolTip.Tip="Jogo de origem">
+              <TextBlock Text="{Binding CardOrigin}" />
+            </Border>
+          </WrapPanel>
           <DockPanel>
             <Border DockPanel.Dock="Left" Margin="0,0,6,0" Classes="chip" Background="{DynamicResource Good}" IsVisible="{Binding ShowLegal}">
               <TextBlock Text="✓ Legal" />
@@ -80,6 +97,7 @@
           </DockPanel>
         </StackPanel>
       </Grid>
+      </Panel>
     </Border>
 
     <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
@@ -262,8 +280,21 @@
                 <TextBlock Text="ATRIBUTOS" Classes="section" Margin="0" />
                 <TextBlock Grid.Column="1" Text="{Binding StatTotal, StringFormat='Total {0}'}" Classes="muted" FontSize="12" />
               </Grid>
-              <c:StatRadar Height="190" Values="{Binding RadarValues}" Labels="{Binding StatLabels}"
-                           Fill="{DynamicResource Accent}" GridBrush="{DynamicResource CardBorder}" LabelBrush="{DynamicResource TextMuted}" />
+              <!-- Hexágono no estilo SwSh/SV: forma na cor do tipo, EVs em dourado, valores e natureza nos nomes -->
+              <c:StatRadar Height="230" Values="{Binding RadarValues}" Labels="{Binding StatLabels}" ValueTexts="{Binding RadarTexts}"
+                           Modifiers="{Binding RadarModifiers}" SecondValues="{Binding RadarEVs}" SecondFill="#F5C542"
+                           Fill="{Binding RadarBrush}" Plate="{DynamicResource SlotBackground}" GridBrush="{DynamicResource CardBorder}"
+                           LabelBrush="{DynamicResource TextMuted}" />
+              <StackPanel Orientation="Horizontal" Spacing="14" HorizontalAlignment="Center" Margin="0,2,0,4">
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                  <Border Width="10" Height="10" CornerRadius="2" Background="{Binding RadarBrush}" VerticalAlignment="Center" />
+                  <TextBlock Text="Atributos" Classes="muted" FontSize="11" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="5" IsVisible="{Binding RadarEVs, Converter={x:Static ObjectConverters.IsNotNull}}">
+                  <Border Width="10" Height="10" CornerRadius="2" Background="#F5C542" VerticalAlignment="Center" />
+                  <TextBlock Text="EVs" Classes="muted" FontSize="11" />
+                </StackPanel>
+              </StackPanel>
 
               <ItemsControl ItemsSource="{Binding Stats}">
                 <ItemsControl.ItemTemplate>

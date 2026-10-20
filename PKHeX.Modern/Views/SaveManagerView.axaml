@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="using:PKHeX.Modern.ViewModels"
+             xmlns:c="using:PKHeX.Modern.Controls"
              x:Class="PKHeX.Modern.Views.SaveManagerView"
              x:DataType="vm:SaveManagerViewModel">
   <Panel>
@@ -47,11 +48,8 @@
     <Panel>
       <!-- Pasta vazia: instrucoes -->
       <Border Classes="card" IsVisible="{Binding IsEmpty}">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10" MaxWidth="520">
-          <TextBlock Text="Arraste um arquivo de save aqui" Classes="title" HorizontalAlignment="Center" />
-          <TextBlock Text="ou use “Abrir save...”. Para ter seus saves sempre à mão, coloque-os na pasta acima (clique em “Abrir pasta”). Subpastas como gba, ds, 3ds e switch viram grupos."
-                     Classes="muted" TextWrapping="Wrap" TextAlignment="Center" />
-        </StackPanel>
+        <c:EmptyState Art="save" ArtSize="168" Title="Arraste um arquivo de save aqui"
+                      Hint="ou use “Abrir save...”. Para ter seus saves sempre à mão, coloque-os na pasta acima (clique em “Abrir pasta”). Subpastas como gba, ds, 3ds e switch viram grupos." />
       </Border>
       <TextBlock Text="Lendo saves..." Classes="muted" IsVisible="{Binding ShowLoading}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
@@ -145,11 +143,8 @@
     </StackPanel>
     <Panel>
       <Border Classes="card" IsVisible="{Binding HasNoBackups}">
-        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="10" MaxWidth="520">
-          <TextBlock Text="Nenhum backup ainda" Classes="title" HorizontalAlignment="Center" />
-          <TextBlock Text="Toda vez que você salva por cima de um save, o arquivo anterior é copiado para cá. Assim dá para voltar atrás se algo der errado."
-                     Classes="muted" TextWrapping="Wrap" TextAlignment="Center" />
-        </StackPanel>
+        <c:EmptyState Art="backup" ArtSize="144" Title="Nenhum backup ainda"
+                      Hint="Toda vez que você salva por cima de um save, o arquivo anterior é copiado para cá. Assim dá para voltar atrás se algo der errado." />
       </Border>
       <ScrollViewer>
         <ItemsControl ItemsSource="{Binding BackupGroups}">

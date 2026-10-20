@@ -417,8 +417,8 @@
               </Grid>
             </StackPanel>
             <Panel>
-              <TextBlock IsVisible="{Binding HasNoSave}" Classes="muted" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Margin="20"
-                         Text="Escolha outro save para mover Pokémon entre ele e o save aberto à direita. Cada Pokémon é convertido para a geração do jogo de destino; depois salve os dois saves." />
+              <c:EmptyState IsVisible="{Binding HasNoSave}" Art="transfer" ArtSize="96" Margin="20" Title="Nenhum outro save aberto"
+                            Hint="Escolha outro save para mover Pokémon entre ele e o save aberto à direita. Cada Pokémon é convertido para a geração do jogo de destino; depois salve os dois saves." />
               <ScrollViewer HorizontalScrollBarVisibility="Disabled" IsVisible="{Binding HasSave}">
                 <ItemsControl ItemsSource="{Binding Slots}">
                   <ItemsControl.ItemsPanel>
@@ -1333,7 +1333,7 @@
           </ItemsRepeater>
         </ScrollViewer>
         <TextBlock Text="Lendo saves e bank..." Classes="muted" IsVisible="{Binding IsBusy}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-        <TextBlock Text="Nenhum Pokémon com esses filtros." Classes="muted" IsVisible="{Binding HasNoResults}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <c:EmptyState Art="search" Title="Nenhum Pokémon com esses filtros." Hint="Tente menos filtros ou outra parte do nome." IsVisible="{Binding HasNoResults}" />
       </Panel>
       <Grid IsVisible="{Binding ShowDuplicates}" RowDefinitions="Auto,*">
         <TextBlock Text="{Binding DuplicateSummary}" Classes="muted" TextWrapping="Wrap" />
@@ -1527,8 +1527,8 @@
               </Grid>
             </StackPanel>
           </Border>
-          <TextBlock DockPanel.Dock="Top" Text="Nenhuma equipe no Hall da Fama ainda. Use “Registrar equipe atual” para adicionar a equipe do save."
-                     Classes="muted" TextWrapping="Wrap" Margin="4,8" IsVisible="{Binding !HasFameTeams}" />
+          <c:EmptyState DockPanel.Dock="Top" Art="trophy" ArtSize="96" Margin="4,16" Title="Hall da Fama vazio"
+                        Hint="Nenhuma equipe no Hall da Fama ainda. Use “Registrar equipe atual” para adicionar a equipe do save." IsVisible="{Binding !HasFameTeams}" />
           <ScrollViewer HorizontalScrollBarVisibility="Disabled">
             <ItemsControl ItemsSource="{Binding FameRows}">
               <ItemsControl.ItemTemplate>
@@ -2344,6 +2344,12 @@
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
           </ItemsControl>
+          <!-- Caixa vazia: aviso por cima dos slots, sem bloquear o arraste nem o clique -->
+          <Border x:Name="EmptyBoxHint" Classes="card" IsVisible="{Binding IsBoxEmpty}" IsHitTestVisible="False" HorizontalAlignment="Center" VerticalAlignment="Top"
+                  Margin="16,96,16,0" Padding="24,18" Opacity="0.96" BoxShadow="0 8 30 0 #40000000">
+            <c:EmptyState Art="box" ArtSize="104" Title="Caixa vazia"
+                          Hint="Arraste Pokémon para cá, cole uma equipe Showdown em “⋯ Caixa” ou clique num slot para criar um Pokémon." MaxWidth="380" />
+          </Border>
           </Grid>
         </Border>
       </ScrollViewer>

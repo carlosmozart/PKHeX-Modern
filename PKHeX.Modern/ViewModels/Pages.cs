@@ -196,6 +196,9 @@ public sealed class BoxesPageViewModel : SlotPageViewModel
 
     public void Reload() => LoadBox();
 
+    /// <summary>Caixa aberta sem nenhum Pokémon: mostra a tela vazia por cima dos slots.</summary>
+    public bool IsBoxEmpty => Slots.Count > 0 && Slots.All(s => s.IsEmpty);
+
     private void LoadBox()
     {
         if (_sav is null)
@@ -207,10 +210,12 @@ public sealed class BoxesPageViewModel : SlotPageViewModel
         {
             var s = new SlotViewModel(CurrentBox, i);
             s.Load(_sav);
+            s.PropertyChanged += (_, e) => { if (e.PropertyName == nameof(SlotViewModel.IsEmpty)) Raise(nameof(IsBoxEmpty)); };
             Slots.Add(s);
         }
         Raise(nameof(BoxName));
         Raise(nameof(BoxLabel));
+        Raise(nameof(IsBoxEmpty));
         RefreshNames();
         RefreshWallpaper();
         for (int i = 0; i < BoxTabs.Count; i++)

@@ -1,5 +1,13 @@
 <Styles xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:c="using:PKHeX.Modern.Controls">
+
+  <!-- Desenhos das telas vazias (Controls/EmptyState.cs): cores do tema -->
+  <Style Selector="c|EmptyArt">
+    <Setter Property="Stroke" Value="{DynamicResource TextMuted}" />
+    <Setter Property="Accent" Value="{DynamicResource Accent}" />
+    <Setter Property="Glow" Value="{DynamicResource AccentSoft}" />
+  </Style>
 
   <!-- Fonte do tema (Theme/AppTheme.cs): herdada por todos os textos da janela. -->
   <Style Selector="Window">
@@ -602,6 +610,15 @@
   <!-- Editor -->
   <Style Selector="Border.hero">
     <Setter Property="Padding" Value="12" />
+  </Style>
+  <!-- Selo do jogo de origem na ficha do editor -->
+  <Style Selector="Border.chip.originChip">
+    <Setter Property="Background" Value="{DynamicResource SlotBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
+    <Setter Property="BorderThickness" Value="1" />
+  </Style>
+  <Style Selector="Border.chip.originChip TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource TextMuted}" />
   </Style>
   <Style Selector="Button.small">
     <Setter Property="FontSize" Value="12" />

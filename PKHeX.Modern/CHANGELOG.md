@@ -9,6 +9,10 @@ Formato: "## versão — data", "### seção", "- item".
 ## Próxima versão
 
 ### 🎨 Interface
+- **Hexágono de atributos no estilo SwSh/SV:** na aba Atributos, a forma na cor do tipo, os EVs como segunda camada dourada e o valor de cada atributo junto do nome, em vermelho ou azul conforme a natureza.
+- **Ficha do Pokémon no editor:** o topo do editor ganhou o brilho da cor dos tipos, o Tera (Scarlet/Violet), o nível com a natureza, a bola de captura e o selo do jogo de origem com a geração. Acompanha as edições na hora.
+- **Telas vazias ilustradas:** pasta de saves vazia, nenhum backup, caixa vazia, nenhum outro save no Bank, Pesquisa sem resultado e Hall da Fama vazio ganharam um desenho próprio e a dica do que fazer. O aviso da caixa vazia não bloqueia o arraste nem o clique nos slots.
+- **Paleta de comandos (Ctrl+K):** digite “legalizar”, “caixa 5”, “Pikachu” ou “exportar” e Enter executa: ações, páginas, caixas pelo número ou nome e Pokémon do save pela espécie ou apelido (abre no editor). Sem diferença de maiúsculas e acentos; no celular, pelo ⌘ ao lado da busca.
 - **Vitrine da equipe:** na página Equipe, “🖼 Vitrine” mostra os seis Pokémon grandes, com tipos, Tera, item, habilidade, natureza e golpes coloridos pelo tipo, em Grade (3×2) ou Colunas. “Salvar imagem” grava um PNG em alta resolução para compartilhar.
 - **Cor do tipo nos cartões:** cada Pokémon das caixas, da equipe, do bank e do outro save tem o fundo do cartão tingido com a cor dos tipos dele (o primeiro no alto, o segundo embaixo). Ovos e slots vazios ficam neutros. Dá para desligar em ⚙ › “Cor do tipo nos cartões”.
 - **Papel de parede “Inteiro”:** nova opção em ⚙ › Papel de parede das caixas que mostra o papel de parede do jogo nítido, como no próprio jogo, com os cartões translúcidos por cima. O padrão continua o Normal.

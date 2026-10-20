@@ -611,7 +611,54 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
     private int _selectedTab;
     public IReadOnlyList<string> StatLabels { get; } = ["PS", "Atq", "Def", "AtE", "DeE", "Vel"];
     public IReadOnlyList<double> RadarValues { get; private set; } = [0, 0, 0, 0, 0, 0];
+    /// <summary>Atributos finais escritos junto dos nomes do hexágono.</summary>
+    public IReadOnlyList<string>? RadarTexts { get; private set; }
+    /// <summary>Natureza por atributo (+1 aumenta, −1 diminui).</summary>
+    public IReadOnlyList<int>? RadarModifiers { get; private set; }
+    /// <summary>EVs (0..1 do máximo por atributo do formato) como segunda camada; null sem EVs.</summary>
+    public IReadOnlyList<double>? RadarEVs { get; private set; }
+    /// <summary>Cor do primeiro tipo, para a forma do hexágono.</summary>
+    public Avalonia.Media.IBrush? RadarBrush { get; private set; }
     public IReadOnlyList<TypeChip> Types { get; private set; } = [];
+
+    // Ficha do Pokémon (cabeçalho do editor): brilho do tipo, nível e natureza, bola e jogo de origem
+    /// <summary>Brilho dos dois tipos atrás da ficha (o mesmo dos cartões das caixas, um pouco mais forte).</summary>
+    public Avalonia.Media.IBrush? CardGlow { get; private set; }
+    /// <summary>"Nv. 50 · Jolly" (sem natureza na Gen 1/2).</summary>
+    public string CardLine => _pk.IsEgg ? "Ovo" : _pk.Format >= 3 ? $"Nv. {_pk.CurrentLevel} · {NatureName}" : $"Nv. {_pk.CurrentLevel}";
+    private string NatureName => (uint)(int)_pk.StatAlignment < (uint)CoreAdapter.NatureNames.Count ? CoreAdapter.NatureNames[(int)_pk.StatAlignment] : "";
+    public Bitmap? CardBallSprite => _pk.IsEgg ? null : SpriteService.GetBallSprite(_pk.Ball);
+    public string CardBallName => (uint)_pk.Ball < (uint)GameInfo.Strings.balllist.Length ? GameInfo.Strings.balllist[_pk.Ball] : "";
+    public bool HasCardBall => CardBallSprite is not null && CardBallName.Length > 0;
+    /// <summary>Selo do jogo de origem ("Black · Gen 5").</summary>
+    public string CardOrigin => _pk.Version == 0 ? "" : $"{OriginGame} · Gen {_pk.Generation}";
+    public bool HasCardOrigin => CardOrigin.Length > 0;
+    /// <summary>Tera Type do Scarlet/Violet (o Stellar fica de fora: não tem cor de tipo).</summary>
+    public TypeChip? CardTera => _pk is ITeraTypeReadOnly t && (byte)t.TeraType is var type && type < 18 && type < GameInfo.Strings.types.Length
+        ? new TypeChip(GameInfo.Strings.types[type], (uint)Drawing.PokeSprite.TypeColor.GetTypeSpriteColor(type).ToArgb()) : null;
+    public bool HasCardTera => CardTera is not null;
+
+    private void RefreshCard()
+    {
+        if (_pk.IsEgg || CoreAdapter.IsEmpty(_pk))
+            CardGlow = null;
+        else
+        {
+            var (t1, t2) = CoreAdapter.GetSpeciesTypes(_pk.PersonalInfo);
+            static Avalonia.Media.Color C(byte type, byte a)
+            {
+                var c = Avalonia.Media.Color.FromUInt32((uint)Drawing.PokeSprite.TypeColor.GetTypeSpriteColor(type).ToArgb());
+                return Avalonia.Media.Color.FromArgb(a, c.R, c.G, c.B);
+            }
+            CardGlow = new Avalonia.Media.LinearGradientBrush
+            {
+                StartPoint = new(0, 0, Avalonia.RelativeUnit.Relative), EndPoint = new(1, 1, Avalonia.RelativeUnit.Relative),
+                GradientStops = { new(C(t1, 0x70), 0), new(C(t1, 0x14), 0.6), new(C(t2, t1 == t2 ? (byte)0x14 : (byte)0x58), 1) },
+            };
+        }
+        foreach (var p in (string[])[nameof(CardGlow), nameof(CardLine), nameof(CardBallSprite), nameof(CardBallName), nameof(HasCardBall), nameof(CardOrigin), nameof(HasCardOrigin), nameof(CardTera), nameof(HasCardTera)])
+            Raise(p);
+    }
     public string GenderSymbol => CoreAdapter.GetGenderSymbol(_pk);
     public string SpeciesName => (uint)_pk.Species < (uint)SpeciesList.Count ? SpeciesList[_pk.Species] : "";
     public int StatTotal { get; private set; }
@@ -1334,7 +1381,15 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
         StatTotal = 0; EVTotal = 0; IVTotal = 0;
         foreach (var st in Stats) { StatTotal += st.Total; EVTotal += st.EV; IVTotal += st.IV; }
         Types = [.. System.Linq.Enumerable.Select(CoreAdapter.GetTypes(_pk), t => new TypeChip(t.Name, t.Argb))];
-        foreach (var p in (string[])[nameof(RadarValues), nameof(StatTotal), nameof(EVTotal), nameof(IVTotal), nameof(EVSummary), nameof(IVSummary), nameof(Types), nameof(GenderSymbol), nameof(SpeciesName), nameof(SelectedSpeciesName), nameof(MoveOptions)])
+        // Hexágono: valores junto dos nomes, natureza (+/−), EVs como segunda camada e a cor do primeiro tipo
+        RadarTexts = [.. Array.ConvertAll(final, v => v.ToString(System.Globalization.CultureInfo.InvariantCulture))];
+        RadarModifiers = mods;
+        double evMax = _pk.Format <= 2 ? 65535 : _pk is PB7 ? 200 : 252;
+        RadarEVs = EVTotal > 0 ? [.. Stats.Select(s => Math.Min(1, s.EV / evMax))] : null;
+        RadarBrush = Types.Count > 0 ? Types[0].Brush : null;
+        foreach (var p in (string[])[nameof(RadarTexts), nameof(RadarModifiers), nameof(RadarEVs), nameof(RadarBrush)])
+            Raise(p);
+        foreach (var p in (string[])[nameof(RadarValues),nameof(StatTotal), nameof(EVTotal), nameof(IVTotal), nameof(EVSummary), nameof(IVSummary), nameof(Types), nameof(GenderSymbol), nameof(SpeciesName), nameof(SelectedSpeciesName), nameof(MoveOptions)])
             Raise(p);
         try
         {
@@ -1358,6 +1413,7 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
         RaiseLegalMode();
         GuardLegality();
         RefreshBalls();
+        RefreshCard();
     }
 }
 

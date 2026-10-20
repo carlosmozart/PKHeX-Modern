@@ -44,6 +44,8 @@ public sealed partial class MainView : UserControl
             Controls.TouchHelp.ObserveTouch(this);
         }, RoutingStrategies.Tunnel);
         _drag = new SlotDragController(this, () => VM);
+        // Clicar fora da paleta fecha
+        PaletteBackdrop.PointerPressed += (_, e) => { if (e.Source == PaletteBackdrop) VM.ClosePalette(); };
         if (!App.ShowShortcuts)
             SearchBox.Watermark = Loc.T("🔍  Buscar");
         // Ctrl+Tab / Ctrl+Shift+Tab trocam de aba de save (em tunel: o Tab normal e consumido pela navegacao de foco).
@@ -94,6 +96,8 @@ public sealed partial class MainView : UserControl
             vm.Game.ExportCardFile = ExportCardFileAsync;
             vm.SaveQrImage = SaveQrImageAsync;
             vm.SaveShowcaseImage = SaveShowcaseImageAsync;
+            vm.FocusSearch = () => SearchBox.Focus();
+            vm.PaletteViewActions = PaletteActions;
             vm.ReadClipboard = async () => TopLevel.GetTopLevel(this)?.Clipboard is { } clip ? await Avalonia.Input.Platform.ClipboardExtensions.TryGetTextAsync(clip) : null;
             vm.WriteClipboard = async text => { if (TopLevel.GetTopLevel(this)?.Clipboard is { } clip) await clip.SetTextAsync(text); };
             // Seletores de arquivo/pasta usados pela pagina Bank (pasta externa e outro save).
@@ -183,6 +187,12 @@ public sealed partial class MainView : UserControl
             if (e.Key == Key.Escape) vm.CloseQr();
             e.Handled = true; return;
         }
+        // Paleta aberta: as teclas ficam com ela (CommandPaletteView); Esc fora do campo também fecha
+        if (vm.HasPalette && vm.Dialog is null)
+        {
+            if (e.Key == Key.Escape) { vm.ClosePalette(); e.Handled = true; }
+            return;
+        }
         if (vm.HasShowcase && vm.Dialog is null)
         {
             if (e.Key == Key.Escape) vm.CloseShowcase();
@@ -215,6 +225,7 @@ public sealed partial class MainView : UserControl
         {
             switch (e.Key)
             {
+                case Key.K: vm.OpenPalette(); e.Handled = true; return;
                 case Key.O: OnOpen(this, e); e.Handled = true; return;
                 case Key.W when vm.ActiveTab is { } tab: _ = vm.CloseTabAsync(tab); e.Handled = true; return;
                 case Key.F when vm.HasSave: SearchBox.Focus(); e.Handled = true; return;

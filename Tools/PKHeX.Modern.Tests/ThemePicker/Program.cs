@@ -57,6 +57,21 @@ Check("slot vazio sem brilho",emptyGlow.Background is null);
 vm.SlotTypeColor=false; Pump(); Check("brilho desligado",!glow.IsVisible && !settings.SlotTypeColor);
 vm.SlotTypeColor=true; Pump(); Check("brilho religado",glow.IsVisible);
 vm.WallpaperIntensityIndex=2; Pump();
+// Telas vazias: o aviso da caixa vazia aparece so na caixa sem Pokemon e nao bloqueia os slots
+var hint=window.GetVisualDescendants().OfType<Border>().Single(b=>b.Name=="EmptyBoxHint");
+Check("caixa com Pokémon sem aviso",!vm.Boxes.IsBoxEmpty && !hint.IsVisible);
+vm.Boxes.CurrentBox=1; Pump();
+hint=window.GetVisualDescendants().OfType<Border>().Single(b=>b.Name=="EmptyBoxHint");
+Check("caixa vazia mostra o aviso",vm.Boxes.IsBoxEmpty && hint.IsVisible && !hint.IsHitTestVisible);
+vm.Boxes.CurrentBox=0; Pump();
+foreach(var kind in EmptyArt.Kinds)
+{
+    var art=new EmptyArt{Kind=kind,Width=120,Height=100,Stroke=Avalonia.Media.Brushes.White,Accent=Avalonia.Media.Brushes.Red,Glow=Avalonia.Media.Brushes.DarkRed};
+    art.Measure(new Size(120,100)); art.Arrange(new Rect(0,0,120,100));
+    using var rtb=new Avalonia.Media.Imaging.RenderTargetBitmap(new PixelSize(120,100)); rtb.Render(art);
+    using var ms=new MemoryStream(); rtb.Save(ms);
+    Check($"desenho {kind} ({ms.Length} bytes)",ms.Length>800);
+}
 var again=new MainViewModel(settings); Check("preferência ao reabrir",again.WallpaperIntensityIndex==2 && again.Boxes.WallpaperOpacity==0 && !settings.Persist);
 Check("papel do jogo preservado",vm.ActiveTab!.Sav is IBoxDetailWallpaper wp && wp.GetBoxWallpaper(0)==((IBoxDetailWallpaper)sav).GetBoxWallpaper(0) && !vm.IsDirty);
 var before=vm.ThemeOptions[0].Preview; vm.ToggleThemeCommand.Execute(null); Pump(); Check("miniatura acompanha claro/escuro",!ReferenceEquals(before,vm.ThemeOptions[0].Preview));

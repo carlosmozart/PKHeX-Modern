@@ -116,14 +116,14 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 - [ ] **Shiny com brilho:** um ✦ animado discreto nos shiny das caixas.
 
 **Telas novas**
-- [ ] **Cartão do Pokémon estilo “ficha de treinador”** no topo do editor: sprite grande, tipos, natureza, bola de captura e selo do jogo de origem.
-- [ ] **Hexágono de atributos estilo SwSh/SV:** o radar atual com a cor do tipo e os EVs como segunda camada.
+- [x] **Cartão do Pokémon estilo “ficha de treinador”:** feito (próxima versão): brilho do tipo, Tera, nível e natureza, bola e selo do jogo de origem no topo do editor (`PokemonEditorViewModel.Card*`).
+- [x] **Hexágono de atributos estilo SwSh/SV:** feito (próxima versão): forma na cor do tipo, EVs em dourado, valores e natureza (vermelho/azul) nos nomes (`Controls/StatRadar.cs`).
 - [x] **Vitrine da equipe:** feito (próxima versão): “🖼 Vitrine” na Equipe, em Grade ou Colunas, com “Salvar imagem” em PNG (`Views/TeamShowcaseView.axaml`, `TeamShowcaseViewModel`).
 - [ ] **Linha do tempo do save no Início:** o que mudou desde a última vez (Pokémon novos, shinies, insígnias, horas), a partir dos backups.
-- [ ] **Estados vazios ilustrados:** “nenhum save”, “caixa vazia” etc. com uma ilustração simples e a dica do que fazer (primeira impressão).
+- [x] **Estados vazios ilustrados:** feito (próxima versão): saves, backups, caixa vazia, outro save, Pesquisa e Hall da Fama (`Controls/EmptyState.cs`, desenhos próprios de traço).
 
 **Uso**
-- [ ] **Paleta de comandos (Ctrl+K):** digitar “legalizar”, “ir para caixa 5”, “Pikachu”, “exportar” e o app executa.
+- [x] **Paleta de comandos (Ctrl+K):** feito (próxima versão): ações, páginas, caixas e Pokémon do save, sem acento, também em inglês; ⌘ ao lado da busca (`CommandPaletteViewModel`, `MainViewModel.Palette.cs`).
 - [ ] **Arrastar com prévia:** sprite flutuando sob o cursor, destino destacado e animação curta ao soltar.
 - [ ] **Gestos no Android:** deslizar entre caixas, segurar um Pokémon para um resumo rápido, puxar para baixo para reler os saves.
 

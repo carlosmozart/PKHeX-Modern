@@ -19,7 +19,7 @@ BankStorage.Root = Path.Combine(work, "bank"); SaveBackup.Folder = Path.Combine(
 void Check(string n, bool ok, string detail = "") { Console.WriteLine($"{(ok ? "OK" : "FAIL")} {n} {detail}"); if (!ok) fails++; }
 void Pump() { for (int i = 0; i < 4; i++) { Dispatcher.UIThread.RunJobs(); AvaloniaHeadlessPlatform.ForceRenderTimerTick(); } }
 
-var vm = new MainViewModel(new AppSettings { CheckForUpdates = false });
+var vm = new MainViewModel(new AppSettings { CheckForUpdates = false, AskLegalizeOnClick = false });
 var win = new MainWindow { DataContext = vm, Width = 1500, Height = 1000 }; win.Show();
 
 // Save sem equipe: avisa e nao abre
@@ -62,5 +62,20 @@ File.WriteAllBytes(Path.Combine(work, "showcase.png"), columns);
 
 win.KeyPressQwerty(PhysicalKey.Escape, RawInputModifiers.None); Pump();
 Check("Esc fecha a vitrine", !vm.HasShowcase);
+// Ficha do Pokemon no editor: tipos, Tera, nivel/natureza, origem; acompanha a edicao
+var select = vm.SelectSlotAsync(vm.Party.Slots[0]);
+for (int i = 0; i < 2000 && !select.IsCompleted; i++) { Pump(); if (vm.Dialog is { } d) d.Complete(false); System.Threading.Thread.Sleep(5); }
+var ed = vm.Editor!;
+Check("ficha: brilho e Tera", ed.CardGlow is not null && ed.CardTera?.Name == "Fairy", ed.CardTera?.Name ?? "-");
+Check("ficha: nível e natureza", ed.CardLine.StartsWith("Nv. ") && ed.CardLine.Contains(" · "), ed.CardLine);
+Check("ficha: jogo de origem", ed.HasCardOrigin && ed.CardOrigin.Contains("Gen "), ed.CardOrigin);
+Check("hexágono: valores, cor do tipo", ed.RadarTexts is { Count: 6 } && ed.RadarBrush is not null && ed.RadarModifiers is { Count: 6 });
+ed.Nature = (int)Nature.Adamant; Pump();
+Check("hexágono: natureza +Atq −AtE", ed.RadarModifiers![1] == 1 && ed.RadarModifiers[3] == -1, string.Join(",", ed.RadarModifiers));
+var evBefore = ed.RadarEVs;
+ed.Stats[1].EV = 252; Pump();
+Check("hexágono: EVs na segunda camada", ed.RadarEVs is { Count: 6 } evs && evs[1] == 1, evBefore is null ? "antes sem EVs" : "");
+ed.Level = 77; Pump();
+Check("ficha acompanha o nível", ed.CardLine.StartsWith("Nv. 77"), ed.CardLine);
 win.Close();
 Console.WriteLine(fails == 0 ? "TUDO OK" : $"{fails} FALHAS"); return fails == 0 ? 0 : 1;

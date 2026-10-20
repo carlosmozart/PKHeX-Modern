@@ -1,0 +1,55 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PKHeX.Modern.ViewModels"
+             x:Class="PKHeX.Modern.Views.CommandPaletteView"
+             x:DataType="vm:CommandPaletteViewModel">
+  <!-- Paleta de comandos (Ctrl+K): setas escolhem, Enter executa, Esc fecha -->
+  <UserControl.Styles>
+    <Style Selector="ListBox.palette ListBoxItem">
+      <Setter Property="Padding" Value="10,6" />
+      <Setter Property="CornerRadius" Value="{DynamicResource Radius8}" />
+    </Style>
+    <Style Selector="ListBox.palette ListBoxItem:selected /template/ ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource AccentSoft}" />
+    </Style>
+    <Style Selector="Border.paletteKey">
+      <Setter Property="Background" Value="{DynamicResource SlotBackground}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="CornerRadius" Value="{DynamicResource Radius4}" />
+      <Setter Property="Padding" Value="6,1" />
+    </Style>
+  </UserControl.Styles>
+  <DockPanel>
+    <TextBox x:Name="PaletteInput" DockPanel.Dock="Top" Text="{Binding Query}" FontSize="16" Padding="12,10"
+             Watermark="Digite um comando, página, caixa ou Pokémon…" />
+    <Grid DockPanel.Dock="Bottom" ColumnDefinitions="Auto,Auto,Auto,*" ColumnSpacing="12" Margin="4,10,4,0">
+      <TextBlock Text="↑↓ escolher" Classes="muted" FontSize="11" />
+      <TextBlock Grid.Column="1" Text="Enter executar" Classes="muted" FontSize="11" />
+      <TextBlock Grid.Column="2" Text="Esc fechar" Classes="muted" FontSize="11" />
+    </Grid>
+    <Panel Margin="0,8,0,0">
+      <TextBlock Text="Nada encontrado." Classes="muted" IsVisible="{Binding IsEmpty}" HorizontalAlignment="Center" Margin="0,24" />
+      <ListBox x:Name="PaletteList" Classes="palette" ItemsSource="{Binding Results}" SelectedIndex="{Binding SelectedIndex}"
+               Background="Transparent" MaxHeight="420" IsVisible="{Binding HasResults}">
+        <ListBox.ItemTemplate>
+          <DataTemplate x:DataType="vm:PaletteItem">
+            <Grid ColumnDefinitions="36,*,Auto" ColumnSpacing="10">
+              <Panel Width="36" Height="30">
+                <Image Source="{Binding Sprite}" IsVisible="{Binding HasSprite}" Stretch="Uniform" />
+                <TextBlock Text="{Binding Icon}" IsVisible="{Binding HasIcon}" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" />
+              </Panel>
+              <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Title}" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" />
+                <TextBlock Text="{Binding Detail}" Classes="muted" FontSize="11" TextTrimming="CharacterEllipsis" />
+              </StackPanel>
+              <Border Grid.Column="2" Classes="paletteKey" IsVisible="{Binding HasShortcut}" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Shortcut}" FontSize="11" Classes="muted" />
+              </Border>
+            </Grid>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </Panel>
+  </DockPanel>
+</UserControl>
