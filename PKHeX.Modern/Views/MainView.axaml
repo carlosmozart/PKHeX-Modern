@@ -118,6 +118,17 @@
                 <Flyout Placement="RightEdgeAlignedBottom">
                   <ScrollViewer MaxHeight="460" HorizontalScrollBarVisibility="Disabled">
                   <StackPanel Spacing="4" Width="250" Margin="4">
+                    <!-- Modo jogo: cor do jogo, papel de parede inteiro, cor dos tipos e animações num clique -->
+                    <Border Classes="gameModeCard" Classes.on="{Binding GameMode}" Margin="0,0,0,6">
+                      <Grid ColumnDefinitions="*,Auto">
+                        <StackPanel Spacing="1" VerticalAlignment="Center">
+                          <TextBlock Text="🎮 Modo jogo" FontWeight="SemiBold" />
+                          <TextBlock Text="Cores do jogo, papel de parede inteiro, cor dos tipos e animações" Classes="muted" FontSize="11" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <ToggleSwitch Grid.Column="1" IsChecked="{Binding GameMode}" OnContent="" OffContent="" MinWidth="0" Margin="6,0,-8,0"
+                                      ToolTip.Tip="Liga tudo de uma vez; desligar volta ao visual de antes" />
+                      </Grid>
+                    </Border>
                     <TextBlock Text="TEMA" Classes="section" Margin="0" />
                     <ItemsControl ItemsSource="{Binding ThemeOptions}">
                       <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="2" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>

@@ -28,6 +28,11 @@ public sealed class AppSettings
     public bool SlotTypeColor { get; set; } = true;
     /// <summary>Animações curtas (pulo do slot, brilho ✦, Pokébola ao abrir, piscada da ★ dos shiny).</summary>
     public bool Animations { get; set; } = true;
+    /// <summary>Visual de antes do “Modo jogo”, para desligar e voltar (null = modo jogo não foi ligado pelo app).</summary>
+    public LookSnapshot? BeforeGameMode { get; set; }
+
+    /// <summary>As quatro escolhas que o “Modo jogo” liga.</summary>
+    public sealed record LookSnapshot(string? AccentColor, int WallpaperIntensity, bool SlotTypeColor, bool Animations);
     /// <summary>Fonte da interface (chave de Theme.AppTheme.Fonts: theme, inter, pixelify...); null = a do tema.</summary>
     public string? FontKey { get; set; }
     /// <summary>Pasta do Save Manager (null = pasta "saves" ao lado do exe).</summary>

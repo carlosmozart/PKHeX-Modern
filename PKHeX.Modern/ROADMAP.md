@@ -107,7 +107,7 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 - [x] **Cartões de slot com a cor do tipo:** feito (próxima versão): brilho dos dois tipos no fundo de todos os cartões de Pokémon (`Controls/TypeGlow.cs`, `SlotViewModel.TypeGlow`), escolhido entre faixa, brilho e barra; desliga em ⚙.
 - [x] **Fundo das caixas fiel ao jogo:** feito (próxima versão): opção “Inteiro” do papel de parede, nítido e com cartões translúcidos (`SlotGlass`); o padrão continua o Normal.
 - [x] **Cor do jogo do save:** feito (próxima versão): destaque “Cor do jogo do save” (bolinha em arco-íris) com brilho no alto da tela, ajustado para contraste (`AccentTheme.ForGame`, `GameTint`).
-- [ ] **“Modo jogo”:** um tema que junta tudo isso (cores do jogo, papel de parede, faixas de tipo, animações); o tema atual continua como opção “limpa”.
+- [x] **“Modo jogo”:** feito (próxima versão): chave no topo do ⚙ (e na paleta) que liga cor do jogo, papel de parede inteiro, cor dos tipos e animações; desligar volta ao visual de antes (`MainViewModel.GameMode`).
 
 **Acabamento**
 - [x] **Animações curtas e próprias:** feito (próxima versão): Pokébola ao abrir, pulinho do slot, brilho ✦ no editor; ⚙ › Animações desliga (`Controls/Effects.cs`, `Theme/Motion.cs`).

@@ -84,6 +84,15 @@ var white=AccentTheme.ForGame(0xFFF2F4F7); double L(Avalonia.Media.Color c)=>(0.
 Check("cor clara escurece para dar leitura",L(white.Dark)<0.72 && L(white.Light)<0.5);
 vm.SetAccentCommand.Execute(vm.AccentOptions[0]); Pump();
 Check("outra cor tira o brilho",Application.Current.Resources["GameTint"] is Avalonia.Media.ISolidColorBrush{Color.A:0} && settings.AccentColor=="red");
+// Modo jogo: liga as quatro escolhas; mexer numa desliga o indicador; desligar volta ao visual de antes
+vm.WallpaperIntensityIndex=1; vm.Animations=false; Pump();
+vm.GameMode=true; Pump();
+Check("modo jogo liga as quatro",vm.GameMode && settings.AccentColor=="game" && settings.WallpaperIntensity==3 && settings.SlotTypeColor && settings.Animations && image.Opacity==1);
+vm.SlotTypeColor=false; Pump(); Check("mexer numa desliga o indicador",!vm.GameMode);
+vm.SlotTypeColor=true; Pump(); Check("religar a escolha volta o indicador",vm.GameMode);
+vm.GameMode=false; Pump();
+Check("desligar volta ao visual de antes",!vm.GameMode && settings.AccentColor=="red" && settings.WallpaperIntensity==1 && !settings.Animations && settings.BeforeGameMode is null);
+vm.Animations=true; vm.WallpaperIntensityIndex=2; Pump();
 var again=new MainViewModel(settings); Check("preferência ao reabrir",again.WallpaperIntensityIndex==2 && again.Boxes.WallpaperOpacity==0 && !settings.Persist);
 Check("papel do jogo preservado",vm.ActiveTab!.Sav is IBoxDetailWallpaper wp && wp.GetBoxWallpaper(0)==((IBoxDetailWallpaper)sav).GetBoxWallpaper(0) && !vm.IsDirty);
 var before=vm.ThemeOptions[0].Preview; vm.ToggleThemeCommand.Execute(null); Pump(); Check("miniatura acompanha claro/escuro",!ReferenceEquals(before,vm.ThemeOptions[0].Preview));

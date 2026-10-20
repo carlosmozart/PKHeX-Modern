@@ -28,6 +28,7 @@ public sealed partial class MainViewModel
             Settings.WallpaperIntensity = value; Settings.Save();
             Boxes.WallpaperIntensity = value;
             Raise(nameof(WallpaperIntensityIndex));
+            Raise(nameof(GameMode));
         }
     }
 
@@ -44,6 +45,7 @@ public sealed partial class MainViewModel
             Settings.Animations = value; Settings.Save();
             Theme.Motion.Enabled = value;
             Raise(nameof(Animations));
+            Raise(nameof(GameMode));
         }
     }
 
@@ -57,6 +59,50 @@ public sealed partial class MainViewModel
             Settings.SlotTypeColor = value; Settings.Save();
             Theme.SlotTypeColor.Apply(value);
             Raise(nameof(SlotTypeColor));
+            Raise(nameof(GameMode));
         }
     }
+
+    /// <summary>
+    /// “Modo jogo” (⚙): junta a cor do jogo do save, o papel de parede inteiro, a cor do tipo nos cartões e as
+    /// animações num clique. Ligado = as quatro estão ligadas (mexer numa delas desliga o indicador). Desligar volta ao
+    /// que estava antes de ligar (guardado em Settings.BeforeGameMode).
+    /// </summary>
+    public bool GameMode
+    {
+        get => Settings.AccentColor == Theme.AccentTheme.GameKey && Settings.WallpaperIntensity == 3 && Settings.SlotTypeColor && Settings.Animations;
+        set
+        {
+            if (value == GameMode) return;
+            if (value)
+            {
+                Settings.BeforeGameMode = new Services.AppSettings.LookSnapshot(Settings.AccentColor, Settings.WallpaperIntensity, Settings.SlotTypeColor, Settings.Animations);
+                ApplyLook(Theme.AccentTheme.GameKey, 3, true, true);
+                Status = "Modo jogo ligado: cores do jogo do save, papel de parede inteiro, cor dos tipos e animações.";
+            }
+            else
+            {
+                var before = Settings.BeforeGameMode;
+                // Sem registro (ou se antes já estava tudo ligado), volta ao visual limpo: destaque do tema e papel de parede normal
+                ApplyLook(before is { AccentColor: not Theme.AccentTheme.GameKey } ? before.AccentColor : Theme.AppTheme.Current.AccentKey,
+                    before is { WallpaperIntensity: not 3 } ? before.WallpaperIntensity : 0, before?.SlotTypeColor ?? true, before?.Animations ?? true);
+                Settings.BeforeGameMode = null;
+                Status = "Modo jogo desligado: visual de antes.";
+            }
+            Settings.Save();
+        }
+    }
+
+    private void ApplyLook(string? accent, int wallpaper, bool typeColor, bool animations)
+    {
+        var preset = accent == Theme.AccentTheme.GameKey ? Theme.AccentTheme.GameOption : Theme.AccentTheme.Find(accent);
+        SetAccent(preset);
+        WallpaperIntensityIndex = wallpaper;
+        SlotTypeColor = typeColor;
+        Animations = animations;
+        Raise(nameof(GameMode));
+    }
+
+    public RelayCommand ToggleGameModeCommand => _toggleGameMode ??= new RelayCommand(() => GameMode = !GameMode);
+    private RelayCommand? _toggleGameMode;
 }

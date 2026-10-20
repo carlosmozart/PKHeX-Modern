@@ -436,6 +436,7 @@ public sealed partial class MainViewModel : ViewModelBase
         Settings.AccentColor = preset.Key;
         Settings.Save();
         ApplyAccent();
+        Raise(nameof(GameMode));
     }
 
     /// <summary>

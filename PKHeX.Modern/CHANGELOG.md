@@ -9,6 +9,7 @@ Formato: "## versão — data", "### seção", "- item".
 ## Próxima versão
 
 ### 🎨 Interface
+- **Modo jogo:** no topo do ⚙, uma chave liga de uma vez a cor do jogo do save, o papel de parede inteiro, a cor do tipo nos cartões e as animações. Desligar volta ao visual de antes; também pela paleta (Ctrl+K).
 - **Cor do jogo do save:** nova cor de destaque (a bolinha em arco-íris no ⚙) que segue a versão aberta, com um brilho suave da cor do jogo no alto da tela. Troca junto com a aba; cores muito claras ou escuras são ajustadas para os botões continuarem legíveis.
 - **Animações curtas:** a Pokébola abre ao carregar um save, o slot dá um pulinho ao receber um Pokémon, o editor solta um brilho ✦ quando o Pokémon fica legal ou vira shiny, e a ★ dos shiny nas caixas pisca de vez em quando. Todas são leves e não bloqueiam cliques; ⚙ › “Animações” desliga.
 - **Linha do tempo do save no Início:** a cada abertura, o Início mostra o que mudou desde a vez anterior: horas de jogo, Pokémon e espécies novas, shinies (com o sprite), insígnias, Pokédex e dinheiro. Separa o que veio do jogo do que foi salvo no app; na primeira vez, usa o backup mais recente como ponto de partida.

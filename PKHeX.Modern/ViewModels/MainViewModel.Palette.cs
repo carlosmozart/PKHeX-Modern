@@ -57,6 +57,7 @@ public sealed partial class MainViewModel
             items.Add(Item("⌕", "Buscar no save", action, () => { CurrentPage = Boxes; FocusSearch?.Invoke(); }, "procurar pesquisar find", "Ctrl+F"));
         }
         items.Add(Item("◐", "Alternar tema claro/escuro", action, () => ToggleThemeCommand.Execute(null), "dark light escuro claro theme"));
+        items.Add(Item("🎮", GameMode ? "Desligar o modo jogo" : "Ligar o modo jogo", action, () => GameMode = !GameMode, "modo jogo game mode cores papel de parede visual"));
         items.Add(Item("?", "Ajuda", action, OpenHelp, "help manual", "F1"));
         if (HasSave)
         {
