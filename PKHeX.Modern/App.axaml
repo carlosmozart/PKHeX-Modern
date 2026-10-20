@@ -355,6 +355,8 @@
                         ToolTip.Tip="{Binding Tooltip}"
                         Command="{Binding $parent[ItemsControl].((vm:SlotPageViewModel)DataContext).SelectSlotCommand}"
                         CommandParameter="{Binding}">
+                  <Panel>
+                  <c:TypeGlow />
                   <Grid RowDefinitions="Auto,*,Auto">
                     <Grid ColumnDefinitions="*,Auto">
                       <StackPanel Orientation="Horizontal" Spacing="3">
@@ -376,6 +378,7 @@
                       <TextBlock Text="{Binding Subtitle}" Classes="muted" FontSize="10" HorizontalAlignment="Center" />
                     </StackPanel>
                   </Grid>
+                  </Panel>
                 </Button>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -428,6 +431,8 @@
                         ToolTip.Tip="{Binding Tooltip}"
                         Command="{Binding $parent[ItemsControl].((vm:SlotPageViewModel)DataContext).SelectSlotCommand}"
                         CommandParameter="{Binding}">
+                  <Panel>
+                  <c:TypeGlow />
                   <Grid RowDefinitions="Auto,*,Auto">
                     <Grid ColumnDefinitions="*,Auto">
                       <StackPanel Orientation="Horizontal" Spacing="3">
@@ -448,6 +453,7 @@
                       <TextBlock Text="{Binding Subtitle}" Classes="muted" FontSize="10" HorizontalAlignment="Center" />
                     </StackPanel>
                   </Grid>
+                  </Panel>
                 </Button>
               </DataTemplate>
                   </ItemsControl.ItemTemplate>
@@ -490,6 +496,8 @@
                         ToolTip.Tip="{Binding Tooltip}"
                         Command="{Binding $parent[ItemsControl].((vm:SlotPageViewModel)DataContext).SelectSlotCommand}"
                         CommandParameter="{Binding}">
+                  <Panel>
+                  <c:TypeGlow />
                   <Grid RowDefinitions="Auto,*,Auto">
                     <Grid ColumnDefinitions="*,Auto">
                       <StackPanel Orientation="Horizontal" Spacing="3">
@@ -510,6 +518,7 @@
                       <TextBlock Text="{Binding Subtitle}" Classes="muted" FontSize="10" HorizontalAlignment="Center" />
                     </StackPanel>
                   </Grid>
+                  </Panel>
                 </Button>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -528,6 +537,8 @@
                         ToolTip.Tip="{Binding Tooltip}"
                         Command="{Binding $parent[ItemsControl].((vm:SlotPageViewModel)DataContext).SelectSlotCommand}"
                         CommandParameter="{Binding}">
+                  <Panel>
+                  <c:TypeGlow />
                   <Grid RowDefinitions="Auto,*,Auto">
                     <Grid ColumnDefinitions="*,Auto">
                       <StackPanel Orientation="Horizontal" Spacing="3">
@@ -548,6 +559,7 @@
                       <TextBlock Text="{Binding Subtitle}" Classes="muted" FontSize="10" HorizontalAlignment="Center" />
                     </StackPanel>
                   </Grid>
+                  </Panel>
                 </Button>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -2171,6 +2183,8 @@
             ToolTip.Tip="{Binding Tooltip}"
             Command="{Binding $parent[ItemsControl].((vm:SlotPageViewModel)DataContext).SelectSlotCommand}"
             CommandParameter="{Binding}">
+      <Panel>
+      <c:TypeGlow />
       <Grid RowDefinitions="Auto,*,Auto">
         <Grid ColumnDefinitions="*,Auto">
           <StackPanel Orientation="Horizontal" Spacing="4">
@@ -2196,6 +2210,7 @@
           </StackPanel>
         </StackPanel>
       </Grid>
+      </Panel>
     </Button>
   </DataTemplate>
 
@@ -2295,6 +2310,8 @@
                         Classes.dropTarget="{Binding IsDropTarget}" Classes.match="{Binding IsMatch}" Classes.dimmed="{Binding IsDimmed}" Classes.marked="{Binding IsMarked}" ToolTip.Tip="{Binding Tooltip}"
                         Command="{Binding $parent[ItemsControl].((vm:SlotPageViewModel)DataContext).SelectSlotCommand}"
                         CommandParameter="{Binding}">
+                  <Panel>
+                  <c:TypeGlow />
                   <Grid ColumnDefinitions="Auto,*">
                     <Image Source="{Binding Sprite}" Stretch="Uniform" Width="44" Height="40" />
                     <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="6,0,0,0"
@@ -2308,6 +2325,7 @@
                       </StackPanel>
                     </StackPanel>
                   </Grid>
+                  </Panel>
                 </Button>
               </DataTemplate>
             </ItemsControl.ItemTemplate>
@@ -2319,7 +2337,7 @@
           <Grid>
           <Image x:Name="BoxWallpaperImage" Source="{Binding Wallpaper}" Stretch="UniformToFill" Opacity="{Binding WallpaperOpacity}" IsHitTestVisible="False"
                  Height="{Binding #BoxSlots.Bounds.Height}" VerticalAlignment="Top" ClipToBounds="True" />
-          <ItemsControl x:Name="BoxSlots" ItemsSource="{Binding Slots}">
+          <ItemsControl x:Name="BoxSlots" ItemsSource="{Binding Slots}" Classes.fullWallpaper="{Binding IsFullWallpaper}">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>
                 <UniformGrid Columns="{Binding #BoxScroll.Bounds.Width, Converter={x:Static c:WidthToColumnsConverter.Instance}, ConverterParameter='112,6'}" />
@@ -2335,9 +2353,11 @@
   <!-- Equipe -->
   <DataTemplate DataType="vm:PartyPageViewModel">
     <DockPanel>
-      <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto" Margin="0,0,0,16">
+      <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8" Margin="0,0,0,16">
         <TextBlock Text="Equipe" Classes="title" VerticalAlignment="Center" />
-        <Button Grid.Column="1" Content="📋 Showdown" VerticalAlignment="Center" ToolTip.Tip="Colar uma equipe Showdown nas vagas da equipe, ou copiar a equipe inteira no formato Showdown">
+        <Button Grid.Column="1" Content="🖼 Vitrine" VerticalAlignment="Center" Command="{Binding ShowcaseCommand}"
+                ToolTip.Tip="Mostra a equipe grande, com tipos, item, habilidade e golpes, e salva como imagem para compartilhar" />
+        <Button Grid.Column="2" Content="📋 Showdown" VerticalAlignment="Center" ToolTip.Tip="Colar uma equipe Showdown nas vagas da equipe, ou copiar a equipe inteira no formato Showdown">
           <Button.Flyout>
             <MenuFlyout>
               <MenuItem Header="⇩ Colar equipe nas vagas" Command="{Binding PasteShowdownCommand}" />
@@ -2359,6 +2379,8 @@
             <Button Classes="partyCard" HorizontalContentAlignment="Stretch" ToolTip.Tip="{Binding Tooltip}" Classes.selected="{Binding IsSelected}" Classes.dropTarget="{Binding IsDropTarget}" Classes.match="{Binding IsMatch}" Classes.dimmed="{Binding IsDimmed}" Classes.marked="{Binding IsMarked}"
                     Command="{Binding $parent[ItemsControl].((vm:SlotPageViewModel)DataContext).SelectSlotCommand}"
                     CommandParameter="{Binding}">
+              <Panel>
+              <c:TypeGlow />
               <Grid ColumnDefinitions="Auto,*,Auto">
                 <Border Classes="spriteWell">
                   <Image Source="{Binding Sprite}" Width="104" Height="92" Stretch="Uniform" />
@@ -2381,6 +2403,7 @@
                   <TextBlock Text="⚠" Classes="legalBad" FontSize="15" HorizontalAlignment="Right" IsVisible="{Binding IsLegalBad}" ToolTip.Tip="Ilegal" />
                 </StackPanel>
               </Grid>
+              </Panel>
             </Button>
           </DataTemplate>
         </ItemsControl.ItemTemplate>

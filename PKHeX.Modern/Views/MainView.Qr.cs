@@ -17,4 +17,17 @@ public sealed partial class MainView
         }
         catch (Exception ex) { await ShowErrorAsync("Não foi possível salvar o QR", ex); }
     }
+
+    /// <summary>Vitrine da equipe como PNG (só o quadro, sem a barra de ações).</summary>
+    private async Task SaveShowcaseImageAsync(ViewModels.TeamShowcaseViewModel showcase)
+    {
+        try
+        {
+            if (ShowcaseView.RenderPng() is not { } png) return;
+            var name = PKHeX.Core.PathUtil.CleanFileName(showcase.Title.Replace(' ', '-').ToLowerInvariant()) + ".png";
+            var file = await Storage.SaveFilePickerAsync(new FilePickerSaveOptions { Title = Loc.T("Salvar imagem"), SuggestedFileName = name, DefaultExtension = "png" });
+            await WriteAsync(file, path => { File.WriteAllBytes(path, png); return true; }, "Não foi possível salvar a vitrine");
+        }
+        catch (Exception ex) { await ShowErrorAsync("Não foi possível salvar a vitrine", ex); }
+    }
 }

@@ -17,16 +17,30 @@ public sealed partial class MainViewModel
         }
     }
 
-    public IReadOnlyList<string> WallpaperIntensityOptions { get; } = ["Normal", "Suave", "Desligado"];
+    // "Inteiro" fica no fim para não mudar o índice salvo das outras opções
+    public IReadOnlyList<string> WallpaperIntensityOptions { get; } = ["Normal", "Suave", "Desligado", "Inteiro"];
     public int WallpaperIntensityIndex
     {
-        get => System.Math.Clamp(Settings.WallpaperIntensity, 0, 2);
+        get => System.Math.Clamp(Settings.WallpaperIntensity, 0, 3);
         set
         {
-            if (value is < 0 or > 2 || value == WallpaperIntensityIndex) return;
+            if (value is < 0 or > 3 || value == WallpaperIntensityIndex) return;
             Settings.WallpaperIntensity = value; Settings.Save();
             Boxes.WallpaperIntensity = value;
             Raise(nameof(WallpaperIntensityIndex));
+        }
+    }
+
+    /// <summary>Brilho da cor do tipo nos cartões de Pokémon.</summary>
+    public bool SlotTypeColor
+    {
+        get => Settings.SlotTypeColor;
+        set
+        {
+            if (value == Settings.SlotTypeColor) return;
+            Settings.SlotTypeColor = value; Settings.Save();
+            Theme.SlotTypeColor.Apply(value);
+            Raise(nameof(SlotTypeColor));
         }
     }
 }

@@ -1,0 +1,171 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:PKHeX.Modern.ViewModels"
+             x:Class="PKHeX.Modern.Views.TeamShowcaseView"
+             x:DataType="vm:TeamShowcaseViewModel">
+  <!-- Vitrine da equipe: o quadro "ShowcaseFrame" e o que vai para a imagem (Salvar imagem) -->
+  <UserControl.Styles>
+    <Style Selector="Border.showcaseCard">
+      <Setter Property="CornerRadius" Value="{DynamicResource CardRadius}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource CardBorder}" />
+      <Setter Property="BorderThickness" Value="1" />
+      <Setter Property="Background" Value="{DynamicResource SlotBackground}" />
+      <Setter Property="Margin" Value="6" />
+    </Style>
+    <Style Selector="Border.moveChip">
+      <Setter Property="CornerRadius" Value="{DynamicResource Radius6}" />
+      <Setter Property="Padding" Value="8,3" />
+      <Setter Property="Margin" Value="2" />
+    </Style>
+    <Style Selector="Border.moveChip TextBlock">
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="FontSize" Value="12" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+      <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+    </Style>
+  </UserControl.Styles>
+
+  <DockPanel>
+    <!-- Barra de acoes (fora da imagem) -->
+    <Grid DockPanel.Dock="Top" ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="8" Margin="0,0,0,12">
+      <TextBlock Text="🖼 Vitrine da equipe" Classes="title" VerticalAlignment="Center" />
+      <ComboBox Grid.Column="1" ItemsSource="{Binding LayoutOptions}" SelectedIndex="{Binding Layout}" MinWidth="120"
+                ToolTip.Tip="Grade: cartões largos em 3 colunas. Colunas: os seis lado a lado." />
+      <Button Grid.Column="2" Classes="accent" Content="⭳ Salvar imagem" Command="{Binding SaveImageCommand}"
+              ToolTip.Tip="Grava a vitrine como imagem PNG para compartilhar" />
+      <Button Grid.Column="3" Content="Fechar" Command="{Binding CloseCommand}" />
+    </Grid>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto">
+      <Border x:Name="ShowcaseFrame" Background="{DynamicResource AppBackground}" CornerRadius="{DynamicResource CardRadius}" Padding="18,16"
+              HorizontalAlignment="Center" VerticalAlignment="Top">
+        <StackPanel Spacing="10">
+          <Grid ColumnDefinitions="*,Auto" Margin="6,0">
+            <StackPanel>
+              <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" />
+              <TextBlock Text="{Binding Subtitle}" Classes="muted" FontSize="14" />
+            </StackPanel>
+            <TextBlock Grid.Column="1" Text="PKHeX Modern" Classes="muted" FontSize="12" VerticalAlignment="Bottom" />
+          </Grid>
+
+          <!-- Grade 3x2 -->
+          <ItemsControl ItemsSource="{Binding Members}" IsVisible="{Binding IsGrid}" Width="1236">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate><UniformGrid Columns="3" /></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:ShowcaseMemberViewModel">
+                <Border Classes="showcaseCard" Height="206">
+                  <Panel>
+                    <Border Background="{Binding Glow}" CornerRadius="{DynamicResource CardRadius}" />
+                    <Grid ColumnDefinitions="128,*" Margin="12" ColumnSpacing="12">
+                      <Panel>
+                        <Image Classes="showcaseSprite" Source="{Binding Sprite}" Width="128" Height="112" Stretch="Uniform" VerticalAlignment="Top" />
+                        <TextBlock Text="★" Classes="shiny" FontSize="18" IsVisible="{Binding IsShiny}" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                        <StackPanel VerticalAlignment="Bottom" Spacing="3">
+                          <StackPanel Orientation="Horizontal" Spacing="4" IsVisible="{Binding HasItem}">
+                            <Image Source="{Binding ItemSprite}" Width="22" Height="22" />
+                            <TextBlock Text="{Binding Item}" FontSize="12" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="100" />
+                          </StackPanel>
+                          <TextBlock Text="{Binding Ability}" FontSize="12" Classes="muted" IsVisible="{Binding HasAbility}" TextTrimming="CharacterEllipsis" />
+                          <TextBlock Text="{Binding Nature}" FontSize="12" Classes="muted" IsVisible="{Binding HasNature}" />
+                        </StackPanel>
+                      </Panel>
+                      <StackPanel Grid.Column="1" Spacing="6">
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                          <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" TextTrimming="CharacterEllipsis" MaxWidth="190" />
+                          <TextBlock Text="♂" Classes="male" FontSize="16" VerticalAlignment="Center" IsVisible="{Binding IsMale}" />
+                          <TextBlock Text="♀" Classes="female" FontSize="16" VerticalAlignment="Center" IsVisible="{Binding IsFemale}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,-4,0,0">
+                          <TextBlock Text="{Binding Level}" Classes="muted" FontSize="13" />
+                          <TextBlock Text="{Binding Species}" Classes="muted" FontSize="13" IsVisible="{Binding HasSpecies}" />
+                        </StackPanel>
+                        <WrapPanel ItemSpacing="4" LineSpacing="4">
+                          <ItemsControl ItemsSource="{Binding Types}">
+                            <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="4" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                              <DataTemplate x:DataType="vm:TypeChip">
+                                <Border Classes="chip" Background="{Binding Brush}" MinWidth="58"><TextBlock Text="{Binding Name}" HorizontalAlignment="Center" /></Border>
+                              </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                          </ItemsControl>
+                          <Border Classes="chip" Background="{Binding Tera.Brush}" IsVisible="{Binding HasTera}" BorderBrush="White" BorderThickness="1">
+                            <TextBlock Text="{Binding Tera.Name, StringFormat='Tera {0}'}" />
+                          </Border>
+                        </WrapPanel>
+                        <ItemsControl ItemsSource="{Binding Moves}" Margin="-2,2,0,0">
+                          <ItemsControl.ItemsPanel><ItemsPanelTemplate><UniformGrid Columns="2" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="vm:ShowcaseMove">
+                              <Border Classes="moveChip" Background="{Binding Brush}"><TextBlock Text="{Binding Name}" /></Border>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                      </StackPanel>
+                    </Grid>
+                  </Panel>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+
+          <!-- Seis colunas -->
+          <ItemsControl ItemsSource="{Binding Members}" IsVisible="{Binding IsColumns}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+              <DataTemplate x:DataType="vm:ShowcaseMemberViewModel">
+                <Border Classes="showcaseCard" Width="196" Height="444">
+                  <Panel>
+                    <Border Background="{Binding Glow}" CornerRadius="{DynamicResource CardRadius}" />
+                    <DockPanel Margin="12">
+                      <!-- Golpes presos no rodape: ficam alinhados entre as colunas mesmo sem item ou habilidade -->
+                      <ItemsControl DockPanel.Dock="Bottom" ItemsSource="{Binding Moves}" Margin="0,4,0,0">
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate x:DataType="vm:ShowcaseMove">
+                            <Border Classes="moveChip" Background="{Binding Brush}"><TextBlock Text="{Binding Name}" HorizontalAlignment="Center" /></Border>
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    <StackPanel Spacing="6">
+                      <Panel Height="132">
+                        <Image Classes="showcaseSprite" Source="{Binding Sprite}" Width="148" Height="128" Stretch="Uniform" />
+                        <TextBlock Text="★" Classes="shiny" FontSize="18" IsVisible="{Binding IsShiny}" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                      </Panel>
+                      <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold" TextTrimming="CharacterEllipsis" MaxWidth="140" />
+                        <TextBlock Text="♂" Classes="male" FontSize="15" VerticalAlignment="Center" IsVisible="{Binding IsMale}" />
+                        <TextBlock Text="♀" Classes="female" FontSize="15" VerticalAlignment="Center" IsVisible="{Binding IsFemale}" />
+                      </StackPanel>
+                      <TextBlock Text="{Binding Level}" Classes="muted" FontSize="13" HorizontalAlignment="Center" Margin="0,-6,0,0" />
+                      <ItemsControl ItemsSource="{Binding Types}" HorizontalAlignment="Center">
+                        <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Orientation="Horizontal" Spacing="4" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                          <DataTemplate x:DataType="vm:TypeChip">
+                            <Border Classes="chip" Background="{Binding Brush}" MinWidth="56"><TextBlock Text="{Binding Name}" HorizontalAlignment="Center" /></Border>
+                          </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                      <Border Classes="chip" Background="{Binding Tera.Brush}" IsVisible="{Binding HasTera}" BorderBrush="White" BorderThickness="1" HorizontalAlignment="Center">
+                        <TextBlock Text="{Binding Tera.Name, StringFormat='Tera {0}'}" />
+                      </Border>
+                      <StackPanel Orientation="Horizontal" Spacing="4" HorizontalAlignment="Center" IsVisible="{Binding HasItem}">
+                        <Image Source="{Binding ItemSprite}" Width="22" Height="22" />
+                        <TextBlock Text="{Binding Item}" FontSize="12" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" MaxWidth="140" />
+                      </StackPanel>
+                      <TextBlock Text="{Binding Ability}" FontSize="12" Classes="muted" HorizontalAlignment="Center" IsVisible="{Binding HasAbility}" TextTrimming="CharacterEllipsis" />
+                      <TextBlock Text="{Binding Nature}" FontSize="12" Classes="muted" HorizontalAlignment="Center" IsVisible="{Binding HasNature}" />
+                    </StackPanel>
+                    </DockPanel>
+                  </Panel>
+                </Border>
+              </DataTemplate>
+            </ItemsControl.ItemTemplate>
+          </ItemsControl>
+        </StackPanel>
+      </Border>
+    </ScrollViewer>
+  </DockPanel>
+</UserControl>

@@ -139,6 +139,8 @@
                     <TextBlock Text="PAPEL DE PAREDE DAS CAIXAS" Classes="section" Margin="0,8,0,0" TextWrapping="Wrap" />
                     <ComboBox ItemsSource="{Binding WallpaperIntensityOptions}" SelectedIndex="{Binding WallpaperIntensityIndex}" HorizontalAlignment="Stretch" />
                     <TextBlock Text="Muda só a exibição; o papel de parede do jogo é preservado." FontSize="11" Classes="muted" TextWrapping="Wrap" />
+                    <CheckBox Content="Cor do tipo nos cartões" IsChecked="{Binding SlotTypeColor}" Margin="0,4,0,0"
+                              ToolTip.Tip="Tinge o fundo de cada Pokémon nas caixas, na equipe e no bank com a cor dos tipos dele" />
                     <TextBlock Text="FONTE" Classes="section" Margin="0,8,0,0" />
                     <ItemsControl ItemsSource="{Binding FontOptions}">
                       <ItemsControl.ItemTemplate>
@@ -445,6 +447,13 @@
                     IsVisible="{Binding Help.IsReadyToRestart}" />
           </StackPanel>
         </StackPanel>
+      </Border>
+    </Border>
+
+    <!-- Vitrine da equipe (MainViewModel.Showcase): cobre o app; Fechar ou Esc volta -->
+    <Border Grid.ColumnSpan="3" Grid.RowSpan="2" Classes="dialogBackdrop" IsVisible="{Binding HasShowcase}">
+      <Border Classes="card dialog" Margin="24" MaxWidth="1340" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <views:TeamShowcaseView x:Name="ShowcaseView" DataContext="{Binding Showcase}" />
       </Border>
     </Border>
 

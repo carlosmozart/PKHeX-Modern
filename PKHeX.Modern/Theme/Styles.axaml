@@ -142,6 +142,10 @@
       </Transitions>
     </Setter>
   </Style>
+  <!-- Papel de parede "Inteiro": cartoes translucidos para o fundo do jogo aparecer -->
+  <Style Selector="ItemsControl.fullWallpaper Button.slot">
+    <Setter Property="Background" Value="{DynamicResource SlotGlass}" />
+  </Style>
   <Style Selector="Button.slot:pointerover">
     <Setter Property="RenderTransform" Value="scale(1.04)" />
   </Style>

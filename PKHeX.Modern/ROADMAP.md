@@ -104,8 +104,8 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 
 **Identidade (maior impacto)**
 - [ ] **Elementos de Pokédex/Pokébola no layout:** topo vermelho e “lente” azul da Pokédex clássica na barra lateral, ou divisórias que lembram a linha da Pokébola. Um ou dois detalhes marcantes, sem exagero.
-- [ ] **Cartões de slot com a cor do tipo:** faixa ou brilho suave da cor do tipo principal em cada cartão das caixas e da equipe. (Sugestão de começo, junto com o próximo item.)
-- [ ] **Fundo das caixas fiel ao jogo:** o papel de parede real de cada caixa do save em destaque, no lugar do cinza neutro.
+- [x] **Cartões de slot com a cor do tipo:** feito (próxima versão): brilho dos dois tipos no fundo de todos os cartões de Pokémon (`Controls/TypeGlow.cs`, `SlotViewModel.TypeGlow`), escolhido entre faixa, brilho e barra; desliga em ⚙.
+- [x] **Fundo das caixas fiel ao jogo:** feito (próxima versão): opção “Inteiro” do papel de parede, nítido e com cartões translúcidos (`SlotGlass`); o padrão continua o Normal.
 - [ ] **Cor do jogo do save:** a cor e o mascote do jogo aberto tingindo levemente a interface (vermelho no Scarlet, azul no Sapphire...).
 - [ ] **“Modo jogo”:** um tema que junta tudo isso (cores do jogo, papel de parede, faixas de tipo, animações); o tema atual continua como opção “limpa”.
 
@@ -118,7 +118,7 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 **Telas novas**
 - [ ] **Cartão do Pokémon estilo “ficha de treinador”** no topo do editor: sprite grande, tipos, natureza, bola de captura e selo do jogo de origem.
 - [ ] **Hexágono de atributos estilo SwSh/SV:** o radar atual com a cor do tipo e os EVs como segunda camada.
-- [ ] **Vitrine da equipe:** os 6 Pokémon grandes lado a lado, com item, golpes e tipos, pensada para print e compartilhamento.
+- [x] **Vitrine da equipe:** feito (próxima versão): “🖼 Vitrine” na Equipe, em Grade ou Colunas, com “Salvar imagem” em PNG (`Views/TeamShowcaseView.axaml`, `TeamShowcaseViewModel`).
 - [ ] **Linha do tempo do save no Início:** o que mudou desde a última vez (Pokémon novos, shinies, insígnias, horas), a partir dos backups.
 - [ ] **Estados vazios ilustrados:** “nenhum save”, “caixa vazia” etc. com uma ilustração simples e a dica do que fazer (primeira impressão).
 

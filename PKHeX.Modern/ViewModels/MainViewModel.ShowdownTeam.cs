@@ -20,6 +20,7 @@ public sealed partial class MainViewModel
         Party.CopyShowdownCommand = new RelayCommand(() => _ = CopyShowdownAsync(toParty: true));
         Boxes.PasteShowdownCommand = new RelayCommand(() => _ = PasteShowdownTeamAsync(toParty: false));
         Boxes.CopyShowdownCommand = new RelayCommand(() => _ = CopyShowdownAsync(toParty: false));
+        Party.ShowcaseCommand = new RelayCommand(OpenShowcase);
     }
 
     private async Task CopyShowdownAsync(bool toParty)

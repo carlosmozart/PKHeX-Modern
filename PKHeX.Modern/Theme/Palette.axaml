@@ -7,6 +7,7 @@
       <SolidColorBrush x:Key="SidebarBackground" Color="#1B1E25" />
       <SolidColorBrush x:Key="CardBackground" Color="#20242C" />
       <SolidColorBrush x:Key="SlotBackground" Color="#2A2F39" />
+      <SolidColorBrush x:Key="SlotGlass" Color="#9A2A2F39" />
       <SolidColorBrush x:Key="SlotHover" Color="#353B48" />
       <SolidColorBrush x:Key="CardBorder" Color="#2E333D" />
       <SolidColorBrush x:Key="TextMuted" Color="#8C93A3" />
@@ -33,6 +34,7 @@
       <SolidColorBrush x:Key="SidebarBackground" Color="#FFFFFF" />
       <SolidColorBrush x:Key="CardBackground" Color="#FFFFFF" />
       <SolidColorBrush x:Key="SlotBackground" Color="#EEF0F4" />
+      <SolidColorBrush x:Key="SlotGlass" Color="#9AEEF0F4" />
       <SolidColorBrush x:Key="SlotHover" Color="#E1E4EB" />
       <SolidColorBrush x:Key="CardBorder" Color="#E2E5EB" />
       <SolidColorBrush x:Key="TextMuted" Color="#6B7280" />

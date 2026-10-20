@@ -131,6 +131,8 @@ public static class AppTheme
         d["SidebarBackground"] = Brush(p.Sidebar);
         d["CardBackground"] = Brush(p.Card);
         d["SlotBackground"] = Brush(p.Slot);
+        var slot = Color.Parse(p.Slot);
+        d["SlotGlass"] = new SolidColorBrush(Color.FromArgb(0x9A, slot.R, slot.G, slot.B));
         d["SlotHover"] = Brush(p.SlotHover);
         d["CardBorder"] = Brush(p.Border);
         d["TextMuted"] = Brush(p.Muted);

@@ -24,6 +24,8 @@ public sealed class AppSettings
     public int WallpaperIntensity { get; set; }
     /// <summary>Tamanho dos sprites nas grades (Theme.SpriteScale): 0 pequeno, 1 normal, 2 grande, 3 enorme.</summary>
     public int SpriteSize { get; set; } = 1;
+    /// <summary>Brilho da cor do tipo nos cartões de Pokémon (Theme.SlotTypeColor).</summary>
+    public bool SlotTypeColor { get; set; } = true;
     /// <summary>Fonte da interface (chave de Theme.AppTheme.Fonts: theme, inter, pixelify...); null = a do tema.</summary>
     public string? FontKey { get; set; }
     /// <summary>Pasta do Save Manager (null = pasta "saves" ao lado do exe).</summary>

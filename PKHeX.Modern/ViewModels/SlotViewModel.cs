@@ -85,13 +85,36 @@ public sealed class SlotViewModel(int box, int slot) : ViewModelBase
         : IsOther ? $"{CoreAdapter.GetGameName(OtherSave!)} ({OtherSave!.OT}), caixa {Box + 1}, slot {Slot + 1}"
         : IsParty ? $"equipe, posição {Slot + 1}" : $"caixa {Box + 1}, slot {Slot + 1}";
 
+    /// <summary>
+    /// Brilho da cor do tipo no fundo do cartão (Controls/TypeGlow.cs): o primeiro tipo no alto à esquerda, o segundo
+    /// embaixo à direita; null = vazio ou ovo.
+    /// </summary>
+    public Avalonia.Media.IBrush? TypeGlow
+    {
+        get
+        {
+            if (IsEmpty || IsEgg) return null;
+            var (t1, t2) = CoreAdapter.GetSpeciesTypes(Pkm!.PersonalInfo);
+            var first = TypeColor(t1);
+            var second = TypeColor(t2);
+            return new Avalonia.Media.LinearGradientBrush
+            {
+                StartPoint = new(0, 0, Avalonia.RelativeUnit.Relative), EndPoint = new(1, 1, Avalonia.RelativeUnit.Relative),
+                GradientStops = { new(Alpha(first, 0x60), 0), new(Alpha(first, 0x10), 0.55), new(Alpha(second, t1 == t2 ? (byte)0x10 : (byte)0x48), 1) },
+            };
+        }
+    }
+
+    private static Avalonia.Media.Color TypeColor(byte type) => Avalonia.Media.Color.FromUInt32((uint)Drawing.PokeSprite.TypeColor.GetTypeSpriteColor(type).ToArgb());
+    private static Avalonia.Media.Color Alpha(Avalonia.Media.Color c, byte a) => Avalonia.Media.Color.FromArgb(a, c.R, c.G, c.B);
+
     public void Load(SaveFile sav)
     {
         var pk = IsParty ? CoreAdapter.GetPartySlot(sav, Slot) : CoreAdapter.GetBoxSlot(sav, Box, Slot);
         Pkm = pk;
         (IsLegal, _summary) = CoreAdapter.IsEmpty(pk) ? (null, "") : CoreAdapter.AnalyzeSlot(pk);
         Sprite = IsParty ? SpriteService.GetSprite(pk) : SpriteService.GetSprite(pk, sav, Box, Slot);
-        foreach (var p in (string[])[nameof(IsEmpty), nameof(Title), nameof(Subtitle), nameof(Tooltip), nameof(IsShiny), nameof(IsEgg), nameof(Nickname), nameof(HasNickname), nameof(Gender), nameof(IsMale), nameof(IsFemale), nameof(BallSprite)])
+        foreach (var p in (string[])[nameof(IsEmpty), nameof(Title), nameof(Subtitle), nameof(Tooltip), nameof(IsShiny), nameof(IsEgg), nameof(Nickname), nameof(HasNickname), nameof(Gender), nameof(IsMale), nameof(IsFemale), nameof(BallSprite), nameof(TypeGlow)])
             Raise(p);
     }
 
@@ -101,7 +124,7 @@ public sealed class SlotViewModel(int box, int slot) : ViewModelBase
         Pkm = pk;
         (IsLegal, _summary) = pk is null || CoreAdapter.IsEmpty(pk) ? (null, "") : CoreAdapter.AnalyzeSlot(pk);
         Sprite = pk is null ? null : SpriteService.GetSprite(pk);
-        foreach (var p in (string[])[nameof(IsEmpty), nameof(Title), nameof(Subtitle), nameof(Tooltip), nameof(IsShiny), nameof(IsEgg), nameof(Nickname), nameof(HasNickname), nameof(Gender), nameof(IsMale), nameof(IsFemale), nameof(BallSprite)])
+        foreach (var p in (string[])[nameof(IsEmpty), nameof(Title), nameof(Subtitle), nameof(Tooltip), nameof(IsShiny), nameof(IsEgg), nameof(Nickname), nameof(HasNickname), nameof(Gender), nameof(IsMale), nameof(IsFemale), nameof(BallSprite), nameof(TypeGlow)])
             Raise(p);
     }
 

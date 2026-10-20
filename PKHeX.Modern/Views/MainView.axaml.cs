@@ -93,6 +93,7 @@ public sealed partial class MainView : UserControl
             };
             vm.Game.ExportCardFile = ExportCardFileAsync;
             vm.SaveQrImage = SaveQrImageAsync;
+            vm.SaveShowcaseImage = SaveShowcaseImageAsync;
             vm.ReadClipboard = async () => TopLevel.GetTopLevel(this)?.Clipboard is { } clip ? await Avalonia.Input.Platform.ClipboardExtensions.TryGetTextAsync(clip) : null;
             vm.WriteClipboard = async text => { if (TopLevel.GetTopLevel(this)?.Clipboard is { } clip) await clip.SetTextAsync(text); };
             // Seletores de arquivo/pasta usados pela pagina Bank (pasta externa e outro save).
@@ -180,6 +181,11 @@ public sealed partial class MainView : UserControl
         if (vm.HasQr && vm.Dialog is null)
         {
             if (e.Key == Key.Escape) vm.CloseQr();
+            e.Handled = true; return;
+        }
+        if (vm.HasShowcase && vm.Dialog is null)
+        {
+            if (e.Key == Key.Escape) vm.CloseShowcase();
             e.Handled = true; return;
         }
         if (vm.Dialog is { } dialog)

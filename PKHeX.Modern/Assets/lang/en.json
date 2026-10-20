@@ -2491,5 +2491,22 @@
   "Toque para ver a lista ou digite": "Tap to see the list or type",
   "Toque para ver todas as espécies; digite parte do nome (ex.: chu) para filtrar": "Tap to see every species; type part of the name (e.g. chu) to filter",
   "Toque para ver todos os itens; digite parte do nome para filtrar": "Tap to see every item; type part of the name to filter",
-  "Toque ou digite": "Tap or type"
+  "Toque ou digite": "Tap or type",
+  "Inteiro": "Full",
+  "Cor do tipo nos cartões": "Type color on cards",
+  "Tinge o fundo de cada Pokémon nas caixas, na equipe e no bank com a cor dos tipos dele": "Tints the background of each Pokémon in the boxes, party and bank with the color of its types",
+  "Na página Caixas, abra o menu “⋯ Caixa” para renomear a caixa atual e escolher o papel de parede. O limite de caracteres e as opções dependem do jogo; jogos sem suporte escondem os controles. As alterações ficam na aba do save e são gravadas com Salvar. O fundo aparece discretamente atrás dos cartões, ou nítido como no jogo com a opção “Inteiro” do ⚙.": "On the Boxes page, open the “⋯ Box” menu to rename the current box and choose the wallpaper. The character limit and options depend on the game; games without support hide the controls. The changes stay in the save's tab and are written with Save. The wallpaper shows subtly behind the cards, or sharp as in the game with the “Full” option in ⚙.",
+  "No ⚙, os cartões mostram miniaturas dos quatro temas renderizadas pelo próprio app, no modo claro ou escuro atual. Toque para aplicar. Papel de parede das caixas tem Normal, Suave, Desligado e Inteiro (o papel de parede do jogo nítido, com os cartões translúcidos por cima); a escolha fica salva e muda somente a exibição, sem alterar o papel de parede guardado no jogo.": "In ⚙, cards show previews of all four themes rendered by the app in the current light or dark mode. Tap to apply. Box wallpaper has Normal, Soft, Off and Full (the game's wallpaper shown sharp, with translucent cards on top); the choice is saved and only changes the display, preserving the wallpaper stored in the game.",
+  "Cada Pokémon das caixas, da equipe, do bank e do outro save tem o fundo do cartão tingido com a cor dos tipos dele: o primeiro tipo no canto de cima e o segundo no de baixo. Ovos e slots vazios ficam neutros. Para voltar aos cartões lisos, desmarque “Cor do tipo nos cartões” no ⚙.": "Each Pokémon in the boxes, party, bank and other save has its card background tinted with the color of its types: the first type in the top corner and the second in the bottom one. Eggs and empty slots stay neutral. To go back to plain cards, uncheck “Type color on cards” in ⚙.",
+  "Vitrine": "Showcase",
+  "Vitrine da equipe": "Party showcase",
+  "Mostra a equipe grande, com tipos, item, habilidade e golpes, e salva como imagem para compartilhar": "Shows the party large, with types, item, ability and moves, and saves it as an image to share",
+  "Grade": "Grid",
+  "Colunas": "Columns",
+  "Grade: cartões largos em 3 colunas. Colunas: os seis lado a lado.": "Grid: wide cards in 3 columns. Columns: all six side by side.",
+  "Grava a vitrine como imagem PNG para compartilhar": "Saves the showcase as a PNG image to share",
+  "Equipe de {0}": "{0}'s party",
+  "A equipe está vazia: não há o que mostrar na vitrine.": "The party is empty: there is nothing to show in the showcase.",
+  "Não foi possível salvar a vitrine": "Could not save the showcase",
+  "Na página Equipe, “🖼 Vitrine” mostra os Pokémon da equipe grandes, com tipos, Tera (Scarlet/Violet), item, habilidade, natureza e golpes nas cores dos tipos. Escolha Grade (3×2) ou Colunas (os seis lado a lado) e use “Salvar imagem” para gravar um PNG em alta resolução, pronto para compartilhar. A imagem leva só a vitrine, com o nome do treinador e o jogo. Esc ou Fechar volta.": "On the Party page, “🖼 Showcase” shows the party Pokémon large, with types, Tera (Scarlet/Violet), item, ability, nature and moves in their type colors. Pick Grid (3×2) or Columns (all six side by side) and use “Save image” to write a high-resolution PNG, ready to share. The image only has the showcase, with the trainer name and the game. Esc or Close goes back."
 }

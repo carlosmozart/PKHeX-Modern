@@ -45,6 +45,8 @@ public abstract class SlotPageViewModel(Action<SlotViewModel> select) : PageView
     public RelayCommand? PasteShowdownCommand { get; set; }
     public RelayCommand? CopyShowdownCommand { get; set; }
     public RelayCommand? ExportReportCommand { get; set; }
+    /// <summary>Abre a vitrine da equipe (definido pelo MainViewModel).</summary>
+    public RelayCommand? ShowcaseCommand { get; set; }
 }
 
 public sealed class BoxesPageViewModel : SlotPageViewModel
@@ -77,8 +79,10 @@ public sealed class BoxesPageViewModel : SlotPageViewModel
     public IReadOnlyList<string> Wallpapers { get; private set; } = [];
     public Avalonia.Media.Imaging.Bitmap? Wallpaper { get; private set; }
     private int _wallpaperIntensity;
-    public int WallpaperIntensity { get => _wallpaperIntensity; set { if (Set(ref _wallpaperIntensity, value)) Raise(nameof(WallpaperOpacity)); } }
-    public double WallpaperOpacity => WallpaperIntensity switch { 1 => 0.10, 2 => 0, _ => 0.25 };
+    public int WallpaperIntensity { get => _wallpaperIntensity; set { if (Set(ref _wallpaperIntensity, value)) { Raise(nameof(WallpaperOpacity)); Raise(nameof(IsFullWallpaper)); } } }
+    public double WallpaperOpacity => WallpaperIntensity switch { 1 => 0.10, 2 => 0, 3 => 1, _ => 0.25 };
+    /// <summary>Papel de parede "Inteiro": nítido como no jogo, com os cartões translúcidos por cima (SlotGlass).</summary>
+    public bool IsFullWallpaper => WallpaperIntensity == 3 && Wallpaper is not null;
     public RelayCommand RenameCommand => new(async () =>
     {
         if (_sav is not IBoxDetailName names || Prompt is null) return;
@@ -114,6 +118,7 @@ public sealed class BoxesPageViewModel : SlotPageViewModel
         var previous = Wallpaper;
         Wallpaper = _sav is not null && HasWallpapers ? SpriteService.GetBoxWallpaper(_sav, CurrentBox) : null;
         Raise(nameof(Wallpaper));
+        Raise(nameof(IsFullWallpaper));
         Raise(nameof(WallpaperIndex));
         previous?.Dispose();
     }

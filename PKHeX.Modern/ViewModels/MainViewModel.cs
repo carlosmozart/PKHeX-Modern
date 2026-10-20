@@ -46,6 +46,7 @@ public sealed partial class MainViewModel : ViewModelBase
         Boxes = new BoxesPageViewModel(s => _ = SelectSlotAsync(s)) { Party = Party };
         Boxes.WallpaperIntensity = WallpaperIntensityIndex;
         Theme.SpriteScale.Apply(Settings.SpriteSize);
+        Theme.SlotTypeColor.Apply(Settings.SlotTypeColor);
         // Registro de paginas: a ordem aqui e a ordem na barra lateral.
         SaveManager = new SaveManagerViewModel(Settings, p => _ = OpenAsync(p), (t, m, ok) => ConfirmAsync(t, m, ok, isDanger: true), s => Status = s)
         {
