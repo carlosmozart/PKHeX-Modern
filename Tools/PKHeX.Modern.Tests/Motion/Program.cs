@@ -63,6 +63,23 @@ ed.ShinyClick(false, false, false); Pump();
 Check("virar shiny brilha", ed.IsShiny && ed.SparkleToken == 1, $"token {ed.SparkleToken} shiny {ed.IsShiny} legal {ed.IsLegal} modo {ed.LegalMode} status {vm.Status}");
 Check("brilho desenha no meio da animação", Pixels(new SparkleBurst { Progress = 0.4, Color = Brushes.Gold }, 120, 120) > Pixels(new SparkleBurst { Progress = 1 }, 120, 120) + 200);
 
+// Prévia do arraste: sprite no ponteiro, ação ao soltar, grupo e origem apagada (restaurada no fim)
+var preview = vm.DragPreview; var src = vm.Boxes.Slots[0]; var emptySlot = vm.Boxes.Slots[5]; var full = vm.Boxes.Slots[1];
+preview.Begin(src, 1, touch: false);
+Check("origem apagada durante o arraste", src.IsDimmed && !preview.IsVisible);
+preview.Move(new Point(400, 300), DragPreviewViewModel.Describe(DropMode.Move, emptySlot, src, false)); Pump();
+Check("prévia segue o ponteiro", preview.IsVisible && preview.X == 414 && preview.Y == 312 && preview.Sprite is not null && preview.Action == "Mover");
+Check("slot ocupado = trocar", DragPreviewViewModel.Describe(DropMode.Move, full, src, false) == "⇄ Trocar");
+Check("copiar, sobrescrever e seta de caixa", DragPreviewViewModel.Describe(DropMode.Copy, full, src, false) == "+ Copiar"
+    && DragPreviewViewModel.Describe(DropMode.Overwrite, emptySlot, src, false) == "Sobrescrever" && DragPreviewViewModel.Describe(DropMode.Move, null, src, true) == "Trocar de caixa…"
+    && DragPreviewViewModel.Describe(DropMode.Move, src, src, false) == "");
+win.CaptureRenderedFrame()?.Save(Path.Combine(work, "drag-preview.png"));
+preview.End(); Pump();
+Check("fim do arraste: some e restaura a origem", !preview.IsVisible && !src.IsDimmed);
+preview.Begin(src, 3, touch: true); preview.Move(new Point(400, 300), "Mover");
+Check("grupo e toque acima do dedo", preview.HasCount && preview.CountText == "×3" && preview.Y < 300);
+preview.End();
+
 // Desligar as animações
 var main = win.GetVisualDescendants().OfType<MainView>().Single();
 vm.Animations = false; Pump();

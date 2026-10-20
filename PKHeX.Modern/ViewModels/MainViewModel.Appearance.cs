@@ -32,6 +32,9 @@ public sealed partial class MainViewModel
         }
     }
 
+    /// <summary>Prévia do arraste de slots (sprite seguindo o ponteiro, grupo e ação ao soltar).</summary>
+    public DragPreviewViewModel DragPreview { get; } = new();
+
     /// <summary>Sobe a cada save aberto numa aba nova: a Pokébola abre no centro da tela.</summary>
     public int OpenToken { get; private set; }
 

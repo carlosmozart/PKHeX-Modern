@@ -51,7 +51,7 @@ public sealed class SlotDragController
         window.AddHandler(InputElement.PointerMovedEvent, OnMoved, RoutingStrategies.Tunnel);
         window.AddHandler(InputElement.PointerReleasedEvent, OnReleased, RoutingStrategies.Tunnel);
         window.AddHandler(DragDrop.DragOverEvent, OnDragOver);
-        window.AddHandler(DragDrop.DragLeaveEvent, (_, _) => SetHover(null, null));
+        window.AddHandler(DragDrop.DragLeaveEvent, (_, _) => { SetHover(null, null); _vm().DragPreview.Hide(); });
         window.AddHandler(DragDrop.DropEvent, OnDrop);
         window.DetachedFromVisualTree += (_, _) => _hold.Stop();
         _hold.Tick += (_, _) =>
@@ -139,6 +139,9 @@ public sealed class SlotDragController
 
         _dragging = _pressed;
         _pressed = null;
+        // Prévia: sprite seguindo o ponteiro, quantos vão juntos e o que acontece ao soltar
+        var preview = _vm().DragPreview;
+        preview.Begin(_dragging, _dragging.IsMarked ? Math.Max(1, _vm().MarkedCount) : 1, _touchPress);
         try
         {
             var data = new DataTransfer();
@@ -158,6 +161,7 @@ public sealed class SlotDragController
         {
             _dragging = null;
             SetHover(null, null);
+            preview.End();
         }
     }
 
@@ -187,8 +191,11 @@ public sealed class SlotDragController
         SetHover(slot, arrow);
 
         if (_dragging is not null)
+        {
             e.DragEffects = slot is null ? DragDropEffects.None
                 : GetMode(e.KeyModifiers) == DropMode.Copy ? DragDropEffects.Copy : DragDropEffects.Move;
+            _vm().DragPreview.Move(e.GetPosition(_window), DragPreviewViewModel.Describe(GetMode(e.KeyModifiers), slot, _dragging, arrow is not null));
+        }
         else
             e.DragEffects = e.DataTransfer.Contains(DataFormat.File) ? DragDropEffects.Copy : DragDropEffects.None;
         e.Handled = true;

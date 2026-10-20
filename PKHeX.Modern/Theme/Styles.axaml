@@ -629,6 +629,38 @@
   <Style Selector="Border.hero">
     <Setter Property="Padding" Value="12" />
   </Style>
+  <!-- Prévia do arraste de slots: sprite flutuando, grupo (×N) e acao ao soltar -->
+  <Style Selector="Border.dragGhost">
+    <Setter Property="Background" Value="{DynamicResource SlotGlass}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Accent}" />
+    <Setter Property="BorderThickness" Value="1.5" />
+    <Setter Property="CornerRadius" Value="{DynamicResource CardRadius}" />
+    <Setter Property="Padding" Value="6,4" />
+    <Setter Property="BoxShadow" Value="0 10 28 0 #60000000" />
+    <Setter Property="Opacity" Value="0.94" />
+  </Style>
+  <Style Selector="Border.dragCount">
+    <Setter Property="Background" Value="{DynamicResource Accent}" />
+    <Setter Property="CornerRadius" Value="9" />
+    <Setter Property="Padding" Value="6,0" />
+    <Setter Property="Margin" Value="0,-6,-10,0" />
+  </Style>
+  <Style Selector="Border.dragCount TextBlock">
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FontWeight" Value="Bold" />
+  </Style>
+  <Style Selector="Border.dragAction">
+    <Setter Property="Background" Value="{DynamicResource Accent}" />
+    <Setter Property="CornerRadius" Value="{DynamicResource Radius6}" />
+    <Setter Property="Padding" Value="7,1" />
+  </Style>
+  <Style Selector="Border.dragAction TextBlock">
+    <Setter Property="Foreground" Value="White" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+  </Style>
+
   <!-- Cartao do "Modo jogo" no topo das preferencias -->
   <Style Selector="Border.gameModeCard">
     <Setter Property="Background" Value="{DynamicResource SlotBackground}" />

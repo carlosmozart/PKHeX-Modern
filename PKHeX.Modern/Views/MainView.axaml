@@ -469,6 +469,23 @@
       </Border>
     </Border>
 
+    <!-- Prévia do arraste (ViewModels/DragPreviewViewModel.cs): sprite seguindo o ponteiro, sem bloquear o soltar -->
+    <Canvas Grid.ColumnSpan="3" Grid.RowSpan="2" IsHitTestVisible="False" DataContext="{Binding DragPreview}" x:DataType="vm:DragPreviewViewModel">
+      <Border Classes="dragGhost" IsVisible="{Binding IsVisible}" Canvas.Left="{Binding X}" Canvas.Top="{Binding Y}">
+        <StackPanel Spacing="2" HorizontalAlignment="Center">
+          <Panel>
+            <Image Source="{Binding Sprite}" Width="72" Height="64" Stretch="Uniform" />
+            <Border Classes="dragCount" IsVisible="{Binding HasCount}" HorizontalAlignment="Right" VerticalAlignment="Top">
+              <TextBlock Text="{Binding CountText}" />
+            </Border>
+          </Panel>
+          <Border Classes="dragAction" IsVisible="{Binding HasAction}" HorizontalAlignment="Center">
+            <TextBlock Text="{Binding Action}" />
+          </Border>
+        </StackPanel>
+      </Border>
+    </Canvas>
+
     <!-- Pokébola abrindo ao carregar um save (Controls/Effects.cs): por cima de tudo, sem bloquear cliques -->
     <controls:PokeballOpen Grid.ColumnSpan="3" Grid.RowSpan="2" Width="190" Height="190" HorizontalAlignment="Center" VerticalAlignment="Center"
                            Trigger="{Binding OpenToken}" Top="{DynamicResource Accent}" Bottom="White" Line="#1C1C22" />

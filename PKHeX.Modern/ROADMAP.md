@@ -124,7 +124,7 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 
 **Uso**
 - [x] **Paleta de comandos (Ctrl+K):** feito (próxima versão): ações, páginas, caixas e Pokémon do save, sem acento, também em inglês; ⌘ ao lado da busca (`CommandPaletteViewModel`, `MainViewModel.Palette.cs`).
-- [ ] **Arrastar com prévia:** sprite flutuando sob o cursor, destino destacado e animação curta ao soltar.
+- [x] **Arrastar com prévia:** feito (próxima versão): sprite seguindo o ponteiro com a ação ao soltar e o tamanho do grupo, origem apagada, destino destacado e pulinho ao soltar (`DragPreviewViewModel`).
 - [ ] **Gestos no Android:** deslizar entre caixas, segurar um Pokémon para um resumo rápido, puxar para baixo para reler os saves.
 
 Prioridade sugerida: faixa de tipo + papel de parede do jogo; depois paleta de comandos, vitrine da equipe e estados vazios ilustrados.
