@@ -23,8 +23,8 @@ public sealed partial class MainViewModel : ViewModelBase
         OpenLastCommand = new RelayCommand(() => { if (HasLastSave) _ = OpenAsync(Settings.LastSavePath!); });
         // So a interface e em portugues; nomes do jogo (especies, golpes, itens) seguem o ingles do PKHeX.
         CoreAdapter.SetLanguage("en");
-        var accent = Theme.AccentTheme.Find(Settings.AccentColor);
-        AccentOptions = [.. Theme.AccentTheme.Presets.Select(p => new AccentOptionViewModel(p) { IsSelected = p == accent })];
+        var accent = Settings.AccentColor == Theme.AccentTheme.GameKey ? Theme.AccentTheme.GameOption : Theme.AccentTheme.Find(Settings.AccentColor);
+        AccentOptions = [.. Theme.AccentTheme.Presets.Append(Theme.AccentTheme.GameOption).Select(p => new AccentOptionViewModel(p) { IsSelected = p == accent })];
         SetAccentCommand = new RelayCommand(p => { if (p is AccentOptionViewModel o) SetAccent(o.Preset); });
         var theme = Theme.AppTheme.Find(Settings.ThemeKey);
         ThemeOptions = [.. Theme.AppTheme.Presets.Select(t => new ThemeOptionViewModel(t, t == theme, new RelayCommand(() => SetTheme(t))))];
@@ -379,7 +379,8 @@ public sealed partial class MainViewModel : ViewModelBase
         Settings.ThemeKey = theme.Key;
         foreach (var f in FontOptions)
             f.RefreshFamily();
-        SetAccent(Theme.AccentTheme.Find(theme.AccentKey)); // tambem salva as preferencias
+        // O tema sugere uma cor de destaque; quem escolheu "Cor do jogo do save" continua com ela
+        SetAccent(Settings.AccentColor == Theme.AccentTheme.GameKey ? Theme.AccentTheme.GameOption : Theme.AccentTheme.Find(theme.AccentKey)); // tambem salva as preferencias
         Raise(nameof(ThemeText));
         Status = $"Tema {theme.Name} aplicado.";
     }
@@ -430,11 +431,23 @@ public sealed partial class MainViewModel : ViewModelBase
 
     private void SetAccent(Theme.AccentPreset preset)
     {
-        Theme.AccentTheme.Apply(preset);
         foreach (var o in AccentOptions)
             o.IsSelected = o.Preset == preset;
         Settings.AccentColor = preset.Key;
         Settings.Save();
+        ApplyAccent();
+    }
+
+    /// <summary>
+    /// Aplica a cor de destaque escolhida. Com “Cor do jogo do save”, usa a cor da versão do save ativo (e o brilho
+    /// no alto da tela); chamado também ao trocar de aba.
+    /// </summary>
+    private void ApplyAccent()
+    {
+        bool game = Settings.AccentColor == Theme.AccentTheme.GameKey;
+        var art = game && _sav is { } sav ? GameArt.Get(sav.Version) : null;
+        Theme.AccentTheme.Apply(art is not null ? Theme.AccentTheme.ForGame(art.Color1) : game ? Theme.AccentTheme.Default : Theme.AccentTheme.Find(Settings.AccentColor));
+        Theme.AccentTheme.ApplyGameTint(art?.Color1);
     }
     public RelayCommand OpenLastCommand { get; }
 
@@ -942,6 +955,8 @@ public sealed partial class MainViewModel : ViewModelBase
     private void CloseAll()
     {
         _sav = null;
+        if (Settings.AccentColor == Theme.AccentTheme.GameKey)
+            ApplyAccent(); // sem save: volta ao vermelho padrão e tira o brilho
         _history = null;
         _isDirty = false;
         _historyAtSave = 0;
@@ -995,6 +1010,8 @@ public sealed partial class MainViewModel : ViewModelBase
         foreach (var page in AllPages)
             page.Load(tab.Sav);
         Boxes.CurrentBox = tab.CurrentBox;
+        if (Settings.AccentColor == Theme.AccentTheme.GameKey)
+            ApplyAccent(); // destaque na cor do jogo deste save
         // Linha do tempo: registra o save na primeira vez que a aba fica ativa (o que mudou veio do jogo)
         tab.Timeline ??= SaveTimeline.Record(tab.Path, tab.Sav);
         Home.Load(tab.Sav);
@@ -2543,7 +2560,16 @@ public sealed class LanguageOptionViewModel(string code, string name, bool selec
 public sealed class AccentOptionViewModel(Theme.AccentPreset preset) : ViewModelBase
 {
     public Theme.AccentPreset Preset { get; } = preset;
-    public Avalonia.Media.IBrush Brush => Preset.Brush;
+    /// <summary>A opção “Cor do jogo do save” aparece como bolinha em arco-íris.</summary>
+    public Avalonia.Media.IBrush Brush => Preset.Key == Theme.AccentTheme.GameKey ? Rainbow : Preset.Brush;
+    private static readonly Avalonia.Media.IBrush Rainbow = new Avalonia.Media.ConicGradientBrush
+    {
+        GradientStops =
+        {
+            new(Avalonia.Media.Color.Parse("#E53935"), 0), new(Avalonia.Media.Color.Parse("#FDD835"), 0.2), new(Avalonia.Media.Color.Parse("#43A047"), 0.4),
+            new(Avalonia.Media.Color.Parse("#1E88E5"), 0.6), new(Avalonia.Media.Color.Parse("#8E24AA"), 0.8), new(Avalonia.Media.Color.Parse("#E53935"), 1),
+        },
+    };
     public string Name => Preset.Name;
     private bool _isSelected;
     public bool IsSelected { get => _isSelected; set => Set(ref _isSelected, value); }

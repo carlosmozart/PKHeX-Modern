@@ -106,7 +106,7 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 - [ ] **Elementos de Pokédex/Pokébola no layout:** topo vermelho e “lente” azul da Pokédex clássica na barra lateral, ou divisórias que lembram a linha da Pokébola. Um ou dois detalhes marcantes, sem exagero.
 - [x] **Cartões de slot com a cor do tipo:** feito (próxima versão): brilho dos dois tipos no fundo de todos os cartões de Pokémon (`Controls/TypeGlow.cs`, `SlotViewModel.TypeGlow`), escolhido entre faixa, brilho e barra; desliga em ⚙.
 - [x] **Fundo das caixas fiel ao jogo:** feito (próxima versão): opção “Inteiro” do papel de parede, nítido e com cartões translúcidos (`SlotGlass`); o padrão continua o Normal.
-- [ ] **Cor do jogo do save:** a cor e o mascote do jogo aberto tingindo levemente a interface (vermelho no Scarlet, azul no Sapphire...).
+- [x] **Cor do jogo do save:** feito (próxima versão): destaque “Cor do jogo do save” (bolinha em arco-íris) com brilho no alto da tela, ajustado para contraste (`AccentTheme.ForGame`, `GameTint`).
 - [ ] **“Modo jogo”:** um tema que junta tudo isso (cores do jogo, papel de parede, faixas de tipo, animações); o tema atual continua como opção “limpa”.
 
 **Acabamento**

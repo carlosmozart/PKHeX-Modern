@@ -34,6 +34,47 @@ public static class AccentTheme
 
     public static AccentPreset Default => Presets[0];
 
+    /// <summary>Chave da opção “Cor do jogo do save”: o destaque segue a cor da versão aberta (Services/GameArt).</summary>
+    public const string GameKey = "game";
+    /// <summary>A opção no seletor (bolinha em arco-íris); sem save aberto, vale o vermelho padrão.</summary>
+    public static AccentPreset GameOption { get; } = new(GameKey, "Cor do jogo do save", Default.Dark, Default.Light);
+
+    /// <summary>
+    /// Destaque a partir da cor de uma versão, ajustada para dar leitura: no escuro, cores muito escuras clareiam;
+    /// no claro, cores muito claras (Yellow, Gold, X) escurecem.
+    /// </summary>
+    public static AccentPreset ForGame(uint argb)
+    {
+        var c = Color.FromUInt32(argb | 0xFF000000);
+        double lum = ((0.2126 * c.R) + (0.7152 * c.G) + (0.0722 * c.B)) / 255;
+        // Os botões de destaque têm texto branco. Mistura o bastante para chegar ao brilho-alvo (misturar com preto
+        // multiplica o brilho; com branco, aproxima de 1): no escuro, entre 0,42 e 0,62; no claro, até 0,46.
+        var dark = lum < 0.38 ? Mix(c, Colors.White, Math.Max(0.18, (0.42 - lum) / (1 - lum)))
+            : lum > 0.72 ? Mix(c, Colors.Black, 1 - (0.62 / lum)) : c;
+        var light = lum > 0.5 ? Mix(c, Colors.Black, 1 - (0.46 / lum)) : c;
+        return new(GameKey, GameOption.Name, dark, light);
+    }
+
+    /// <summary>
+    /// Brilho suave da cor do jogo no alto da área principal (DynamicResource GameTint); null = sem brilho.
+    /// </summary>
+    public static void ApplyGameTint(uint? argb)
+    {
+        if (Application.Current is not { } app)
+            return;
+        if (argb is not { } v)
+        {
+            app.Resources["GameTint"] = Brushes.Transparent;
+            return;
+        }
+        var c = Color.FromUInt32(v | 0xFF000000);
+        app.Resources["GameTint"] = new LinearGradientBrush
+        {
+            StartPoint = new RelativePoint(0.5, 0, RelativeUnit.Relative), EndPoint = new RelativePoint(0.5, 1, RelativeUnit.Relative),
+            GradientStops = { new GradientStop(Color.FromArgb(0x30, c.R, c.G, c.B), 0), new GradientStop(Color.FromArgb(0, c.R, c.G, c.B), 0.32) },
+        };
+    }
+
     public static AccentPreset Find(string? key) => Presets.FirstOrDefault(p => p.Key == key) ?? Default;
 
     /// <summary>Aplica a cor nos dois temas (claro e escuro).</summary>
