@@ -26,6 +26,8 @@ public sealed class AppSettings
     public int SpriteSize { get; set; } = 1;
     /// <summary>Brilho da cor do tipo nos cartões de Pokémon (Theme.SlotTypeColor).</summary>
     public bool SlotTypeColor { get; set; } = true;
+    /// <summary>Animações curtas (pulo do slot, brilho ✦, Pokébola ao abrir, piscada da ★ dos shiny).</summary>
+    public bool Animations { get; set; } = true;
     /// <summary>Fonte da interface (chave de Theme.AppTheme.Fonts: theme, inter, pixelify...); null = a do tema.</summary>
     public string? FontKey { get; set; }
     /// <summary>Pasta do Save Manager (null = pasta "saves" ao lado do exe).</summary>

@@ -9,6 +9,8 @@ Formato: "## versão — data", "### seção", "- item".
 ## Próxima versão
 
 ### 🎨 Interface
+- **Animações curtas:** a Pokébola abre ao carregar um save, o slot dá um pulinho ao receber um Pokémon, o editor solta um brilho ✦ quando o Pokémon fica legal ou vira shiny, e a ★ dos shiny nas caixas pisca de vez em quando. Todas são leves e não bloqueiam cliques; ⚙ › “Animações” desliga.
+- **Linha do tempo do save no Início:** a cada abertura, o Início mostra o que mudou desde a vez anterior: horas de jogo, Pokémon e espécies novas, shinies (com o sprite), insígnias, Pokédex e dinheiro. Separa o que veio do jogo do que foi salvo no app; na primeira vez, usa o backup mais recente como ponto de partida.
 - **Hexágono de atributos no estilo SwSh/SV:** na aba Atributos, a forma na cor do tipo, os EVs como segunda camada dourada e o valor de cada atributo junto do nome, em vermelho ou azul conforme a natureza.
 - **Ficha do Pokémon no editor:** o topo do editor ganhou o brilho da cor dos tipos, o Tera (Scarlet/Violet), o nível com a natureza, a bola de captura e o selo do jogo de origem com a geração. Acompanha as edições na hora.
 - **Telas vazias ilustradas:** pasta de saves vazia, nenhum backup, caixa vazia, nenhum outro save no Bank, Pesquisa sem resultado e Hall da Fama vazio ganharam um desenho próprio e a dica do que fazer. O aviso da caixa vazia não bloqueia o arraste nem o clique nos slots.

@@ -47,6 +47,7 @@ public sealed partial class MainViewModel : ViewModelBase
         Boxes.WallpaperIntensity = WallpaperIntensityIndex;
         Theme.SpriteScale.Apply(Settings.SpriteSize);
         Theme.SlotTypeColor.Apply(Settings.SlotTypeColor);
+        Theme.Motion.Enabled = Settings.Animations;
         // Registro de paginas: a ordem aqui e a ordem na barra lateral.
         SaveManager = new SaveManagerViewModel(Settings, p => _ = OpenAsync(p), (t, m, ok) => ConfirmAsync(t, m, ok, isDanger: true), s => Status = s)
         {
@@ -120,6 +121,7 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             Pages = () => Pages,
             Pending = () => (IsDirty, PendingActions.Count),
+            Timeline = () => _activeTab?.Timeline ?? [],
             ShowPendingCommand = new RelayCommand(() => _ = ShowPendingAsync()),
             BackupsCommand = new RelayCommand(() => { CurrentPage = SaveManager; SaveManager.OpenBackupsCommand.Execute(null); }),
         };
@@ -993,6 +995,8 @@ public sealed partial class MainViewModel : ViewModelBase
         foreach (var page in AllPages)
             page.Load(tab.Sav);
         Boxes.CurrentBox = tab.CurrentBox;
+        // Linha do tempo: registra o save na primeira vez que a aba fica ativa (o que mudou veio do jogo)
+        tab.Timeline ??= SaveTimeline.Record(tab.Path, tab.Sav);
         Home.Load(tab.Sav);
         CurrentPage = tab.LastPage ?? Home; // save recem-aberto cai no Inicio
         foreach (var p in (string[])[nameof(IsDirty), nameof(PendingActions), nameof(PendingText), nameof(HasSave), nameof(ShowLastSaveLink), nameof(ShowSidebarSaves), nameof(ShowEditorPanel), nameof(GameName), nameof(GameArt), nameof(TrainerInfo), nameof(Pages), nameof(ActiveTab)])
@@ -1100,6 +1104,8 @@ public sealed partial class MainViewModel : ViewModelBase
         OpenSaves.Add(tab);
         Raise(nameof(HasTabs));
         ActivateTab(tab);
+        OpenToken++; // Pokébola abrindo (Controls/Effects.cs)
+        Raise(nameof(OpenToken));
         Status = $"Aberto: {ZipSaves.DisplayName(path)}" + zipNote;
         Settings.LastSavePath = ZipSaves.IsZipPath(path, out var zip, out var entry) ? ZipSaves.Combine(System.IO.Path.GetFullPath(zip), entry) : System.IO.Path.GetFullPath(path);
         Settings.RecentSaves.RemoveAll(p => string.Equals(p, Settings.LastSavePath, StringComparison.OrdinalIgnoreCase));
@@ -1138,6 +1144,9 @@ public sealed partial class MainViewModel : ViewModelBase
             var backup = SaveBackup.BeforeOverwrite(ZipSaves.FileOf(path), reason, CoreAdapter.GetVersionName(_sav.Version));
             CoreAdapter.ExportSave(_sav, path);
             if (markSaved) IsDirty = false;
+            // Gravado pelo app: entra na linha do tempo como "Salvo no app" (não se confunde com o progresso no jogo)
+            if (_activeTab is { } saved && path.Equals(saved.Path, StringComparison.OrdinalIgnoreCase))
+                saved.Timeline = SaveTimeline.Record(saved.Path, _sav, "saved");
             var where = ZipSaves.IsZipPath(path, out _, out _) ? ZipSaves.DisplayName(path) : path;
             Status = backup is null
                 ? $"Salvo em {where}"

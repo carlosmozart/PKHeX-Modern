@@ -7,6 +7,7 @@
              x:Class="PKHeX.Modern.Views.MainView"
              x:DataType="vm:MainViewModel"
              Background="{DynamicResource AppBackground}"
+             Classes.noMotion="{Binding !Animations}"
              DragDrop.AllowDrop="True">
   <!-- Interface principal: a mesma no desktop (dentro de MainWindow) e no Android (vista unica). -->
 
@@ -141,6 +142,8 @@
                     <TextBlock Text="Muda só a exibição; o papel de parede do jogo é preservado." FontSize="11" Classes="muted" TextWrapping="Wrap" />
                     <CheckBox Content="Cor do tipo nos cartões" IsChecked="{Binding SlotTypeColor}" Margin="0,4,0,0"
                               ToolTip.Tip="Tinge o fundo de cada Pokémon nas caixas, na equipe e no bank com a cor dos tipos dele" />
+                    <CheckBox Content="Animações" IsChecked="{Binding Animations}"
+                              ToolTip.Tip="Pulinho do slot que recebe um Pokémon, brilho ✦ ao ficar legal ou shiny, Pokébola ao abrir um save e a ★ dos shiny piscando. Desligue para economizar bateria." />
                     <TextBlock Text="FONTE" Classes="section" Margin="0,8,0,0" />
                     <ItemsControl ItemsSource="{Binding FontOptions}">
                       <ItemsControl.ItemTemplate>
@@ -451,6 +454,10 @@
         </StackPanel>
       </Border>
     </Border>
+
+    <!-- Pokébola abrindo ao carregar um save (Controls/Effects.cs): por cima de tudo, sem bloquear cliques -->
+    <controls:PokeballOpen Grid.ColumnSpan="3" Grid.RowSpan="2" Width="190" Height="190" HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Trigger="{Binding OpenToken}" Top="{DynamicResource Accent}" Bottom="White" Line="#1C1C22" />
 
     <!-- Paleta de comandos (Ctrl+K): clicar fora ou Esc fecha -->
     <Border x:Name="PaletteBackdrop" Grid.ColumnSpan="3" Grid.RowSpan="2" Classes="dialogBackdrop" IsVisible="{Binding HasPalette}">

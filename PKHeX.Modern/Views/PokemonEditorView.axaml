@@ -38,9 +38,13 @@
       <Panel>
       <Border Background="{Binding CardGlow}" Margin="-12" IsHitTestVisible="False" />
       <Grid ColumnDefinitions="Auto,*">
-        <Border Classes="spriteWell" Width="112" Height="100" VerticalAlignment="Top">
-          <Image Source="{Binding Sprite}" Stretch="Uniform" />
-        </Border>
+        <Panel VerticalAlignment="Top">
+          <Border Classes="spriteWell" Width="112" Height="100">
+            <Image Source="{Binding Sprite}" Stretch="Uniform" />
+          </Border>
+          <!-- Brilho ✦ ao ficar legal ou shiny (Controls/Effects.cs) -->
+          <c:SparkleBurst Trigger="{Binding SparkleToken}" Color="#F5C542" Margin="-24" />
+        </Panel>
         <StackPanel Grid.Column="1" Margin="14,0,0,0" VerticalAlignment="Center" Spacing="6">
           <!-- Nome com fontes largas (ex.: Pokémon GB) encolhe em vez de empurrar gênero e shiny para fora da tela -->
           <Grid ColumnDefinitions="Auto,Auto,Auto,Auto" ColumnSpacing="6">

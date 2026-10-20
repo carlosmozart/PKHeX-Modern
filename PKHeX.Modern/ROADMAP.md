@@ -110,16 +110,16 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 - [ ] **“Modo jogo”:** um tema que junta tudo isso (cores do jogo, papel de parede, faixas de tipo, animações); o tema atual continua como opção “limpa”.
 
 **Acabamento**
-- [ ] **Animações curtas e próprias:** Pokébola abrindo ao carregar um save, slot “pulando” ao receber um Pokémon, brilho ✦ ao legalizar ou ao ficar shiny. Leves, por causa do Android.
+- [x] **Animações curtas e próprias:** feito (próxima versão): Pokébola ao abrir, pulinho do slot, brilho ✦ no editor; ⚙ › Animações desliga (`Controls/Effects.cs`, `Theme/Motion.cs`).
 - [ ] **Ícones próprios com traço de jogo:** Pokébola, Pokédex, mochila, PC (evolução dos ícones de traço em `Controls/LineIcon.cs`).
 - [ ] **Tipografia com personalidade nos títulos:** fonte mais marcante só nos títulos, Inter no texto.
-- [ ] **Shiny com brilho:** um ✦ animado discreto nos shiny das caixas.
+- [x] **Shiny com brilho:** feito (próxima versão): a ★ dos shiny nas caixas pisca a cada 3 s (estilo em Theme/Styles.axaml).
 
 **Telas novas**
 - [x] **Cartão do Pokémon estilo “ficha de treinador”:** feito (próxima versão): brilho do tipo, Tera, nível e natureza, bola e selo do jogo de origem no topo do editor (`PokemonEditorViewModel.Card*`).
 - [x] **Hexágono de atributos estilo SwSh/SV:** feito (próxima versão): forma na cor do tipo, EVs em dourado, valores e natureza (vermelho/azul) nos nomes (`Controls/StatRadar.cs`).
 - [x] **Vitrine da equipe:** feito (próxima versão): “🖼 Vitrine” na Equipe, em Grade ou Colunas, com “Salvar imagem” em PNG (`Views/TeamShowcaseView.axaml`, `TeamShowcaseViewModel`).
-- [ ] **Linha do tempo do save no Início:** o que mudou desde a última vez (Pokémon novos, shinies, insígnias, horas), a partir dos backups.
+- [x] **Linha do tempo do save no Início:** feito (próxima versão): resumos a cada abertura e gravação, “No jogo” x “Salvo no app”, backup como ponto de partida (`Services/SaveTimeline.cs`).
 - [x] **Estados vazios ilustrados:** feito (próxima versão): saves, backups, caixa vazia, outro save, Pesquisa e Hall da Fama (`Controls/EmptyState.cs`, desenhos próprios de traço).
 
 **Uso**

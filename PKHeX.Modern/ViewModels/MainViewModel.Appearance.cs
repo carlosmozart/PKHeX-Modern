@@ -31,6 +31,22 @@ public sealed partial class MainViewModel
         }
     }
 
+    /// <summary>Sobe a cada save aberto numa aba nova: a Pokébola abre no centro da tela.</summary>
+    public int OpenToken { get; private set; }
+
+    /// <summary>Animações curtas (Theme/Motion.cs); a View põe a classe noMotion quando desligadas.</summary>
+    public bool Animations
+    {
+        get => Settings.Animations;
+        set
+        {
+            if (value == Settings.Animations) return;
+            Settings.Animations = value; Settings.Save();
+            Theme.Motion.Enabled = value;
+            Raise(nameof(Animations));
+        }
+    }
+
     /// <summary>Brilho da cor do tipo nos cartões de Pokémon.</summary>
     public bool SlotTypeColor
     {

@@ -1,6 +1,7 @@
 <Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:c="using:PKHeX.Modern.Controls">
+        xmlns:c="using:PKHeX.Modern.Controls"
+        xmlns:views="using:PKHeX.Modern.Views">
 
   <!-- Desenhos das telas vazias (Controls/EmptyState.cs): cores do tema -->
   <Style Selector="c|EmptyArt">
@@ -150,6 +151,23 @@
       </Transitions>
     </Setter>
   </Style>
+  <!-- ★ dos shiny nas caixas: piscada discreta de vez em quando (sem animacoes, a MainView ganha a classe noMotion) -->
+  <Style Selector="views|MainView:not(.noMotion) Button.slot TextBlock.shiny">
+    <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+    <Setter Property="RenderTransform">
+      <ScaleTransform />
+    </Setter>
+    <Style.Animations>
+      <Animation Duration="0:0:3.2" IterationCount="Infinite">
+        <KeyFrame Cue="0%"><Setter Property="Opacity" Value="1" /><Setter Property="ScaleTransform.ScaleX" Value="1" /><Setter Property="ScaleTransform.ScaleY" Value="1" /></KeyFrame>
+        <KeyFrame Cue="78%"><Setter Property="Opacity" Value="1" /><Setter Property="ScaleTransform.ScaleX" Value="1" /><Setter Property="ScaleTransform.ScaleY" Value="1" /></KeyFrame>
+        <KeyFrame Cue="86%"><Setter Property="Opacity" Value="0.5" /><Setter Property="ScaleTransform.ScaleX" Value="1.5" /><Setter Property="ScaleTransform.ScaleY" Value="1.5" /></KeyFrame>
+        <KeyFrame Cue="94%"><Setter Property="Opacity" Value="1" /><Setter Property="ScaleTransform.ScaleX" Value="0.9" /><Setter Property="ScaleTransform.ScaleY" Value="0.9" /></KeyFrame>
+        <KeyFrame Cue="100%"><Setter Property="Opacity" Value="1" /><Setter Property="ScaleTransform.ScaleX" Value="1" /><Setter Property="ScaleTransform.ScaleY" Value="1" /></KeyFrame>
+      </Animation>
+    </Style.Animations>
+  </Style>
+
   <!-- Papel de parede "Inteiro": cartoes translucidos para o fundo do jogo aparecer -->
   <Style Selector="ItemsControl.fullWallpaper Button.slot">
     <Setter Property="Background" Value="{DynamicResource SlotGlass}" />
@@ -611,6 +629,21 @@
   <Style Selector="Border.hero">
     <Setter Property="Padding" Value="12" />
   </Style>
+  <!-- Linha do tempo do Inicio: de onde veio a mudanca (jogo ou app) -->
+  <Style Selector="Border.chip.timelineSource">
+    <Setter Property="Background" Value="{DynamicResource TintGoodBackground}" />
+  </Style>
+  <Style Selector="Border.chip.timelineSource TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource TintGoodForeground}" />
+    <Setter Property="FontSize" Value="11" />
+  </Style>
+  <Style Selector="Border.chip.timelineSource.app">
+    <Setter Property="Background" Value="{DynamicResource TintInfoBackground}" />
+  </Style>
+  <Style Selector="Border.chip.timelineSource.app TextBlock">
+    <Setter Property="Foreground" Value="{DynamicResource TintInfoForeground}" />
+  </Style>
+
   <!-- Selo do jogo de origem na ficha do editor -->
   <Style Selector="Border.chip.originChip">
     <Setter Property="Background" Value="{DynamicResource SlotBackground}" />

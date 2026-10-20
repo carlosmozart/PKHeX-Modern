@@ -638,8 +638,20 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
         ? new TypeChip(GameInfo.Strings.types[type], (uint)Drawing.PokeSprite.TypeColor.GetTypeSpriteColor(type).ToArgb()) : null;
     public bool HasCardTera => CardTera is not null;
 
+    /// <summary>Sobe quando o Pokémon passa a legal ou vira shiny durante a edição: brilho ✦ na ficha (Controls/SparkleBurst).</summary>
+    public int SparkleToken { get; private set; }
+    private bool? _sparkleLegal, _sparkleShiny;
+
     private void RefreshCard()
     {
+        // Brilho: só nas transições depois de carregado (abrir um Pokémon já legal ou shiny não brilha)
+        bool legal = IsLegal, shiny = _pk.IsShiny;
+        if (_sparkleLegal is { } wasLegal && _sparkleShiny is { } wasShiny && ((legal && !wasLegal) || (shiny && !wasShiny)))
+        {
+            SparkleToken++;
+            Raise(nameof(SparkleToken));
+        }
+        (_sparkleLegal, _sparkleShiny) = (legal, shiny);
         if (_pk.IsEgg || CoreAdapter.IsEmpty(_pk))
             CardGlow = null;
         else

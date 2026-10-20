@@ -28,6 +28,8 @@ $suites = [ordered]@{
     'ThemePicker' = @{}
     'Showcase' = @{ 'sv.sav' = 'Scarlet' }
     'Palette' = @{}
+    'Timeline' = @{}
+    'Motion' = @{}
     'BankDetails' = @{}
     'ChangePreview' = @{}
     'LegalityGroups' = @{}

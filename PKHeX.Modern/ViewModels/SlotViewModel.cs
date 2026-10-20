@@ -108,10 +108,28 @@ public sealed class SlotViewModel(int box, int slot) : ViewModelBase
     private static Avalonia.Media.Color TypeColor(byte type) => Avalonia.Media.Color.FromUInt32((uint)Drawing.PokeSprite.TypeColor.GetTypeSpriteColor(type).ToArgb());
     private static Avalonia.Media.Color Alpha(Avalonia.Media.Color c, byte a) => Avalonia.Media.Color.FromArgb(a, c.R, c.G, c.B);
 
+    /// <summary>
+    /// Sobe quando o slot recebe outro Pokémon depois de carregado (arrastar, colar, aplicar): o cartão dá um pulinho
+    /// (Controls/TypeGlow.cs). Trocar de caixa cria slots novos, então não pula.
+    /// </summary>
+    public int Pulse { get; private set; }
+    private string? _identity;
+
+    private void TrackPulse(PKM? pk)
+    {
+        var identity = pk is null || CoreAdapter.IsEmpty(pk) ? "" : $"{pk.Species}:{pk.Form}:{pk.EncryptionConstant:X8}:{pk.PID:X8}:{pk.CurrentLevel}:{pk.Nickname}";
+        bool changed = _identity is not null && identity != _identity && identity.Length > 0;
+        _identity = identity;
+        if (!changed) return;
+        Pulse++;
+        Raise(nameof(Pulse));
+    }
+
     public void Load(SaveFile sav)
     {
         var pk = IsParty ? CoreAdapter.GetPartySlot(sav, Slot) : CoreAdapter.GetBoxSlot(sav, Box, Slot);
         Pkm = pk;
+        TrackPulse(pk);
         (IsLegal, _summary) = CoreAdapter.IsEmpty(pk) ? (null, "") : CoreAdapter.AnalyzeSlot(pk);
         Sprite = IsParty ? SpriteService.GetSprite(pk) : SpriteService.GetSprite(pk, sav, Box, Slot);
         foreach (var p in (string[])[nameof(IsEmpty), nameof(Title), nameof(Subtitle), nameof(Tooltip), nameof(IsShiny), nameof(IsEgg), nameof(Nickname), nameof(HasNickname), nameof(Gender), nameof(IsMale), nameof(IsFemale), nameof(BallSprite), nameof(TypeGlow)])
@@ -122,6 +140,7 @@ public sealed class SlotViewModel(int box, int slot) : ViewModelBase
     public void LoadEntity(PKM? pk)
     {
         Pkm = pk;
+        TrackPulse(pk);
         (IsLegal, _summary) = pk is null || CoreAdapter.IsEmpty(pk) ? (null, "") : CoreAdapter.AnalyzeSlot(pk);
         Sprite = pk is null ? null : SpriteService.GetSprite(pk);
         foreach (var p in (string[])[nameof(IsEmpty), nameof(Title), nameof(Subtitle), nameof(Tooltip), nameof(IsShiny), nameof(IsEgg), nameof(Nickname), nameof(HasNickname), nameof(Gender), nameof(IsMale), nameof(IsFemale), nameof(BallSprite), nameof(TypeGlow)])

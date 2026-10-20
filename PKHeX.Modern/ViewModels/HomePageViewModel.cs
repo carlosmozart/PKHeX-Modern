@@ -24,6 +24,8 @@ public sealed class HomePageViewModel(Action<PageViewModel> navigate, Action<int
     /// <summary>Situacao do save (definida pelo MainViewModel): alteracoes nao salvas e as acoes do cartao de status.</summary>
     public Func<(bool Dirty, int Count)>? Pending { get; set; }
     public RelayCommand? ShowPendingCommand { get; set; }
+    /// <summary>Linha do tempo do save ativo (definida pelo MainViewModel, mais nova primeiro).</summary>
+    public Func<IReadOnlyList<TimelineEntry>>? Timeline { get; set; }
     public RelayCommand? BackupsCommand { get; set; }
 
     public override void Load(SaveFile sav)
@@ -89,7 +91,9 @@ public sealed class HomePageViewModel(Action<PageViewModel> navigate, Action<int
                 break;
         }
         Recent = recent;
-        foreach (var p in (string[])[nameof(Art), nameof(GameName), nameof(Trainer), nameof(Facts), nameof(Status), nameof(Party), nameof(HasParty), nameof(Tiles), nameof(Recent), nameof(HasRecent)])
+        TimelineEntries = [.. (Timeline?.Invoke() ?? []).Take(6).Select(e => new HomeTimelineViewModel(e, WhenText(e.When)))];
+        foreach (var p in (string[])[nameof(Art), nameof(GameName), nameof(Trainer), nameof(Facts), nameof(Status), nameof(Party), nameof(HasParty), nameof(Tiles), nameof(Recent), nameof(HasRecent),
+            nameof(TimelineEntries), nameof(HasTimeline), nameof(HasNoTimeline)])
             Raise(p);
     }
 
@@ -158,6 +162,22 @@ public sealed class HomePageViewModel(Action<PageViewModel> navigate, Action<int
     public IReadOnlyList<HomeTileViewModel> Tiles { get; private set; } = [];
     public IReadOnlyList<HomeRecentViewModel> Recent { get; private set; } = [];
     public bool HasRecent => Recent.Count > 0;
+    public IReadOnlyList<HomeTimelineViewModel> TimelineEntries { get; private set; } = [];
+    public bool HasTimeline => TimelineEntries.Count > 0;
+    public bool HasNoTimeline => TimelineEntries.Count == 0;
+}
+
+/// <summary>Uma linha da linha do tempo do Início: quando, de onde veio a mudança e o que mudou.</summary>
+public sealed class HomeTimelineViewModel(TimelineEntry entry, string when)
+{
+    public string When { get; } = when;
+    /// <summary>"No jogo" (mudou fora do app, entre uma abertura e outra) ou "Salvo no app".</summary>
+    public string Source { get; } = entry.Kind == "saved" ? "Salvo no app" : "No jogo";
+    public bool IsFromApp => entry.Kind == "saved";
+    public IReadOnlyList<string> Changes { get; } = entry.Changes;
+    /// <summary>Sprites dos shinies novos (até 6).</summary>
+    public IReadOnlyList<Bitmap?> Shinies { get; } = [.. entry.NewShinies.Take(6).Select(s => SpriteService.GetSpeciesSprite(s, true))];
+    public bool HasShinies => Shinies.Count > 0;
 }
 
 /// <summary>Um Pokemon da equipe no topo do Inicio (clique abre na pagina Equipe).</summary>

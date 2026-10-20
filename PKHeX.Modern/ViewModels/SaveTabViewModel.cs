@@ -27,6 +27,8 @@ public sealed class SaveTabViewModel : ViewModelBase
     /// <summary>Caixa e pagina abertas quando a aba deixou de ser a ativa.</summary>
     public int CurrentBox { get; set; }
     public PageViewModel? LastPage { get; set; }
+    /// <summary>Linha do tempo do save (registrada ao ativar a aba pela primeira vez e depois de cada gravação).</summary>
+    public System.Collections.Generic.IReadOnlyList<TimelineEntry>? Timeline { get; set; }
 
     private bool _isDirty;
     public bool IsDirty { get => _isDirty; set => Set(ref _isDirty, value); }
