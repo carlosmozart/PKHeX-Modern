@@ -6,6 +6,11 @@ Ao adicionar uma função, anote em "Próxima versão"; na release, troque o tí
 Formato: "## versão — data", "### seção", "- item".
 -->
 
+## Próxima versão
+
+### 🔄 PKHeX atualizado
+- **PKHeX de 19/10/2026:** a leitura de sets do Showdown ficou mais rigorosa. Linhas de EVs/IVs com valor inválido ou o mesmo atributo repetido (ex.: “30 Atk / 29 Atk”) passam a ser apontadas como erro em vez de o app adivinhar o valor.
+
 ## 0.4.30 — 2026-10-19
 
 ### 🔄 PKHeX atualizado
