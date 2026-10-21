@@ -47,7 +47,8 @@ using (var zip = ZipFile.Open(Path.Combine(library, "Black-backup.zip"), ZipArch
 var bank = "Coleção"; BankStorage.CreateBank(bank);
 var bankBox = BankStorage.GetBoxes(bank).First();
 for (int i = 0; i < species.Length; i++) BankStorage.WriteSlot(bankBox, i, sav.GetBoxSlotAtIndex(0, i));
-var vm = new MainViewModel(new AppSettings { SavesFolder = library, CheckForUpdates = false });
+// Sem animacoes: a Pokebola de abertura aparecia no meio da captura do Inicio
+var vm = new MainViewModel(new AppSettings { SavesFolder = library, CheckForUpdates = false, Animations = false });
 // Caminho neutro na pagina Saves: a pasta temporaria tem o nome do usuario do Windows.
 vm.SaveManager.DescribeFolder = () => "Documentos/PKHeX/saves";
 var win = new MainWindow { DataContext = vm, Width = 1500, Height = 1100 }; win.Show();
@@ -151,7 +152,7 @@ Pump(); phone.UpdateLayout(); Pump(); phone.CaptureRenderedFrame()!.Save(Path.Co
 phone.Content = null; phone.Close();
 // Interface em ingles: a traducao so e instalada na partida, entao vai por ultimo, numa janela nova.
 Loc.Load(Loc.English); Loc.Hook();
-var vmEn = new MainViewModel(new AppSettings { SavesFolder = library, CheckForUpdates = false, UiLanguage = Loc.English });
+var vmEn = new MainViewModel(new AppSettings { SavesFolder = library, CheckForUpdates = false, Animations = false, UiLanguage = Loc.English });
 win.Close(); win = new MainWindow { DataContext = vmEn, Width = 1500, Height = 1100 }; win.Show();
 vmEn.Open(black); Wait(vmEn.SelectSlotAsync(vmEn.Boxes.Slots[0])); Shot("english");
 Console.WriteLine("Capturas sintéticas concluídas: " + output);
