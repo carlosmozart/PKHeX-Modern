@@ -24,6 +24,9 @@ Formato: "## versão — data", "### seção", "- item".
 - **Cor do tipo nos cartões:** cada Pokémon das caixas, da equipe, do bank e do outro save tem o fundo do cartão tingido com a cor dos tipos dele (o primeiro no alto, o segundo embaixo). Ovos e slots vazios ficam neutros. Dá para desligar em ⚙ › “Cor do tipo nos cartões”.
 - **Papel de parede “Inteiro”:** nova opção em ⚙ › Papel de parede das caixas que mostra o papel de parede do jogo nítido, como no próprio jogo, com os cartões translúcidos por cima. O padrão continua o Normal.
 
+### 📱 Android
+- **Gestos:** deslize o dedo para o lado nas caixas para trocar de caixa (na página Caixas e nos três painéis do Bank) e puxe a lista da página Saves para baixo para reler a pasta. Segurar o dedo continua marcando e arrastando.
+
 ### 🔄 PKHeX atualizado
 - **PKHeX de 19/10/2026:** a leitura de sets do Showdown ficou mais rigorosa. Linhas de EVs/IVs com valor inválido ou o mesmo atributo repetido (ex.: “30 Atk / 29 Atk”) passam a ser apontadas como erro em vez de o app adivinhar o valor.
 

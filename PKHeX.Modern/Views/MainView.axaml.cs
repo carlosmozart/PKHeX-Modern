@@ -44,6 +44,7 @@ public sealed partial class MainView : UserControl
             Controls.TouchHelp.ObserveTouch(this);
         }, RoutingStrategies.Tunnel);
         _drag = new SlotDragController(this, () => VM);
+        _ = new BoxSwipe(this);
         // Clicar fora da paleta fecha
         PaletteBackdrop.PointerPressed += (_, e) => { if (e.Source == PaletteBackdrop) VM.ClosePalette(); };
         if (!App.ShowShortcuts)

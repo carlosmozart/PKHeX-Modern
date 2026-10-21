@@ -53,6 +53,8 @@
       </Border>
       <TextBlock Text="Lendo saves..." Classes="muted" IsVisible="{Binding ShowLoading}" HorizontalAlignment="Center" VerticalAlignment="Center" />
 
+      <!-- Puxar para baixo (toque) relê a lista -->
+      <RefreshContainer RefreshRequested="OnPullRefresh">
       <ScrollViewer>
         <ItemsControl ItemsSource="{Binding Groups}">
           <ItemsControl.ItemTemplate>
@@ -122,6 +124,7 @@
           </ItemsControl.ItemTemplate>
         </ItemsControl>
       </ScrollViewer>
+      </RefreshContainer>
     </Panel>
   </DockPanel>
 
@@ -146,6 +149,8 @@
         <c:EmptyState Art="backup" ArtSize="144" Title="Nenhum backup ainda"
                       Hint="Toda vez que você salva por cima de um save, o arquivo anterior é copiado para cá. Assim dá para voltar atrás se algo der errado." />
       </Border>
+      <!-- Puxar para baixo (toque) relê a lista -->
+      <RefreshContainer RefreshRequested="OnPullRefresh">
       <ScrollViewer>
         <ItemsControl ItemsSource="{Binding BackupGroups}">
           <ItemsControl.ItemTemplate>
@@ -200,6 +205,7 @@
           </ItemsControl.ItemTemplate>
         </ItemsControl>
       </ScrollViewer>
+      </RefreshContainer>
     </Panel>
   </DockPanel>
   </Panel>

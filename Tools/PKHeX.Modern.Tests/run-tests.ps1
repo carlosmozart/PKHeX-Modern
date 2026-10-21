@@ -25,6 +25,7 @@ $suites = [ordered]@{
     'BackupMetadata' = @{}
     'ShowdownTeam' = @{}
     'Touch' = @{}
+    'Gestures' = @{}
     'ThemePicker' = @{}
     'Showcase' = @{ 'sv.sav' = 'Scarlet' }
     'Palette' = @{}

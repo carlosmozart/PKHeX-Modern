@@ -306,7 +306,7 @@
                     ToolTip.Tip="Abre um segundo save aqui para mover Pokémon entre dois jogos (com conversão de geração)" />
           </StackPanel>
           <Panel>
-          <DockPanel IsVisible="{Binding ShowBank}">
+          <DockPanel Classes="boxSwipe" IsVisible="{Binding ShowBank}">
           <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,0,10" IsVisible="{Binding ShowSelectors}">
             <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
               <TextBlock Text="BANCO" Classes="section" Margin="0" VerticalAlignment="Center" />
@@ -434,7 +434,7 @@
           </DockPanel>
 
           <!-- Outro save -->
-          <DockPanel IsVisible="{Binding $parent[UserControl].((vm:BankPageViewModel)DataContext).ShowOther}" DataContext="{Binding Other}" x:DataType="vm:OtherSaveViewModel">
+          <DockPanel Classes="boxSwipe" IsVisible="{Binding $parent[UserControl].((vm:BankPageViewModel)DataContext).ShowOther}" DataContext="{Binding Other}" x:DataType="vm:OtherSaveViewModel">
             <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,0,10">
               <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
                 <ComboBox HorizontalAlignment="Stretch" ItemsSource="{Binding Options}" SelectedItem="{Binding SelectedOption}"
@@ -513,7 +513,7 @@
       </Border>
 
       <!-- Direita: save aberto (mesma caixa da pagina Caixas) -->
-      <Border Grid.Column="2" Classes="card bankPane" DataContext="{Binding $parent[views:MainView].((vm:MainViewModel)DataContext)}" x:DataType="vm:MainViewModel">
+      <Border Grid.Column="2" Classes="card bankPane boxSwipe" DataContext="{Binding $parent[views:MainView].((vm:MainViewModel)DataContext)}" x:DataType="vm:MainViewModel">
         <DockPanel>
           <StackPanel DockPanel.Dock="Top" Spacing="8" Margin="0,0,0,10">
             <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
@@ -2263,7 +2263,7 @@
 
   <!-- Caixas -->
   <DataTemplate DataType="vm:BoxesPageViewModel">
-    <DockPanel>
+    <DockPanel Classes="boxSwipe">
       <DockPanel DockPanel.Dock="Top" Margin="0,4,0,10">
         <Button x:Name="SortButton" DockPanel.Dock="Right" Classes="small" Content="⇅  Ordenar" Margin="10,0,0,0" VerticalAlignment="Top"
                 ToolTip.Tip="Ordena a caixa aberta ou todas as caixas (Ctrl+Z desfaz)">

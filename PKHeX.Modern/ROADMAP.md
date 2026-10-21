@@ -125,9 +125,9 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 **Uso**
 - [x] **Paleta de comandos (Ctrl+K):** feito (próxima versão): ações, páginas, caixas e Pokémon do save, sem acento, também em inglês; ⌘ ao lado da busca (`CommandPaletteViewModel`, `MainViewModel.Palette.cs`).
 - [x] **Arrastar com prévia:** feito (próxima versão): sprite seguindo o ponteiro com a ação ao soltar e o tamanho do grupo, origem apagada, destino destacado e pulinho ao soltar (`DragPreviewViewModel`).
-- [ ] **Gestos no Android:** deslizar entre caixas, segurar um Pokémon para um resumo rápido, puxar para baixo para reler os saves.
+- [x] **Gestos no Android:** feito (próxima versão): deslizar entre caixas (`Views/BoxSwipe.cs`) e puxar para reler os saves (RefreshContainer no Save Manager). O resumo ao segurar ficou de fora: segurar já marca e arrasta (0.4.16). **Falta conferir no aparelho.** Pedido original: deslizar entre caixas, segurar um Pokémon para um resumo rápido, puxar para baixo para reler os saves.
 
-Andamento (20/10/2026): 15 de 17 feitos, ainda sem release. Faltam a tipografia dos títulos e os gestos no Android (este último precisa de teste no aparelho). Sugestão: soltar a 0.5.0 com a identidade completa; tipografia e gestos podem ficar para a 0.5.x.
+Andamento (21/10/2026): 16 de 17 feitos, ainda sem release. Falta a tipografia dos títulos (precisa baixar uma fonte, com permissão). Os gestos precisam de conferência no aparelho.
 
 ## Conhecido / observações
 - Em saves com a equipe cheia, ainda não foi testado colocar um Pokémon num slot vazio da equipe. Ele entra na próxima posição livre.

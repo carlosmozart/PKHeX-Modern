@@ -21,6 +21,21 @@ public sealed partial class SaveManagerView : UserControl
             card.Focus();
     }
 
+    /// <summary>Puxar a lista para baixo (toque) relê a pasta, ou os backups; a roda some quando termina.</summary>
+    private async void OnPullRefresh(object? sender, RefreshRequestedEventArgs e)
+    {
+        var deferral = e.GetDeferral();
+        try
+        {
+            if (VM is { } vm)
+                await (vm.ShowBackups ? vm.RefreshBackupsAsync() : vm.RefreshAsync());
+        }
+        finally
+        {
+            deferral.Complete();
+        }
+    }
+
     /// <summary>Duplo clique no cartao abre o save.</summary>
     private void OnCardDoubleTapped(object? sender, TappedEventArgs e)
     {
