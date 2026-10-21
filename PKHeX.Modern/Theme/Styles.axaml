@@ -44,6 +44,11 @@
   <Style Selector="TextBlock.title">
     <Setter Property="FontSize" Value="20" />
     <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="FontFamily" Value="{DynamicResource AppTitleFontFamily}" />
+  </Style>
+  <!-- Outros titulos grandes (nome do save, logo, vitrine): so a fonte dos titulos, tamanho e peso de cada um -->
+  <Style Selector="TextBlock.display">
+    <Setter Property="FontFamily" Value="{DynamicResource AppTitleFontFamily}" />
   </Style>
   <Style Selector="TextBlock.section">
     <Setter Property="FontSize" Value="12" />

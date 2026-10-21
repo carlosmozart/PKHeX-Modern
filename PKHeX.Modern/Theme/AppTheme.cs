@@ -39,12 +39,17 @@ public static class AppTheme
     private const string InterFont = "fonts:Inter#Inter, $Default";
     /// <summary>Recriacao da fonte dos Pokemon de Game Boy (Pokemon Classic, CC BY-SA 3.0: Assets/Fonts/PokemonClassic-LICENSE.txt).</summary>
     private const string PokemonGbFont = "avares://PKHeX.Modern.UI/Assets/Fonts#Pokemon Classic, $Default";
+    /// <summary>
+    /// Fonte dos titulos grandes (Fredoka SemiBold, OFL: Assets/Fonts/OFL-Fredoka.txt; peso fixo cortado da fonte
+    /// variavel com o fontTools). Ela nao tem ♂/♀ e outros simbolos, que vem da Inter.
+    /// </summary>
+    private const string TitleFont = "avares://PKHeX.Modern.UI/Assets/Fonts#Fredoka, fonts:Inter#Inter, $Default";
 
     /// <summary>Fontes da interface (menu ⚙ › Fonte). "Do tema" segue o tema completo (Pixel usa a Pixelify Sans).</summary>
     public static IReadOnlyList<AppFontChoice> Fonts { get; } =
     [
-        new("theme", "Do tema", "Usa a fonte do tema escolhido (Pixelify Sans no tema Pixel, Inter nos outros).", null),
-        new("inter", "Inter", "Fonte moderna e legível, a padrão do app.", InterFont),
+        new("theme", "Do tema", "Usa a fonte do tema escolhido (Pixelify Sans no tema Pixel, Inter com os títulos em Fredoka nos outros).", null),
+        new("inter", "Inter", "Fonte moderna e legível em tudo, inclusive nos títulos.", InterFont),
         new("pixelify", "Pixelify Sans", "Fonte pixelada com acentos e negrito (OFL).", PixelFont),
         new("pokemongb", "Pokémon GB/GBC", "Recriação da fonte de Red/Blue/Yellow/Gold/Silver/Crystal (Pokemon Classic, de TheLouster115). Como as letras são largas, vale nos títulos; o texto normal fica na Inter.", PokemonGbFont, HeadingsOnly: true),
     ];
@@ -64,13 +69,16 @@ public static class AppTheme
 
     /// <summary>
     /// AppFontFamily = fonte dos titulos e do resto; AppBodyFontFamily = texto normal (14-15 px, Styles.axaml), que
-    /// so difere nas fontes largas (<see cref="AppFontChoice.HeadingsOnly"/>).
+    /// so difere nas fontes largas (<see cref="AppFontChoice.HeadingsOnly"/>); AppTitleFontFamily = titulos grandes.
     /// </summary>
     private static void ApplyFont(Application app)
     {
         var family = FontFamily.Parse(CurrentFontFamily);
         app.Resources["AppFontFamily"] = family;
         app.Resources["AppBodyFontFamily"] = FindFont(FontKey).HeadingsOnly ? FontFamily.Parse(InterFont) : family;
+        // Titulos grandes (TextBlock.title e .display): Fredoka quando a fonte em uso e a Inter do tema; uma fonte
+        // escolhida no ⚙ (ou a do tema Pixel) vale tambem para eles, e "Inter" no ⚙ deixa tudo na Inter.
+        app.Resources["AppTitleFontFamily"] = FontKey == "theme" && CurrentFontFamily == InterFont ? FontFamily.Parse(TitleFont) : family;
     }
 
     /// <summary>Familia em uso: a escolhida ou, em "Do tema", a do tema atual.</summary>

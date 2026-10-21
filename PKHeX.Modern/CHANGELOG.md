@@ -9,6 +9,7 @@ Formato: "## versão — data", "### seção", "- item".
 ## Próxima versão
 
 ### 🎨 Interface
+- **Títulos com personalidade:** os títulos grandes (páginas, nome do save, Pokémon no editor, logo e vitrine) passaram a usar a Fredoka, uma fonte arredondada; o texto continua na Inter. ⚙ › Fonte › Inter volta tudo para a Inter.
 - **Ícones de jogo:** a barra lateral e os atalhos do Início trocaram os ícones genéricos por desenhos próprios de objetos dos jogos, coloridos: Pokébola, caixa do PC, o PC do Bank, a Pokédex, o boné do treinador, a mochila, o mato alto, o cartucho e o portátil.
 - **Barra lateral de Pokédex:** o topo virou a tampa de uma Pokédex, com a faixa na cor de destaque (ou na cor do jogo do save), a lente azul e as três luzes; a linha acima das páginas ganhou o botão da Pokébola. Desenhos próprios, sem arte oficial.
 - **Arrastar com prévia:** o sprite do Pokémon segue o ponteiro (no celular, acima do dedo) com o que vai acontecer ao soltar (Mover, ⇄ Trocar, Copiar, Sobrescrever, Trocar de caixa) e quantos vão juntos na seleção múltipla; a origem fica apagada até soltar.

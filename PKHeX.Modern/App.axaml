@@ -133,7 +133,7 @@
               </Viewbox>
             </Border>
             <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="4">
-              <TextBlock Text="{Binding GameName}" FontSize="24" FontWeight="SemiBold" />
+              <TextBlock Classes="display" Text="{Binding GameName}" FontSize="24" FontWeight="SemiBold" />
               <TextBlock Text="{Binding Trainer}" Classes="muted" FontSize="13" />
               <TextBlock Text="{Binding Facts}" Classes="muted" FontSize="13" />
             </StackPanel>
@@ -2440,7 +2440,7 @@
                 </Border>
                 <StackPanel Grid.Column="1" VerticalAlignment="Center" Margin="16,0,0,0" Spacing="2">
                   <Viewbox Stretch="Uniform" StretchDirection="DownOnly" HorizontalAlignment="Left">
-                    <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="20" />
+                    <TextBlock Classes="display" Text="{Binding Title}" FontWeight="SemiBold" FontSize="20" />
                   </Viewbox>
                   <TextBlock Text="{Binding Nickname}" Classes="muted" IsVisible="{Binding HasNickname}" />
                   <StackPanel Orientation="Horizontal" Spacing="6">

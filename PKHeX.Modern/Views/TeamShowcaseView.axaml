@@ -42,7 +42,7 @@
         <StackPanel Spacing="10">
           <Grid ColumnDefinitions="*,Auto" Margin="6,0">
             <StackPanel>
-              <TextBlock Text="{Binding Title}" FontSize="24" FontWeight="Bold" />
+              <TextBlock Classes="display" Text="{Binding Title}" FontSize="24" FontWeight="SemiBold" />
               <TextBlock Text="{Binding Subtitle}" Classes="muted" FontSize="14" />
             </StackPanel>
             <TextBlock Grid.Column="1" Text="PKHeX Modern" Classes="muted" FontSize="12" VerticalAlignment="Bottom" />
@@ -73,7 +73,7 @@
                       </Panel>
                       <StackPanel Grid.Column="1" Spacing="6">
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                          <TextBlock Text="{Binding Name}" FontSize="20" FontWeight="Bold" TextTrimming="CharacterEllipsis" MaxWidth="190" />
+                          <TextBlock Classes="display" Text="{Binding Name}" FontSize="20" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" MaxWidth="190" />
                           <TextBlock Text="♂" Classes="male" FontSize="16" VerticalAlignment="Center" IsVisible="{Binding IsMale}" />
                           <TextBlock Text="♀" Classes="female" FontSize="16" VerticalAlignment="Center" IsVisible="{Binding IsFemale}" />
                         </StackPanel>
@@ -135,7 +135,7 @@
                         <TextBlock Text="★" Classes="shiny" FontSize="18" IsVisible="{Binding IsShiny}" HorizontalAlignment="Right" VerticalAlignment="Top" />
                       </Panel>
                       <StackPanel Orientation="Horizontal" Spacing="5" HorizontalAlignment="Center">
-                        <TextBlock Text="{Binding Name}" FontSize="18" FontWeight="Bold" TextTrimming="CharacterEllipsis" MaxWidth="140" />
+                        <TextBlock Classes="display" Text="{Binding Name}" FontSize="18" FontWeight="SemiBold" TextTrimming="CharacterEllipsis" MaxWidth="140" />
                         <TextBlock Text="♂" Classes="male" FontSize="15" VerticalAlignment="Center" IsVisible="{Binding IsMale}" />
                         <TextBlock Text="♀" Classes="female" FontSize="15" VerticalAlignment="Center" IsVisible="{Binding IsFemale}" />
                       </StackPanel>

@@ -72,4 +72,6 @@
   <FontFamily x:Key="AppSmallFontFamily">fonts:Inter#Inter, $Default</FontFamily>
   <!-- Texto normal (14-15 px): igual a AppFontFamily, menos nas fontes largas (Pokemon GB), que ficam so nos titulos -->
   <FontFamily x:Key="AppBodyFontFamily">fonts:Inter#Inter, $Default</FontFamily>
+  <!-- Titulos grandes (TextBlock.title e .display): Fredoka nos temas com Inter (Theme/AppTheme.cs) -->
+  <FontFamily x:Key="AppTitleFontFamily">avares://PKHeX.Modern.UI/Assets/Fonts#Fredoka, fonts:Inter#Inter, $Default</FontFamily>
 </ResourceDictionary>

@@ -55,7 +55,14 @@ var logo = win.GetVisualDescendants().OfType<TextBlock>().First(t => t.Text == "
 Check("Pokémon GB no logo", logo.FontFamily.Name.Contains("Pokemon Classic"), logo.FontFamily.Name);
 win.CaptureRenderedFrame()?.Save(Path.Combine(work, "pokemongb.png"));
 Opt("theme").SelectCommand.Execute(null); Pump();
-Check("volta ao tema: título na Inter", win.GetVisualDescendants().OfType<TextBlock>().First(t => t.Classes.Contains("title") && t.Text == vm.Boxes.BoxName).FontFamily.Name.Contains("Inter"));
+string TitleFont() => win.GetVisualDescendants().OfType<TextBlock>().First(t => t.Classes.Contains("title") && t.Text == vm.Boxes.BoxName).FontFamily.Name;
+Check("volta ao tema: título na Fredoka (0.5.0), texto na Inter", TitleFont().Contains("Fredoka") && NavFont().Contains("Inter"), $"{TitleFont()} / {NavFont()}");
+Check("tema: logo na Fredoka", win.GetVisualDescendants().OfType<TextBlock>().First(t => t.Text == "PKHeX").FontFamily.Name.Contains("Fredoka"));
+Opt("inter").SelectCommand.Execute(null); Pump();
+Check("⚙ › Inter: título também na Inter", TitleFont().Contains("Inter"), TitleFont());
+vm.ThemeOptions.First(t => t.Preset.Key == "pixel").SelectCommand.Execute(null); Opt("theme").SelectCommand.Execute(null); Pump();
+Check("tema Pixel: título na Pixelify", TitleFont().Contains("Pixelify"), TitleFont());
+vm.ThemeOptions.First(t => t.Preset.Key == "default").SelectCommand.Execute(null); Pump();
 
 // menu ⚙ com a secao Fonte
 var prefs = win.GetVisualDescendants().OfType<Button>().First(b => b.Name == "PrefsButton");
