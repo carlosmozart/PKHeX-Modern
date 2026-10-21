@@ -103,7 +103,7 @@ Ideias escolhidas, na ordem combinada. O PKVault também usa o PKHeX.Core; o có
 Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent genérico. Inspirar-se nos jogos (cores, formas, a ideia da Pokédex) sem copiar telas, logos ou artes oficiais. Antes de implementar, mostrar prévias renderizadas sem janela para o usuário escolher.
 
 **Identidade (maior impacto)**
-- [ ] **Elementos de Pokédex/Pokébola no layout:** topo vermelho e “lente” azul da Pokédex clássica na barra lateral, ou divisórias que lembram a linha da Pokébola. Um ou dois detalhes marcantes, sem exagero.
+- [x] **Elementos de Pokédex/Pokébola no layout:** feito (próxima versão): tampa da Pokédex no topo da barra lateral (faixa na cor de destaque, lente e luzes) e a linha da Pokébola acima das páginas (`Controls/DexChrome.cs`). Pedido original: topo vermelho e “lente” azul da Pokédex clássica na barra lateral, ou divisórias que lembram a linha da Pokébola. Um ou dois detalhes marcantes, sem exagero.
 - [x] **Cartões de slot com a cor do tipo:** feito (próxima versão): brilho dos dois tipos no fundo de todos os cartões de Pokémon (`Controls/TypeGlow.cs`, `SlotViewModel.TypeGlow`), escolhido entre faixa, brilho e barra; desliga em ⚙.
 - [x] **Fundo das caixas fiel ao jogo:** feito (próxima versão): opção “Inteiro” do papel de parede, nítido e com cartões translúcidos (`SlotGlass`); o padrão continua o Normal.
 - [x] **Cor do jogo do save:** feito (próxima versão): destaque “Cor do jogo do save” (bolinha em arco-íris) com brilho no alto da tela, ajustado para contraste (`AccentTheme.ForGame`, `GameTint`).
@@ -127,7 +127,7 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 - [x] **Arrastar com prévia:** feito (próxima versão): sprite seguindo o ponteiro com a ação ao soltar e o tamanho do grupo, origem apagada, destino destacado e pulinho ao soltar (`DragPreviewViewModel`).
 - [ ] **Gestos no Android:** deslizar entre caixas, segurar um Pokémon para um resumo rápido, puxar para baixo para reler os saves.
 
-Andamento (20/10/2026): 13 de 17 feitos, ainda sem release. Faltam os elementos de Pokédex/Pokébola no layout, os ícones próprios, a tipografia dos títulos e os gestos no Android (este último precisa de teste no aparelho). Sugestão: fechar a 0.5.0 com os elementos de Pokédex/Pokébola e os ícones, que completam a identidade; tipografia e gestos podem ficar para a 0.5.x.
+Andamento (20/10/2026): 14 de 17 feitos, ainda sem release. Faltam os ícones próprios, a tipografia dos títulos e os gestos no Android (este último precisa de teste no aparelho). Sugestão: fechar a 0.5.0 com os ícones, que completam a identidade; tipografia e gestos podem ficar para a 0.5.x.
 
 ## Conhecido / observações
 - Em saves com a equipe cheia, ainda não foi testado colocar um Pokémon num slot vazio da equipe. Ele entra na próxima posição livre.

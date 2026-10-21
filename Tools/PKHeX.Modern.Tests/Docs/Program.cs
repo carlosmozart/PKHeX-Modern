@@ -135,6 +135,7 @@ Wait(vm.OpenAsync(black)); vm.CurrentPage = vm.ShinyHunt; vm.ShinyHunt.TargetNam
 vm.ShinyHunt.Step = 1234; vm.ShinyHunt.AddStepCommand.Execute(null);
 for (int i = 0; i < 400 && vm.ShinyHunt.IsLoadingLocations; i++) { Pump(); System.Threading.Thread.Sleep(10); }
 Shot("shinyhunt"); vm.ShinyHunt.NewHuntCommand.Execute(null);
+Pump(); vm.Dialog?.Complete(true); Pump(); // "Apagar caçada": sem responder, a pergunta ficava por cima das capturas seguintes
 Wait(vm.OpenAsync(black)); vm.CurrentPage = vm.Home; // a aba do Black (com equipe)
 foreach (var key in new[] { "pss", "pixel", "za", "oras", "kanto" })
 {

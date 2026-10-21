@@ -27,10 +27,19 @@
             BorderBrush="{DynamicResource CardBorder}" BorderThickness="0,0,1,0" Padding="16">
       <DockPanel>
         <StackPanel DockPanel.Dock="Top" Spacing="6">
-          <StackPanel Orientation="Horizontal" Spacing="6" Margin="0,0,0,8">
-            <TextBlock Text="PKHeX" FontSize="24" FontWeight="Bold" Foreground="{DynamicResource Accent}" />
-            <TextBlock Text="Modern" Classes="muted" VerticalAlignment="Bottom" Margin="0,0,0,4" />
-          </StackPanel>
+          <!-- Tampa da Pokédex (Controls/DexChrome.cs): faixa na cor de destaque, lente e as três luzes -->
+          <controls:DexBand Fill="{DynamicResource Accent}" Edge="#40000000" Margin="-16,-16,-16,4">
+            <StackPanel Orientation="Horizontal" Spacing="10" Margin="14,12,14,24">
+              <controls:DexLens Width="40" Height="40" />
+              <StackPanel VerticalAlignment="Center" Spacing="3">
+                <controls:DexLights Height="8" HorizontalAlignment="Left" Margin="1,0,0,0" />
+                <StackPanel Orientation="Horizontal" Spacing="5">
+                  <TextBlock Text="PKHeX" FontSize="20" FontWeight="Bold" />
+                  <TextBlock Text="Modern" FontSize="11" Opacity="0.85" VerticalAlignment="Bottom" Margin="0,0,0,3" />
+                </StackPanel>
+              </StackPanel>
+            </StackPanel>
+          </controls:DexBand>
           <!-- Primario so sem save aberto; com save, o primario da tela e o Salvar do rodape (Salvar como fica na seta dele) -->
           <Button Classes.accent="{Binding !HasSave}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"
                   Content="Abrir save..." Click="OnOpen" ToolTip.Tip="Ctrl+O" />
@@ -275,7 +284,9 @@
           </ScrollViewer>
         </DockPanel>
         <!-- Recorte explicito: com a escala do Android, a lista rolada desenhava o item de cima por baixo do "Inicio" -->
-        <Border ClipToBounds="True" IsVisible="{Binding HasSave}" BorderBrush="{DynamicResource CardBorder}" BorderThickness="0,1,0,0" Margin="0,4,0,0" Padding="0,4,0,0">
+        <!-- Linha da Pokébola entre o topo e a navegação -->
+        <controls:BallDivider DockPanel.Dock="Top" IsVisible="{Binding HasSave}" Stroke="{DynamicResource CardBorder}" Fill="{DynamicResource SidebarBackground}" Margin="0,4,0,0" />
+        <Border ClipToBounds="True" IsVisible="{Binding HasSave}" Padding="0,4,0,0">
           <ListBox Classes="nav" Classes.dimmed="{Binding IsHelpOpen}" IsVisible="{Binding HasSave}" ItemsSource="{Binding Pages}"
                    SelectedItem="{Binding CurrentPage}" Background="Transparent">
             <ListBox.Styles>
