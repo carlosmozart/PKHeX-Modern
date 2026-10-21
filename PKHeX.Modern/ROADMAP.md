@@ -127,7 +127,7 @@ Objetivo: deixar a interface com cara de app de Pokémon, sem parecer o Fluent g
 - [x] **Arrastar com prévia:** feito (próxima versão): sprite seguindo o ponteiro com a ação ao soltar e o tamanho do grupo, origem apagada, destino destacado e pulinho ao soltar (`DragPreviewViewModel`).
 - [ ] **Gestos no Android:** deslizar entre caixas, segurar um Pokémon para um resumo rápido, puxar para baixo para reler os saves.
 
-Prioridade sugerida: faixa de tipo + papel de parede do jogo; depois paleta de comandos, vitrine da equipe e estados vazios ilustrados.
+Andamento (20/10/2026): 13 de 17 feitos, ainda sem release. Faltam os elementos de Pokédex/Pokébola no layout, os ícones próprios, a tipografia dos títulos e os gestos no Android (este último precisa de teste no aparelho). Sugestão: fechar a 0.5.0 com os elementos de Pokédex/Pokébola e os ícones, que completam a identidade; tipografia e gestos podem ficar para a 0.5.x.
 
 ## Conhecido / observações
 - Em saves com a equipe cheia, ainda não foi testado colocar um Pokémon num slot vazio da equipe. Ele entra na próxima posição livre.
