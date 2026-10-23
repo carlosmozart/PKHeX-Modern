@@ -1,0 +1,62 @@
+<!doctype html>
+<!-- Imagem de compartilhamento do site (og:image, 1200x630): PKHeX.Modern/docs/social.png. Para gerar de novo:
+     msedge --headless=new --hide-scrollbars --force-device-scale-factor=1 --window-size=1200,630 --screenshot=social.png Tools/SocialCard/card.html -->
+<html><head><meta charset="utf-8">
+<style>
+  @font-face { font-family: "Fredoka"; src: url("../../PKHeX.Modern/Assets/Fonts/Fredoka-SemiBold.ttf"); font-weight: 600; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    font-family: Inter, "Segoe UI", system-ui, sans-serif; color: #eef0f4; position: relative;
+    background-color: #14161b;
+    background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .lid { position: absolute; left: 0; top: 0; width: 1200px; height: 132px; }
+  .lid svg { position: absolute; inset: 0; }
+  .head { position: absolute; left: 56px; top: 26px; display: flex; align-items: center; gap: 22px; }
+  .lens { width: 74px; height: 74px; border-radius: 50%; background: #f5f5f7; border: 2px solid rgba(16,16,24,.6); display: grid; place-items: center; }
+  .lens i { width: 54px; height: 54px; border-radius: 50%; border: 2px solid rgba(16,16,24,.6); background: radial-gradient(circle at 35% 30%, #9be3ff 0, #2f9bf0 45%, #104ea8 100%); position: relative; }
+  .lens i::after { content: ""; position: absolute; left: 22%; top: 18%; width: 26%; height: 18%; border-radius: 50%; background: rgba(255,255,255,.85); }
+  .lights { display: flex; gap: 9px; margin-bottom: 6px; }
+  .lights b { width: 15px; height: 15px; border-radius: 50%; border: 1.5px solid rgba(16,16,24,.6); }
+  .lights b:nth-child(1) { background: #f03a3a; } .lights b:nth-child(2) { background: #ffd23f; } .lights b:nth-child(3) { background: #4cc25a; }
+  .brand { color: #fff; font-family: Fredoka; font-weight: 600; font-size: 46px; line-height: 1; }
+  .brand span { font-family: Inter, "Segoe UI", sans-serif; font-weight: 500; font-size: 24px; opacity: .9; margin-left: 6px; }
+  .text { position: absolute; left: 56px; top: 178px; width: 470px; }
+  h1 { font-family: Fredoka; font-weight: 600; font-size: 54px; line-height: 1.05; margin: 0 0 18px; letter-spacing: -.5px; }
+  h1 em { font-style: normal; color: #e5484d; }
+  .en { color: #8c93a3; font-size: 22px; margin: 0 0 26px; }
+  .os { display: flex; gap: 8px; flex-wrap: wrap; }
+  .os span { font-weight: 600; font-size: 17px; padding: 7px 14px; border-radius: 999px; background: #20242c; border: 1.5px solid #2e333d; }
+  .free { margin-top: 18px; color: #8c93a3; font-size: 18px; }
+  .free b { color: #eef0f4; }
+  .device { position: absolute; right: 44px; top: 160px; width: 600px; background: linear-gradient(160deg, #ec5257, #b8323a); border: 2px solid #7d1f26; border-radius: 20px 20px 20px 52px; padding: 16px 16px 40px; box-shadow: 0 24px 60px rgba(0,0,0,.6), inset 0 2px 0 rgba(255,255,255,.25); }
+  .bezel { background: #e9e9ee; border-radius: 9px 9px 9px 30px; padding: 12px 12px 20px; border: 2px solid rgba(0,0,0,.25); position: relative; }
+  .bezel::before { content: ""; position: absolute; top: 4px; left: 50%; width: 5px; height: 5px; margin-left: -10px; border-radius: 50%; background: #e5484d; box-shadow: 12px 0 0 #e5484d; }
+  .screen { border-radius: 5px; overflow: hidden; border: 2px solid #2a2d35; height: 340px; }
+  .screen img { width: 100%; display: block; }
+  .knob { position: absolute; left: 20px; bottom: 10px; width: 20px; height: 20px; border-radius: 50%; background: #2a2d35; border: 2px solid #7d1f26; }
+  .speaker { position: absolute; right: 26px; bottom: 14px; display: flex; gap: 5px; }
+  .speaker i { width: 24px; height: 4px; border-radius: 2px; background: #7d1f26; }
+</style></head>
+<body>
+  <div class="lid">
+    <svg width="1200" height="132" viewBox="0 0 1200 132"><path d="M0 0H1200V96H700L668 128H0Z" fill="#e5484d"/><path d="M0 127H668L700 95H1200" fill="none" stroke="#7d1f26" stroke-width="4"/></svg>
+  </div>
+  <div class="head">
+    <div class="lens"><i></i></div>
+    <div><div class="lights"><b></b><b></b><b></b></div><div class="brand">PKHeX<span>Modern</span></div></div>
+  </div>
+  <div class="text">
+    <h1>Editor de saves de Pokémon <em>com cara de Pokédex</em></h1>
+    <p class="en">A modern Pokémon save editor built on PKHeX</p>
+    <div class="os"><span>Windows</span><span>Linux</span><span>macOS</span><span>Android</span></div>
+    <div class="free"><b>Grátis</b> e de código aberto · Gen 1–9</div>
+  </div>
+  <div class="device">
+    <div class="bezel"><div class="screen"><img src="../../PKHeX.Modern/docs/boxes.png"></div></div>
+    <div class="knob"></div>
+    <div class="speaker"><i></i><i></i><i></i></div>
+  </div>
+</body></html>
