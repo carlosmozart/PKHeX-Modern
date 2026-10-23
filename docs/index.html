@@ -1,5 +1,6 @@
 <!doctype html>
-<!-- Pagina de divulgacao do PKHeX Modern (GitHub Pages, pasta /docs do branch modern-ui).
+<!-- Pagina de divulgacao do PKHeX Modern (GitHub Pages, pasta /docs do branch modern-ui). Visual de Pokedex (0.5.0):
+     tampa com lente e luzes, fichas numeradas das funcoes e "escolha seu inicial" no download; PT no HTML, EN no script.
      As imagens vem de PKHeX.Modern/docs no proprio repositorio (capturas headless com saves sinteticos). -->
 <html lang="pt-BR">
 <head>
@@ -21,8 +22,8 @@
 <meta property="og:title" content="PKHeX Modern: editor de saves de Pokémon">
 <meta property="og:description" content="Interface moderna e gratuita para o PKHeX, com modo legal, bank, Pokédex centralizada e temas. Windows, Linux, macOS, Steam Deck e Android.">
 <meta property="og:image" content="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/boxes.png">
-<meta property="og:image:width" content="1600">
-<meta property="og:image:height" content="950">
+<meta property="og:image:width" content="1500">
+<meta property="og:image:height" content="1100">
 <meta property="og:image:alt" content="Caixas, equipe e editor do PKHeX Modern">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="PKHeX Modern: editor de saves de Pokémon">
@@ -51,225 +52,459 @@
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #14161b; --panel: #1b1e25; --card: #20242c; --border: #2e333d;
-    --text: #eef0f4; --muted: #8c93a3; --accent: #e5484d; --accent-2: #ff6b6f;
-    --radius: 14px;
+    --text: #eef0f4; --muted: #8c93a3; --red: #e5484d; --red-dark: #b8323a; --red-edge: #7d1f26;
+    --radius: 16px; --title: "Fredoka", Inter, system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body { margin: 0; background: var(--bg); color: var(--text); font-family: Inter, system-ui, sans-serif; line-height: 1.55; }
-  a { color: var(--accent-2); text-decoration: none; }
+  html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+  body {
+    margin: 0; color: var(--text); font-family: Inter, system-ui, sans-serif; line-height: 1.55; overflow-x: hidden;
+    /* grade sutil, como as caixas do PC */
+    background-color: var(--bg);
+    background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  a { color: #ff7a7e; text-decoration: none; }
   a:hover { text-decoration: underline; }
-  img { max-width: 100%; display: block; }
-  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+  img { max-width: 100%; height: auto; display: block; }
+  code { background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 1px 6px; font-size: 13px; }
+  .wrap { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+  h1, h2, h3 { font-family: var(--title); font-weight: 600; letter-spacing: -.01em; }
 
-  header.nav { position: sticky; top: 0; z-index: 10; background: rgba(20,22,27,.85); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-  header.nav .wrap { display: flex; align-items: center; gap: 20px; height: 60px; }
-  .logo { font-weight: 800; font-size: 20px; color: var(--accent); letter-spacing: -.02em; }
-  .logo span { color: var(--muted); font-weight: 500; font-size: 15px; margin-left: 4px; }
-  header.nav nav { margin-left: auto; display: flex; gap: 18px; font-size: 14px; }
-  header.nav nav a { color: var(--muted); }
-  header.nav nav a:hover { color: var(--text); text-decoration: none; }
+  /* Tampa da Pokedex (desenho proprio, o mesmo degrau do app) */
+  .lid { position: sticky; top: 0; z-index: 20; filter: drop-shadow(0 6px 14px rgba(0,0,0,.45)); }
+  .lid svg.shape { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .lid .wrap { position: relative; display: flex; align-items: center; gap: 16px; height: 76px; padding-bottom: 14px; }
+  .lens { width: 46px; height: 46px; border-radius: 50%; flex: none; background: #f5f5f7; border: 1.5px solid rgba(16,16,24,.6); display: grid; place-items: center; }
+  .lens i { width: 34px; height: 34px; border-radius: 50%; border: 1.5px solid rgba(16,16,24,.6); background: radial-gradient(circle at 35% 30%, #9be3ff 0, #2f9bf0 45%, #104ea8 100%); position: relative; }
+  .lens i::after { content: ""; position: absolute; left: 22%; top: 18%; width: 26%; height: 18%; border-radius: 50%; background: rgba(255,255,255,.85); }
+  .lights { display: flex; gap: 6px; margin-bottom: 4px; }
+  .lights b { width: 10px; height: 10px; border-radius: 50%; border: 1px solid rgba(16,16,24,.6); }
+  .lights b:nth-child(1) { background: #f03a3a; } .lights b:nth-child(2) { background: #ffd23f; } .lights b:nth-child(3) { background: #4cc25a; }
+  .brand { color: #fff; line-height: 1; }
+  .brand:hover { text-decoration: none; }
+  .brand strong { font-family: var(--title); font-weight: 600; font-size: 24px; }
+  .brand span { font-size: 13px; opacity: .85; margin-left: 4px; }
+  .lid nav { margin-left: auto; display: flex; gap: 4px; align-items: center; }
+  .lid nav a { color: #fff; font-size: 14px; font-weight: 500; padding: 6px 11px; border-radius: 999px; }
+  .lid nav a:hover { background: rgba(0,0,0,.18); text-decoration: none; }
+  .lang { display: flex; border: 1.5px solid rgba(255,255,255,.6); border-radius: 999px; overflow: hidden; margin-left: 8px; }
+  .lang button { background: none; border: 0; color: #fff; font: 600 12px Inter, sans-serif; padding: 5px 10px; cursor: pointer; }
+  .lang button[aria-pressed="true"] { background: #fff; color: var(--red-dark); }
 
-  .hero { padding: 72px 0 40px; text-align: center; background: radial-gradient(800px 380px at 50% -40px, rgba(229,72,77,.22), transparent 70%); }
-  .badge { display: inline-block; padding: 4px 12px; border: 1px solid var(--border); border-radius: 999px; font-size: 13px; color: var(--muted); background: var(--panel); }
-  .hero h1 { font-size: clamp(34px, 6vw, 56px); line-height: 1.08; margin: 18px 0 14px; letter-spacing: -.03em; }
-  .hero h1 em { font-style: normal; color: var(--accent); }
-  .hero p.lead { font-size: clamp(16px, 2.2vw, 19px); color: var(--muted); max-width: 720px; margin: 0 auto 28px; }
-  .btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 22px; border-radius: 10px; font-weight: 600; font-size: 15px; border: 1px solid var(--border); background: var(--card); color: var(--text); }
-  .btn:hover { text-decoration: none; border-color: var(--muted); }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .btn.primary:hover { background: var(--accent-2); }
-  .shot { margin: 44px auto 0; border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,.5); max-width: 1040px; }
+  /* Abertura */
+  .hero { padding: 52px 0 20px; display: grid; grid-template-columns: 1fr 1.25fr; gap: 44px; align-items: center; }
+  .hero > *, .dex > *, .split > * { min-width: 0; }
+  .chip { display: inline-block; padding: 4px 12px; border: 1.5px solid var(--border); border-radius: 999px; font-size: 12px; color: var(--muted); background: var(--panel); margin-bottom: 16px; }
+  .hero h1 { font-size: clamp(36px, 5.2vw, 60px); line-height: 1.04; margin: 0 0 16px; }
+  .hero h1 em { font-style: normal; color: var(--red); }
+  .hero p.lead { color: var(--muted); font-size: 18px; margin: 0 0 26px; max-width: 520px; }
+  .btns { display: flex; gap: 12px; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 999px; font: 600 15px Inter, sans-serif; color: var(--text); border: 1.5px solid var(--border); background: var(--card); }
+  .btn:hover { border-color: var(--muted); text-decoration: none; }
+  .btn.primary { background: var(--red); border-color: var(--red-edge); color: #fff; box-shadow: 0 4px 0 var(--red-edge); }
+  .btn.primary:hover { background: #ef5a5f; }
+  .btn svg { width: 18px; height: 18px; flex: none; }
+  .facts { display: flex; flex-wrap: wrap; gap: 22px; margin-top: 28px; color: var(--muted); font-size: 13px; }
+  .facts b { display: block; font-family: var(--title); font-size: 24px; color: var(--text); font-weight: 600; }
 
-  section { padding: 64px 0; }
-  section h2 { font-size: clamp(26px, 4vw, 34px); margin: 0 0 10px; letter-spacing: -.02em; }
-  section p.sub { color: var(--muted); margin: 0 0 32px; max-width: 720px; }
+  /* Aparelho: moldura vermelha com a tela */
+  .device { background: linear-gradient(160deg, #ec5257, var(--red-dark)); border: 2px solid var(--red-edge); border-radius: 22px 22px 22px 60px; padding: 18px 18px 46px; box-shadow: 0 30px 70px rgba(0,0,0,.55), inset 0 2px 0 rgba(255,255,255,.25); position: relative; }
+  .device .bezel { background: #e9e9ee; border-radius: 10px 10px 10px 36px; padding: 14px 14px 24px; border: 2px solid rgba(0,0,0,.25); position: relative; }
+  .device .bezel::before { content: ""; position: absolute; top: 5px; left: 50%; width: 6px; height: 6px; margin-left: -12px; border-radius: 50%; background: var(--red); box-shadow: 14px 0 0 var(--red); }
+  .device .screen { border-radius: 6px; overflow: hidden; border: 2px solid #2a2d35; }
+  .device .speaker { position: absolute; right: 30px; bottom: 16px; display: flex; gap: 5px; }
+  .device .speaker i { width: 26px; height: 4px; border-radius: 2px; background: var(--red-edge); }
+  .device .knob { position: absolute; left: 24px; bottom: 12px; width: 22px; height: 22px; border-radius: 50%; background: #2a2d35; border: 2px solid var(--red-edge); }
+  .device.phone { border-radius: 26px; padding: 14px 40px 14px 14px; }
+  .device.phone .bezel { border-radius: 14px; padding: 10px; }
+  .device.phone .bezel::before { display: none; }
+  .device.phone .knob { left: auto; right: 9px; top: 50%; bottom: auto; margin-top: -11px; }
 
-  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); }
-  .feat { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
-  .feat .ic { font-size: 24px; }
-  .feat h3 { font-size: 16px; margin: 8px 0 6px; }
-  .feat p { margin: 0; color: var(--muted); font-size: 14px; }
+  /* Divisoria com a linha da Pokebola */
+  .divider { display: flex; align-items: center; margin: 44px 0; }
+  .divider::before, .divider::after { content: ""; flex: 1; height: 3px; background: var(--border); }
+  .divider span { width: 26px; height: 26px; border-radius: 50%; border: 3px solid var(--border); background: var(--bg); display: grid; place-items: center; }
+  .divider span::after { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 2px solid var(--border); }
 
-  .gallery { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
-  .gallery figure { margin: 0; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .gallery figcaption { padding: 10px 14px; font-size: 14px; color: var(--muted); }
+  section h2 { font-size: clamp(28px, 4vw, 38px); margin: 0 0 8px; }
+  section p.sub { color: var(--muted); margin: 0 0 30px; max-width: 680px; }
+  .center { text-align: center; }
+  .center p.sub { margin-left: auto; margin-right: auto; }
+
+  /* Faixa dos jogos */
+  .strip { display: flex; flex-wrap: wrap; justify-content: center; column-gap: 18px; row-gap: 8px; }
+  .genrow { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .strip span { font: 700 11px Inter, sans-serif; padding: 5px 8px; border-radius: 6px; color: #fff; text-shadow: 0 1px 1px rgba(0,0,0,.35); }
+  .strip span.lt { color: #222; text-shadow: none; }
+  .strip span.gen { background: none; color: var(--muted); text-shadow: none; padding: 5px 2px; }
+
+  /* Fichas da Pokedex */
+  .dex { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(330px, 100%), 1fr)); gap: 16px; }
+  .entry { background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column; transition: transform .18s, border-color .18s; }
+  .entry:hover { transform: translateY(-3px); border-color: var(--tint); }
+  .entry .head { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; gap: 14px; align-items: center; padding: 16px 18px 10px; background: linear-gradient(135deg, color-mix(in srgb, var(--tint) 22%, transparent), transparent 70%); }
+  .entry .icon { width: 52px; height: 52px; border-radius: 14px; background: var(--panel); border: 1.5px solid var(--border); display: grid; place-items: center; }
+  .entry .icon svg { width: 32px; height: 32px; }
+  .entry .num { font: 600 13px var(--title); color: var(--muted); }
+  .entry h3 { font-size: 20px; margin: 0; line-height: 1.15; }
+  .types { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+  .types span { font: 700 10px Inter, sans-serif; text-transform: uppercase; letter-spacing: .04em; padding: 3px 8px; border-radius: 999px; color: #fff; }
+  .entry p { margin: 0; padding: 4px 18px 16px; color: var(--muted); font-size: 14px; }
+  .entry .peek { margin-top: auto; border-top: 1.5px solid var(--border); height: 0; overflow: hidden; transition: height .25s; }
+  .entry:hover .peek, .entry:focus-within .peek { height: 170px; }
+  .entry .peek img { width: 100%; height: 170px; object-fit: cover; object-position: top left; }
+  .t-legal { background: #3fa45b; } .t-colecao { background: #b97a3e; } .t-celular { background: #3e8ed0; } .t-ferramenta { background: #9b6bd6; } .t-visual { background: #e5484d; } .t-jogo { background: #c9932a; }
+  @media (hover: none) { .entry .peek { height: 170px; } }
+
+  /* Capturas: cartoes como slots das caixas */
+  .gallery { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)); }
+  .gallery figure { margin: 0; background: var(--card); border: 1.5px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .18s, border-color .18s; }
+  .gallery figure:hover { transform: translateY(-3px); border-color: var(--red); }
+  .gallery figcaption { padding: 10px 14px 12px; font-size: 14px; color: var(--muted); display: flex; gap: 8px; align-items: baseline; }
+  .gallery figcaption b { font: 600 12px var(--title); color: var(--red); }
   .gallery a { display: block; }
 
-  .dl { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
-  .dl a { display: block; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 18px; color: var(--text); }
-  .dl a:hover { border-color: var(--accent); text-decoration: none; }
-  .dl .os { font-weight: 700; font-size: 17px; }
-  .dl .file { color: var(--muted); font-size: 13px; margin-top: 4px; word-break: break-all; }
-  .note { margin-top: 18px; color: var(--muted); font-size: 14px; }
-  .warn { margin-top: 26px; padding: 14px 18px; border-left: 3px solid var(--accent); background: var(--panel); border-radius: 8px; font-size: 14px; color: var(--muted); }
-
-  .split { display: grid; gap: 28px; grid-template-columns: 1fr 1fr; align-items: center; }
-  .split img { border-radius: var(--radius); border: 1px solid var(--border); }
+  /* Celular */
+  .split { display: grid; gap: 40px; grid-template-columns: 1fr 1.2fr; align-items: center; }
   ul.check { padding: 0; list-style: none; margin: 0; }
-  ul.check li { padding-left: 26px; position: relative; margin: 8px 0; color: var(--muted); }
-  ul.check li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  ul.check li { padding-left: 30px; position: relative; margin: 10px 0; color: var(--muted); }
+  ul.check li::before { content: ""; position: absolute; left: 0; top: 4px; width: 16px; height: 16px; border-radius: 50%; border: 2px solid #1e1e24; background: linear-gradient(#e5484d 0 45%, #1e1e24 45% 55%, #f5f5f7 55%); }
   ul.check b { color: var(--text); font-weight: 600; }
 
-  footer { border-top: 1px solid var(--border); padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+  /* Escolha seu inicial */
+  .lab { background: radial-gradient(600px 220px at 50% 100%, rgba(229,72,77,.12), transparent 70%), var(--panel); border: 1.5px solid var(--border); border-radius: 26px; padding: 34px 28px 30px; }
+  .starters { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
+  .starter { width: 156px; color: var(--text); padding: 18px 10px 14px; border-radius: 18px; border: 1.5px solid transparent; transition: transform .18s, background .18s; text-align: center; }
+  .starter:hover { transform: translateY(-4px); background: var(--card); border-color: var(--border); text-decoration: none; }
+  .starter svg { width: 74px; height: 74px; margin: 0 auto 10px; display: block; transition: transform .3s; }
+  .starter:hover svg { transform: rotate(-12deg); }
+  .starter b { display: block; font-family: var(--title); font-weight: 600; font-size: 18px; }
+  .starter small { color: var(--muted); font-size: 12px; }
+  .starter .mine-tag { display: none; font: 700 10px Inter, sans-serif; text-transform: uppercase; letter-spacing: .05em; color: #fff; background: var(--red); padding: 2px 8px; border-radius: 999px; margin-bottom: 8px; }
+  .starter.mine { background: var(--card); border-color: var(--red); box-shadow: 0 0 0 4px rgba(229,72,77,.15); }
+  .starter.mine .mine-tag { display: inline-block; }
+  .notes { max-width: 820px; margin: 24px auto 0; color: var(--muted); font-size: 14px; text-align: left; }
+  .notes p { margin: 10px 0; }
+  .warn { margin-top: 16px; padding: 12px 16px; border-left: 3px solid var(--red); background: var(--card); border-radius: 8px; }
+
+  footer { padding: 34px 0 50px; color: var(--muted); font-size: 13px; text-align: center; }
   footer p { margin: 6px 0; }
 
-  @media (max-width: 760px) {
-    header.nav nav { display: none; }
-    .split { grid-template-columns: 1fr; }
-    .hero { padding-top: 48px; }
-    section { padding: 48px 0; }
-    .gallery { grid-template-columns: 1fr; }
+  @media (max-width: 860px) {
+    .hero, .split { grid-template-columns: 1fr; }
+    .hero { padding-top: 34px; }
+    .lid nav a { display: none; }
+    .lid .wrap { gap: 10px; }
+    .lens { width: 38px; height: 38px; } .lens i { width: 28px; height: 28px; }
+    .device { border-radius: 18px 18px 18px 40px; padding: 12px 12px 38px; }
   }
 </style>
 </head>
 <body>
 
-<header class="nav">
+<header class="lid">
+  <svg class="shape" viewBox="0 0 1000 90" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 0H1000V64H612L590 90H0Z" fill="#e5484d"/>
+    <path d="M0 89H590L612 63H1000" fill="none" stroke="#7d1f26" stroke-width="3" vector-effect="non-scaling-stroke"/>
+  </svg>
   <div class="wrap">
-    <div class="logo">PKHeX<span>Modern</span></div>
+    <div class="lens" aria-hidden="true"><i></i></div>
+    <a class="brand" href="#"><div class="lights" aria-hidden="true"><b></b><b></b><b></b></div><strong>PKHeX</strong><span>Modern</span></a>
     <nav>
-      <a href="#funcoes">Funções</a>
-      <a href="#capturas">Capturas</a>
-      <a href="#temas">Temas</a>
-      <a href="#download">Download</a>
+      <a href="#funcoes" data-i18n="nav.features">Funções</a>
+      <a href="#capturas" data-i18n="nav.shots">Capturas</a>
+      <a href="#temas" data-i18n="nav.themes">Temas</a>
+      <a href="#download" data-i18n="nav.download">Download</a>
       <a href="https://github.com/carlosmozart/PKHeX-Modern">GitHub</a>
+      <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="pt" aria-pressed="true">PT</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
     </nav>
   </div>
 </header>
 
-<div class="hero">
-  <div class="wrap">
-    <span class="badge" id="version">Windows · Linux · macOS · Android</span>
-    <h1>O PKHeX que você conhece,<br><em>com uma interface moderna.</em></h1>
-    <p class="lead">Uma interface moderna para o <a href="https://github.com/kwsch/PKHeX">PKHeX</a>, com modo legal, bank, Pokédex centralizada e temas inspirados nos jogos. Por baixo continua o PKHeX.Core original: as mesmas regras de save e de legalidade.</p>
-    <div class="btns">
-      <a class="btn primary" href="#download">⬇ Baixar grátis</a>
-      <a class="btn" href="https://github.com/carlosmozart/PKHeX-Modern">★ Ver no GitHub</a>
-    </div>
-    <div class="shot"><img src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/boxes.png" alt="Caixas, equipe e editor do PKHeX Modern" width="1600" height="950"></div>
-  </div>
-</div>
-
-<section id="funcoes">
-  <div class="wrap">
-    <h2>Tudo o que o PKHeX faz, num lugar só</h2>
-    <p class="sub">Feito para organizar a coleção de todos os seus jogos, da primeira geração a Legends: Z-A, sem perder a legalidade.</p>
-    <div class="grid">
-      <div class="feat"><div class="ic">🔴</div><h3>Cara de app de Pokémon</h3><p>Barra lateral com a tampa da Pokédex, ícones próprios de objetos dos jogos, títulos arredondados, a cor do jogo aberto, animações curtas e o “modo jogo” que liga tudo num clique. Mais a vitrine da equipe para compartilhar.</p></div>
-      <div class="feat"><div class="ic">🛡️</div><h3>Modo legal</h3><p>O editor só oferece opções legais e legaliza com um clique, a partir de encontros reais do jogo.</p></div>
-      <div class="feat"><div class="ic">📋</div><h3>Set do Showdown → Pokémon legal</h3><p>Cole um set e receba um Pokémon legal do seu jogo, offline: IVs, habilidade, natureza, EVs, golpes e Tera Type mantidos sempre que possível, com o aviso do que mudou.</p></div>
-      <div class="feat"><div class="ic">📱</div><h3>Saves dos emuladores</h3><p>No Android, acha sozinho os saves do RetroArch, DraStic, melonDS, Dolphin, Azahar/Citra, Eden e outros, e grava de volta no lugar, com backup.</p></div>
-      <div class="feat"><div class="ic">🖱️</div><h3>Arrastar e soltar</h3><p>Caixas, equipe e editor lado a lado, com desfazer e refazer, seleção múltipla e busca global.</p></div>
-      <div class="feat"><div class="ic">🏦</div><h3>Bank local</h3><p>Guarde Pokémon fora dos saves e leve de um jogo para outro, com conversão de geração.</p></div>
-      <div class="feat"><div class="ic">📖</div><h3>Pokédex centralizada</h3><p>Junta todos os saves e o bank: living dex, shiny dex, formas e gêneros, um planejador que organiza as caixas e completar a Pokédex do save com um clique.</p></div>
-      <div class="feat"><div class="ic">🗂️</div><h3>Save Manager</h3><p>Todos os saves da pasta com o selo de cada jogo, saves em .zip e backup automático antes de gravar.</p></div>
-      <div class="feat"><div class="ic">🌿</div><h3>Encontros e eventos</h3><p>Gere Pokémon legais a partir dos encontros e Mystery Gifts de cada jogo, inclusive os da Gen 1 a 3.</p></div>
-      <div class="feat"><div class="ic">🔎</div><h3>Pesquisa e lote</h3><p>Procure em todos os saves e no bank, ache duplicados e edite ou legalize vários Pokémon de uma vez.</p></div>
-      <div class="feat"><div class="ic">🎮</div><h3>Página Jogo</h3><p>Flags de evento com nome, recordes, Hall da Fama, Battle Frontier, Pokéathlon, bases secretas e atalhos para liberar O-Powers, Super Training e Zygarde Cells.</p></div>
-      <div class="feat"><div class="ic">♟️</div><h3>Treinador completo</h3><p>Insígnias de cada região, gênero, dinheiro, moedas do Game Corner, BP, tempo de jogo e datas da aventura.</p></div>
-      <div class="feat"><div class="ic">🔒</div><h3>Nuzlocke e Hardcore</h3><p>Relatório de Nuzlocke com o primeiro encontro de cada rota, repetidos, vivos e mortos, e um modo Hardcore que só deixa mover Pokémon, para desafios e RetroAchievements.</p></div>
-      <div class="feat"><div class="ic">🌟</div><h3>Caçada shiny</h3><p>Contador com as chances reais de cada método do jogo, encontros para 50/90/99%, onde o alvo aparece, aviso de shiny lock e de golpes perigosos, e o “Achei!” lido do save.</p></div>
-      <div class="feat"><div class="ic">🥚</div><h3>Fábrica de ovos</h3><p>Um ovo legal de cada espécie que falta no save, dos ovos de criação do próprio jogo, direto nas caixas e com um único desfazer.</p></div>
-      <div class="feat"><div class="ic">✨</div><h3>Evolução assistida</h3><p>Todas as evoluções da espécie no jogo, com o requisito e a prévia: o app cumpre nível, item, troca ou felicidade por você.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="capturas" style="background: var(--panel)">
-  <div class="wrap">
-    <h2>Capturas</h2>
-    <p class="sub">Geradas com saves de exemplo. Clique para ver em tamanho real.</p>
-    <div class="gallery">
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/showdown.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/showdown.png" alt="Set do Showdown legalizado"></a><figcaption>Set do Showdown colado e legalizado, com o mesmo set</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/emulators.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/emulators.png" alt="Saves dos emuladores"></a><figcaption>Saves dos emuladores achados sozinhos no Android</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/home.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/home.png" alt="Tela inicial"></a><figcaption>Início: o jogo, a equipe e atalhos para tudo</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/pokedex.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/pokedex.png" alt="Pokédex centralizada"></a><figcaption>Pokédex centralizada de todos os saves</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/moves.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/moves.png" alt="Golpes com busca"></a><figcaption>Golpes com busca: em verde, os que o Pokémon aprende</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/encounters.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/encounters.png" alt="Banco de encontros"></a><figcaption>Banco de encontros: onde e como cada espécie aparece</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/bank.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/bank.png" alt="Bank"></a><figcaption>Bank com seleção múltipla e conversão de geração</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/savemanager.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/savemanager.png" alt="Save Manager"></a><figcaption>Save Manager com o selo de cada jogo</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/trainer.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/trainer.png" alt="Treinador com insígnias"></a><figcaption>Treinador com insígnias, BP e datas</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/beauty.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/beauty.png" alt="Evolução assistida"></a><figcaption>Evolução assistida, inclusive Feebas por Beauty</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/nuzlocke.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/nuzlocke.png" alt="Relatório de Nuzlocke"></a><figcaption>Relatório de Nuzlocke: primeiro encontro de cada rota</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/eggs.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/eggs.png" alt="Fábrica de ovos"></a><figcaption>Fábrica de ovos: um ovo de cada espécie que falta</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/shinyhunt.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/shinyhunt.png" alt="Caçada shiny"></a><figcaption>Caçada shiny: contador, chances e onde encontrar</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<section id="temas">
-  <div class="wrap">
-    <h2>Temas inspirados nos jogos</h2>
-    <p class="sub">Escuro ou claro, oito cores de destaque, tamanho dos sprites ajustável e temas completos que mudam fundo, cantos, bordas e fonte.</p>
-    <div class="gallery">
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_oras.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_oras.png" alt="Tema ORAS"></a><figcaption>ORAS (Pokédex de Omega Ruby/Alpha Sapphire)</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_kanto_light.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_kanto_light.png" alt="Tema Kanto claro"></a><figcaption>Kanto (Pokédex clássica), no modo claro</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_pixel.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_pixel.png" alt="Tema Pixel"></a><figcaption>Pixel (menus do Game Boy Advance)</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_pss.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_pss.png" alt="Tema PSS"></a><figcaption>PSS (Player Search System de X/Y)</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_za.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/theme_za.png" alt="Tema Z-A"></a><figcaption>Z-A (Lumiose de Legends: Z-A)</figcaption></figure>
-      <figure><a href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/english.png"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/english.png" alt="Interface em inglês"></a><figcaption>Interface em português ou inglês</figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<section style="background: var(--panel)">
-  <div class="wrap split">
+<div class="wrap">
+  <div class="hero">
     <div>
-      <h2>No celular também</h2>
-      <p class="sub">O mesmo app no Android, com a mesma interface do desktop.</p>
-      <ul class="check">
-        <li><b>Acha sozinho</b> os saves do RetroArch, DraStic, melonDS, Dolphin, Azahar/Citra, Eden e outros emuladores.</li>
-        <li><b>Abre e grava</b> saves e pastas pelo seletor do sistema, de volta no arquivo original.</li>
-        <li><b>Toque e arraste</b> para mover Pokémon; segure um botão para ver a dica.</li>
-        <li><b>Atualiza sozinho</b> quando sai uma versão nova.</li>
-      </ul>
+      <span class="chip" id="version">Windows · Linux · macOS · Android</span>
+      <h1 data-i18n="hero.title">O PKHeX que você conhece, <em>com cara de Pokédex.</em></h1>
+      <p class="lead" data-i18n="hero.lead">Uma interface moderna e gratuita para o <a href="https://github.com/kwsch/PKHeX">PKHeX</a>: edite, organize e legalize seus Pokémon de todos os jogos, da primeira geração a Legends: Z-A. Por baixo continua o PKHeX.Core original, com as mesmas regras de save e de legalidade.</p>
+      <div class="btns">
+        <a class="btn primary" href="#download"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#fff" stroke="#7d1f26" stroke-width="2"/><path d="M2 12a10 10 0 0 1 20 0z" fill="#e5484d" stroke="#7d1f26" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="#fff" stroke="#7d1f26" stroke-width="2"/></svg><span data-i18n="hero.download">Baixar grátis</span></a>
+        <a class="btn" href="https://github.com/carlosmozart/PKHeX-Modern" data-i18n="hero.github">★ Ver no GitHub</a>
+      </div>
+      <div class="facts">
+        <div><b>Gen 1–9</b><span data-i18n="fact.gens">de Red a Legends: Z-A</span></div>
+        <div><b>4</b><span data-i18n="fact.os">sistemas, com Android</span></div>
+        <div><b data-i18n="fact.free">Grátis</b><span data-i18n="fact.open">e de código aberto</span></div>
+      </div>
     </div>
-    <img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/android.png" alt="PKHeX Modern no Android">
-  </div>
-</section>
-
-<section id="download">
-  <div class="wrap">
-    <h2>Download</h2>
-    <p class="sub">Grátis e de código aberto. Não precisa instalar o .NET; o app avisa quando sai versão nova e se atualiza sozinho.</p>
-    <div class="dl">
-      <a href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-win-x64.zip"><div class="os">Windows</div><div class="file">10/11 64 bits · PKHeX.Modern-win-x64.zip</div></a>
-      <a href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-linux-x64.zip"><div class="os">Linux</div><div class="file">x64, também Steam Deck · PKHeX.Modern-linux-x64.zip</div></a>
-      <a href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-osx-arm64.zip"><div class="os">macOS (Apple Silicon)</div><div class="file">M1, M2... · PKHeX.Modern-osx-arm64.zip</div></a>
-      <a href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-osx-x64.zip"><div class="os">macOS (Intel)</div><div class="file">PKHeX.Modern-osx-x64.zip</div></a>
-      <a href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-Android.apk"><div class="os">Android</div><div class="file">6 ou mais novo · PKHeX.Modern-Android.apk</div></a>
+    <div class="device">
+      <div class="bezel"><div class="screen"><img src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/boxes.png" alt="Caixas, equipe e editor do PKHeX Modern" width="1500" height="1100"></div></div>
+      <div class="knob"></div>
+      <div class="speaker"><i></i><i></i><i></i></div>
     </div>
-    <p class="note">Como instalar em cada sistema: <a href="https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/PKHeX.Modern/README.md#download">guia de instalação</a> · Novidades de cada versão: <a href="https://github.com/carlosmozart/PKHeX-Modern/releases">Releases</a></p>
-    <p class="note"><b>macOS:</b> na primeira abertura, o macOS bloqueia o app (ele é gratuito e não tem a assinatura paga da Apple). Abra <b>Ajustes do Sistema › Privacidade e Segurança</b> e clique em <b>Abrir Mesmo Assim</b>. Se aparecer “está danificado”, rode no Terminal: <code>xattr -dr com.apple.quarantine "/Applications/PKHeX Modern.app"</code></p>
-    <div class="warn"><b>Faça backup dos seus saves antes de editar.</b> O app já guarda uma cópia antes de gravar por cima, mas um backup seu nunca é demais.</div>
   </div>
-</section>
 
-<section style="background: var(--panel)">
-  <div class="wrap">
-    <h2>English</h2>
-    <p class="sub" style="margin-bottom:0"><b>PKHeX Modern</b> is a modern UI for the PKHeX Pokémon save editor, running on Windows, Linux, macOS and Android. It is built on the unmodified PKHeX.Core, so save handling and legality checks match PKHeX. It includes a legal mode, drag and drop, a save manager, a local bank, a combined Pokédex with one-click Pokédex completion, a full trainer editor with badges, Battle Frontier, Pokéathlon and secret base editors, encounter and event databases and game-inspired themes. The interface is available in Portuguese and English. <a href="#download">Download it for free</a>.</p>
-  </div>
-</section>
+  <div class="divider"><span></span></div>
+
+  <section class="center" id="jogos" aria-label="Jogos">
+    <p class="sub" data-i18n="games.sub">Todos os jogos principais, cada um com o seu selo</p>
+    <div class="strip" id="strip"></div>
+  </section>
+
+  <div class="divider"><span></span></div>
+
+  <section id="funcoes">
+    <h2 data-i18n="dex.title">Pokédex de funções</h2>
+    <p class="sub" data-i18n="dex.sub">Tudo o que o PKHeX faz, num lugar só, e mais um pouco. Cada função tem a sua ficha: passe o mouse para ver a tela.</p>
+    <div class="dex">
+      <article class="entry" style="--tint:#e5484d"><div class="head"><div class="icon" data-icon="lid"></div><div><h3 data-i18n="f1.t">Cara de app de Pokémon</h3><div class="types"><span class="t-visual" data-i18n="ty.visual">Visual</span></div></div><div class="num">#001</div></div>
+        <p data-i18n="f1.d">Barra lateral com a tampa da Pokédex, ícones próprios de objetos dos jogos, títulos arredondados, a cor do jogo aberto, animações curtas e o “modo jogo” que liga tudo num clique. Mais a vitrine da equipe para compartilhar.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/home.png" alt=""></div></article>
+      <article class="entry" style="--tint:#3fa45b"><div class="head"><div class="icon" data-icon="legal"></div><div><h3 data-i18n="f2.t">Modo legal</h3><div class="types"><span class="t-legal" data-i18n="ty.legal">Legalidade</span></div></div><div class="num">#002</div></div>
+        <p data-i18n="f2.d">O editor só oferece opções legais e legaliza com um clique, a partir de encontros reais do jogo.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/legalmode.png" alt=""></div></article>
+      <article class="entry" style="--tint:#e5484d"><div class="head"><div class="icon" data-icon="ball"></div><div><h3 data-i18n="f3.t">Set do Showdown → Pokémon legal</h3><div class="types"><span class="t-legal" data-i18n="ty.legal">Legalidade</span><span class="t-ferramenta" data-i18n="ty.tool">Ferramenta</span></div></div><div class="num">#003</div></div>
+        <p data-i18n="f3.d">Cole um set e receba um Pokémon legal do seu jogo, offline: IVs, habilidade, natureza, EVs, golpes e Tera Type mantidos sempre que possível, com o aviso do que mudou.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/showdown.png" alt=""></div></article>
+      <article class="entry" style="--tint:#3e8ed0"><div class="head"><div class="icon" data-icon="phone"></div><div><h3 data-i18n="f4.t">Saves dos emuladores</h3><div class="types"><span class="t-celular" data-i18n="ty.phone">Celular</span></div></div><div class="num">#004</div></div>
+        <p data-i18n="f4.d">No Android, acha sozinho os saves do RetroArch, DraStic, melonDS, Dolphin, Azahar/Citra, Eden e outros, e grava de volta no lugar, com backup.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/emulators.png" alt=""></div></article>
+      <article class="entry" style="--tint:#c9894a"><div class="head"><div class="icon" data-icon="box"></div><div><h3 data-i18n="f5.t">Arrastar e soltar</h3><div class="types"><span class="t-ferramenta" data-i18n="ty.tool">Ferramenta</span></div></div><div class="num">#005</div></div>
+        <p data-i18n="f5.d">Caixas, equipe e editor lado a lado, com desfazer e refazer, seleção múltipla, busca global e paleta de comandos (Ctrl+K).</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/boxes.png" alt=""></div></article>
+      <article class="entry" style="--tint:#3e8ed0"><div class="head"><div class="icon" data-icon="pc"></div><div><h3 data-i18n="f6.t">Bank local</h3><div class="types"><span class="t-colecao" data-i18n="ty.coll">Coleção</span></div></div><div class="num">#006</div></div>
+        <p data-i18n="f6.d">Guarde Pokémon fora dos saves e leve de um jogo para outro, com conversão de geração.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/bank.png" alt=""></div></article>
+      <article class="entry" style="--tint:#c9894a"><div class="head"><div class="icon" data-icon="dex"></div><div><h3 data-i18n="f7.t">Pokédex centralizada</h3><div class="types"><span class="t-colecao" data-i18n="ty.coll">Coleção</span></div></div><div class="num">#007</div></div>
+        <p data-i18n="f7.d">Junta todos os saves e o bank: living dex, shiny dex, formas e gêneros, um planejador que organiza as caixas e completar a Pokédex do save com um clique.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/pokedex.png" alt=""></div></article>
+      <article class="entry" style="--tint:#3e8ed0"><div class="head"><div class="icon" data-icon="cart"></div><div><h3 data-i18n="f8.t">Save Manager</h3><div class="types"><span class="t-ferramenta" data-i18n="ty.tool">Ferramenta</span></div></div><div class="num">#008</div></div>
+        <p data-i18n="f8.d">Todos os saves da pasta com o selo de cada jogo, saves em .zip e backup automático antes de gravar.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/savemanager.png" alt=""></div></article>
+      <article class="entry" style="--tint:#4cb05a"><div class="head"><div class="icon" data-icon="grass"></div><div><h3 data-i18n="f9.t">Encontros e eventos</h3><div class="types"><span class="t-legal" data-i18n="ty.legal">Legalidade</span><span class="t-jogo" data-i18n="ty.game">Jogo</span></div></div><div class="num">#009</div></div>
+        <p data-i18n="f9.d">Gere Pokémon legais a partir dos encontros e Mystery Gifts de cada jogo, inclusive os da Gen 1 a 3.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/encounters.png" alt=""></div></article>
+      <article class="entry" style="--tint:#e5484d"><div class="head"><div class="icon" data-icon="search"></div><div><h3 data-i18n="f10.t">Pesquisa e lote</h3><div class="types"><span class="t-ferramenta" data-i18n="ty.tool">Ferramenta</span></div></div><div class="num">#010</div></div>
+        <p data-i18n="f10.d">Procure em todos os saves e no bank, ache duplicados e edite ou legalize vários Pokémon de uma vez.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/search.png" alt=""></div></article>
+      <article class="entry" style="--tint:#6c7a89"><div class="head"><div class="icon" data-icon="game"></div><div><h3 data-i18n="f11.t">Página Jogo</h3><div class="types"><span class="t-jogo" data-i18n="ty.game">Jogo</span></div></div><div class="num">#011</div></div>
+        <p data-i18n="f11.d">Flags de evento com nome, recordes, Hall da Fama, Battle Frontier, Pokéathlon, bases secretas e atalhos para liberar O-Powers, Super Training e Zygarde Cells.</p></article>
+      <article class="entry" style="--tint:#e5484d"><div class="head"><div class="icon" data-icon="trainer"></div><div><h3 data-i18n="f12.t">Treinador completo</h3><div class="types"><span class="t-jogo" data-i18n="ty.game">Jogo</span></div></div><div class="num">#012</div></div>
+        <p data-i18n="f12.d">Insígnias de cada região, gênero, dinheiro, moedas do Game Corner, BP, tempo de jogo e datas da aventura.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/trainer.png" alt=""></div></article>
+      <article class="entry" style="--tint:#6c7a89"><div class="head"><div class="icon" data-icon="lock"></div><div><h3 data-i18n="f13.t">Nuzlocke e Hardcore</h3><div class="types"><span class="t-jogo" data-i18n="ty.game">Jogo</span></div></div><div class="num">#013</div></div>
+        <p data-i18n="f13.d">Relatório de Nuzlocke com o primeiro encontro de cada rota, repetidos, vivos e mortos, e um modo Hardcore que só deixa mover Pokémon, para desafios e RetroAchievements.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/nuzlocke.png" alt=""></div></article>
+      <article class="entry" style="--tint:#f2c230"><div class="head"><div class="icon" data-icon="shiny"></div><div><h3 data-i18n="f14.t">Caçada shiny</h3><div class="types"><span class="t-jogo" data-i18n="ty.game">Jogo</span><span class="t-ferramenta" data-i18n="ty.tool">Ferramenta</span></div></div><div class="num">#014</div></div>
+        <p data-i18n="f14.d">Contador com as chances reais de cada método do jogo, encontros para 50/90/99%, onde o alvo aparece, aviso de shiny lock e de golpes perigosos, e o “Achei!” lido do save.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/shinyhunt.png" alt=""></div></article>
+      <article class="entry" style="--tint:#d9b65a"><div class="head"><div class="icon" data-icon="egg"></div><div><h3 data-i18n="f15.t">Fábrica de ovos</h3><div class="types"><span class="t-colecao" data-i18n="ty.coll">Coleção</span></div></div><div class="num">#015</div></div>
+        <p data-i18n="f15.d">Um ovo legal de cada espécie que falta no save, dos ovos de criação do próprio jogo, direto nas caixas e com um único desfazer.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/eggs.png" alt=""></div></article>
+      <article class="entry" style="--tint:#9b6bd6"><div class="head"><div class="icon" data-icon="evolve"></div><div><h3 data-i18n="f16.t">Evolução assistida</h3><div class="types"><span class="t-ferramenta" data-i18n="ty.tool">Ferramenta</span></div></div><div class="num">#016</div></div>
+        <p data-i18n="f16.d">Todas as evoluções da espécie no jogo, com o requisito e a prévia: o app cumpre nível, item, troca ou felicidade por você.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/beauty.png" alt=""></div></article>
+    </div>
+  </section>
+
+  <div class="divider"><span></span></div>
+
+  <section id="capturas">
+    <h2 data-i18n="shots.title">Capturas</h2>
+    <p class="sub" data-i18n="shots.sub">Geradas com saves de exemplo. Clique para ver em tamanho real.</p>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <div class="divider"><span></span></div>
+
+  <section id="temas">
+    <h2 data-i18n="themes.title">Temas inspirados nos jogos</h2>
+    <p class="sub" data-i18n="themes.sub">Escuro ou claro, a cor do jogo aberto ou uma das cores de destaque, tamanho dos sprites ajustável e temas completos que mudam fundo, cantos, bordas e fonte.</p>
+    <div class="gallery" id="themes"></div>
+  </section>
+
+  <div class="divider"><span></span></div>
+
+  <section aria-labelledby="celular">
+    <div class="split">
+      <div>
+        <h2 id="celular" data-i18n="phone.title">No celular também</h2>
+        <p class="sub" data-i18n="phone.sub">O mesmo app no Android, com a mesma interface do desktop.</p>
+        <ul class="check">
+          <li data-i18n="phone.1"><b>Acha sozinho</b> os saves do RetroArch, DraStic, melonDS, Dolphin, Azahar/Citra, Eden e outros emuladores.</li>
+          <li data-i18n="phone.2"><b>Abre e grava</b> saves e pastas pelo seletor do sistema, de volta no arquivo original.</li>
+          <li data-i18n="phone.3"><b>Toque e deslize:</b> segure para marcar e arrastar Pokémon, deslize para trocar de caixa e puxe a lista de saves para reler.</li>
+          <li data-i18n="phone.4"><b>Atualiza sozinho</b> quando sai uma versão nova.</li>
+        </ul>
+      </div>
+      <div class="device phone">
+        <div class="bezel"><div class="screen"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/android.png" alt="PKHeX Modern no Android"></div></div>
+        <div class="knob"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"><span></span></div>
+
+  <section id="download">
+    <div class="lab center">
+      <h2 data-i18n="dl.title">Escolha seu inicial</h2>
+      <p class="sub" data-i18n="dl.sub">Grátis e de código aberto. Não precisa instalar o .NET; o app avisa quando sai versão nova e se atualiza sozinho.</p>
+      <div class="starters">
+        <a class="starter" data-os="win" href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-win-x64.zip"><span class="mine-tag" data-i18n="dl.mine">Seu sistema</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/><path d="M4 32a28 28 0 0 1 56 0H41a9 9 0 0 0-18 0Z" fill="#e5484d" stroke="#1e1e24" stroke-width="3"/><circle cx="32" cy="32" r="8" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/></svg><b>Windows</b><small data-i18n="dl.win">10 e 11, 64 bits</small></a>
+        <a class="starter" data-os="linux" href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-linux-x64.zip"><span class="mine-tag" data-i18n="dl.mine">Seu sistema</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/><path d="M4 32a28 28 0 0 1 56 0H41a9 9 0 0 0-18 0Z" fill="#3e8ed0" stroke="#1e1e24" stroke-width="3"/><path d="M12 17C18 21 23 21 26 15M52 17C46 21 41 21 38 15" fill="none" stroke="#e5484d" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="32" r="8" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/></svg><b>Linux</b><small data-i18n="dl.linux">x64, também Steam Deck</small></a>
+        <a class="starter" data-os="mac" href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-osx-arm64.zip"><span class="mine-tag" data-i18n="dl.mine">Seu sistema</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/><path d="M4 32a28 28 0 0 1 56 0H41a9 9 0 0 0-18 0Z" fill="#7a47b8" stroke="#1e1e24" stroke-width="3"/><circle cx="19" cy="19" r="5" fill="#d98db2"/><circle cx="45" cy="19" r="5" fill="#d98db2"/><circle cx="32" cy="32" r="8" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/></svg><b>macOS</b><small data-i18n="dl.mac">chip Apple (M1, M2…)</small></a>
+        <a class="starter" data-os="macintel" href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-osx-x64.zip"><span class="mine-tag" data-i18n="dl.mine">Seu sistema</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/><path d="M4 32a28 28 0 0 1 56 0H41a9 9 0 0 0-18 0Z" fill="#2b2b30" stroke="#1e1e24" stroke-width="3"/><path d="M14 14L22 26M50 14L42 26" stroke="#f2c230" stroke-width="5" stroke-linecap="round"/><circle cx="32" cy="32" r="8" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/></svg><b>macOS Intel</b><small data-i18n="dl.macintel">Macs com Intel</small></a>
+        <a class="starter" data-os="android" href="https://github.com/carlosmozart/PKHeX-Modern/releases/latest/download/PKHeX.Modern-Android.apk"><span class="mine-tag" data-i18n="dl.mine">Seu sistema</span><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="28" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/><path d="M4 32a28 28 0 0 1 56 0H41a9 9 0 0 0-18 0Z" fill="#4cb05a" stroke="#1e1e24" stroke-width="3"/><path d="M8 26H24M40 26H56" stroke="#f2c230" stroke-width="4"/><circle cx="32" cy="32" r="8" fill="#f5f5f7" stroke="#1e1e24" stroke-width="3"/></svg><b>Android</b><small data-i18n="dl.android">6 ou mais novo (APK)</small></a>
+      </div>
+      <div class="notes">
+        <p data-i18n="dl.guide">Como instalar em cada sistema: <a href="https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/PKHeX.Modern/README.md#download">guia de instalação</a> · Novidades de cada versão: <a href="https://github.com/carlosmozart/PKHeX-Modern/releases">Releases</a></p>
+        <p data-i18n="dl.macnote"><b>macOS:</b> na primeira abertura, o macOS bloqueia o app (ele é gratuito e não tem a assinatura paga da Apple). Abra <b>Ajustes do Sistema › Privacidade e Segurança</b> e clique em <b>Abrir Mesmo Assim</b>. Se aparecer “está danificado”, rode no Terminal: <code>xattr -dr com.apple.quarantine "/Applications/PKHeX Modern.app"</code></p>
+        <div class="warn" data-i18n="dl.backup"><b>Faça backup dos seus saves antes de editar.</b> O app já guarda uma cópia antes de gravar por cima, mas um backup seu nunca é demais.</div>
+      </div>
+    </div>
+  </section>
+</div>
 
 <footer>
   <div class="wrap">
-    <p>PKHeX Modern, de <a href="https://github.com/carlosmozart">Carlos Mozart</a> · Licença <a href="https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/LICENSE">GPLv3</a></p>
-    <p>Feito sobre o <a href="https://github.com/kwsch/PKHeX">PKHeX</a>, de Kaphotics e colaboradores. Pokémon e os nomes, imagens e marcas relacionados pertencem à Nintendo, Game Freak e The Pokémon Company. Projeto de fãs, sem fins lucrativos e sem ligação com elas.</p>
+    <p data-i18n="foot.1">PKHeX Modern, de <a href="https://github.com/carlosmozart">Carlos Mozart</a> · Licença <a href="https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/LICENSE">GPLv3</a></p>
+    <p data-i18n="foot.2">Feito sobre o <a href="https://github.com/kwsch/PKHeX">PKHeX</a>, de Kaphotics e colaboradores. Pokémon e os nomes, imagens e marcas relacionados pertencem à Nintendo, Game Freak e The Pokémon Company. Projeto de fãs, sem fins lucrativos e sem ligação com elas.</p>
   </div>
 </footer>
 
 <script>
-  // Mostra o numero da versao mais recente (se a API do GitHub responder; senao fica o texto padrao).
+  const RAW = "https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/";
+
+  // Icones proprios (os mesmos do app, Controls/LineIcon.cs): traco + a cor do objeto por baixo
+  const ICONS = {
+    lid: ["M3 4H21V11H14L12 13H3Z M6.5 7.5A1.5 1.5 0 1 0 9.5 7.5A1.5 1.5 0 1 0 6.5 7.5Z M3 13V20H21V11", "M3 4H21V11H14L12 13H3Z", "#e5484d"],
+    legal: ["M12 3L20 6V11C20 16 16.5 19.5 12 21C7.5 19.5 4 16 4 11V6Z M8.5 12L11 14.5L15.5 9.5", "M12 3L20 6V11C20 16 16.5 19.5 12 21C7.5 19.5 4 16 4 11V6Z", "#3fa45b"],
+    ball: ["M3 12A9 9 0 1 0 21 12A9 9 0 1 0 3 12Z M3 12H9 M15 12H21 M9 12A3 3 0 1 0 15 12A3 3 0 1 0 9 12Z", "M3 12A9 9 0 0 1 21 12H15A3 3 0 0 0 9 12Z", "#e5484d"],
+    phone: ["M7 2.5H17A1.5 1.5 0 0 1 18.5 4V20A1.5 1.5 0 0 1 17 21.5H7A1.5 1.5 0 0 1 5.5 20V4A1.5 1.5 0 0 1 7 2.5Z M10 18.5H14 M9 9.5A3 3 0 0 1 15 9.5H13A1 1 0 0 0 11 9.5Z", "M7.5 5H16.5V16H7.5Z", "#3e8ed0"],
+    box: ["M3 5.5A1 1 0 0 1 4 4.5H20A1 1 0 0 1 21 5.5V9H3Z M4.5 9V19A1 1 0 0 0 5.5 20H18.5A1 1 0 0 0 19.5 19V9 M10 13H14", "M4.5 9H19.5V19A1 1 0 0 1 18.5 20H5.5A1 1 0 0 1 4.5 19Z", "#c9894a"],
+    pc: ["M3 5A1 1 0 0 1 4 4H20A1 1 0 0 1 21 5V15A1 1 0 0 1 20 16H4A1 1 0 0 1 3 15Z M12 16V19.5 M8 20H16 M9.5 10A2.5 2.5 0 1 0 14.5 10A2.5 2.5 0 1 0 9.5 10Z M9.5 10H14.5", "M3 5A1 1 0 0 1 4 4H20A1 1 0 0 1 21 5V15A1 1 0 0 1 20 16H4A1 1 0 0 1 3 15Z", "#3e8ed0"],
+    dex: ["M5 3H19A1.5 1.5 0 0 1 20.5 4.5V19.5A1.5 1.5 0 0 1 19 21H5A1.5 1.5 0 0 1 3.5 19.5V4.5A1.5 1.5 0 0 1 5 3Z M6.5 7.5A2 2 0 1 0 10.5 7.5A2 2 0 1 0 6.5 7.5Z M13.5 6.5V6.51 M16.5 6.5V6.51 M7 12.5H17V17.5H7Z", "M5 3H19A1.5 1.5 0 0 1 20.5 4.5V19.5A1.5 1.5 0 0 1 19 21H5A1.5 1.5 0 0 1 3.5 19.5V4.5A1.5 1.5 0 0 1 5 3Z", "#e5484d"],
+    cart: ["M6 3H15.5L18.5 6V20A1 1 0 0 1 17.5 21H7A1 1 0 0 1 6 20Z M9 3V6.5 M11.5 3V6.5 M8.5 10H16V17.5H8.5Z", "M8.5 10H16V17.5H8.5Z", "#3e8ed0"],
+    grass: ["M3 20.5H21 M4.5 20.5L7 11L9.5 20.5 M9 20.5L12 6.5L15 20.5 M14.5 20.5L17 11.5L19.5 20.5", "M4.5 20.5L7 11L9.5 20.5Z M9 20.5L12 6.5L15 20.5Z M14.5 20.5L17 11.5L19.5 20.5Z", "#4cb05a"],
+    search: ["M4 10.5A6.5 6.5 0 1 0 17 10.5A6.5 6.5 0 1 0 4 10.5Z M4 10.5H8.5 M12.5 10.5H17 M8.5 10.5A2 2 0 1 0 12.5 10.5A2 2 0 1 0 8.5 10.5Z M15.3 15.3L20.5 20.5", "M4 10.5A6.5 6.5 0 0 1 17 10.5H12.5A2 2 0 0 0 8.5 10.5Z", "#e5484d"],
+    game: ["M5 3H19A1 1 0 0 1 20 4V11H4V4A1 1 0 0 1 5 3Z M7 5.5H17V9H7Z M4 13H20V20A1 1 0 0 1 19 21H5A1 1 0 0 1 4 20Z M7.5 15.5V18.5 M6 17H9 M15.5 16V16.01 M17.5 18V18.01", "M7 5.5H17V9H7Z M4 13H20V20A1 1 0 0 1 19 21H5A1 1 0 0 1 4 20Z", "#6c7a89"],
+    trainer: ["M8.5 9.5A3.5 3.5 0 0 0 15.5 9.5 M8.5 9.5V10.5A3.5 3.5 0 0 0 15.5 10.5V9.5 M7.5 9.5A4.5 4.5 0 0 1 16.5 9.5H20 M7.5 9.5H16.5 M4.5 21A7.5 7.5 0 0 1 19.5 21", "M7.5 9.5A4.5 4.5 0 0 1 16.5 9.5Z", "#e5484d"],
+    lock: ["M6 11H18V20.5H6Z M8.5 11V8A3.5 3.5 0 0 1 15.5 8V11 M12 14.5V17", "M6 11H18V20.5H6Z", "#6c7a89"],
+    shiny: ["M11 3L12.8 9.2L19 11L12.8 12.8L11 19L9.2 12.8L3 11L9.2 9.2Z M19 3V7 M17 5H21", "M11 3L12.8 9.2L19 11L12.8 12.8L11 19L9.2 12.8L3 11L9.2 9.2Z", "#f2c230"],
+    egg: ["M12 3C8.5 3 5.5 9 5.5 13.5A6.5 6.5 0 0 0 18.5 13.5C18.5 9 15.5 3 12 3Z M6.5 11.5L9.5 13L12 11L14.5 13L17.5 11.5", "M12 3C8.5 3 5.5 9 5.5 13.5A6.5 6.5 0 0 0 18.5 13.5C18.5 9 15.5 3 12 3Z", "#d9b65a"],
+    evolve: ["M4.5 12A7.5 7.5 0 0 1 17.5 7 M18 3V7.5H13.5 M19.5 12A7.5 7.5 0 0 1 6.5 17 M6 21V16.5H10.5 M9.5 12A2.5 2.5 0 1 0 14.5 12A2.5 2.5 0 1 0 9.5 12Z", "M9.5 12A2.5 2.5 0 1 0 14.5 12A2.5 2.5 0 1 0 9.5 12Z", "#9b6bd6"],
+  };
+  document.querySelectorAll("[data-icon]").forEach(el => {
+    const [stroke, fill, tint] = ICONS[el.dataset.icon];
+    el.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="${fill}" fill="${tint}" opacity=".8"/><path d="${stroke}" fill="none" stroke="#eef0f4" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  });
+
+  // Faixa dos jogos: a cor de cada versao, por geracao (1 = cor clara, texto escuro)
+  const GAMES = [
+    ["Gen 1", [["Red", "#e3350d"], ["Blue", "#3b6fd8"], ["Yellow", "#f6c700", 1]]],
+    ["Gen 2", [["Gold", "#c9a43a"], ["Silver", "#a9b2bc", 1], ["Crystal", "#5fb8d6"]]],
+    ["Gen 3", [["Ruby", "#c8102e"], ["Sapphire", "#2e5aac"], ["Emerald", "#2e9e5b"], ["FireRed", "#f06b26"], ["LeafGreen", "#6bb53a"]]],
+    ["Gen 4", [["Diamond", "#5f8fd6"], ["Pearl", "#d98db2"], ["Platinum", "#8a8f99"], ["HeartGold", "#d4a93a"], ["SoulSilver", "#a8b4c0", 1]]],
+    ["Gen 5", [["Black", "#2b2b2b"], ["White", "#eeeeee", 1], ["Black 2", "#34495e"], ["White 2", "#e7d2c0", 1]]],
+    ["Gen 6", [["X", "#2d6cb5"], ["Y", "#c8344a"], ["Omega Ruby", "#b32d2d"], ["Alpha Sapphire", "#2f5ea8"]]],
+    ["Gen 7", [["Sun", "#f2a33a"], ["Moon", "#6d5cc9"], ["Ultra Sun", "#e86a2a"], ["Ultra Moon", "#4e3fa6"], ["Let's Go", "#f2c230", 1]]],
+    ["Gen 8", [["Sword", "#2e9bd6"], ["Shield", "#d6336c"], ["BD/SP", "#7a8fd0"], ["Legends: Arceus", "#6b8f9c"]]],
+    ["Gen 9", [["Scarlet", "#e0452e"], ["Violet", "#7a47b8"], ["Legends: Z-A", "#8fc43a", 1]]],
+  ];
+  document.getElementById("strip").innerHTML = GAMES.map(([gen, list]) => `<div class="genrow"><span class="gen">${gen}</span>` +
+    list.map(([n, c, lt]) => `<span class="${lt ? "lt" : ""}" style="background:${c}">${n}</span>`).join("") + `</div>`).join("");
+
+  // Capturas e temas: [arquivo, legenda PT, legenda EN]
+  const SHOTS = [
+    ["showdown", "Set do Showdown colado e legalizado, com o mesmo set", "A Showdown set pasted and legalized, keeping the set"],
+    ["emulators", "Saves dos emuladores achados sozinhos no Android", "Emulator saves found automatically on Android"],
+    ["home", "Início: o jogo, a equipe, a linha do tempo e atalhos para tudo", "Home: the game, the team, the timeline and shortcuts to everything"],
+    ["pokedex", "Pokédex centralizada de todos os saves", "Combined Pokédex across all saves"],
+    ["moves", "Golpes com busca: em verde, os que o Pokémon aprende", "Searchable moves: the ones the Pokémon learns in green"],
+    ["encounters", "Banco de encontros: onde e como cada espécie aparece", "Encounter database: where and how each species appears"],
+    ["bank", "Bank com seleção múltipla e conversão de geração", "Bank with multi-select and generation conversion"],
+    ["savemanager", "Save Manager com o selo de cada jogo", "Save Manager with each game's badge"],
+    ["trainer", "Treinador com insígnias, BP e datas", "Trainer with badges, BP and dates"],
+    ["beauty", "Evolução assistida, inclusive Feebas por Beauty", "Assisted evolution, Feebas by Beauty included"],
+    ["nuzlocke", "Relatório de Nuzlocke: primeiro encontro de cada rota", "Nuzlocke report: first encounter of each route"],
+    ["eggs", "Fábrica de ovos: um ovo de cada espécie que falta", "Egg factory: one egg of each missing species"],
+    ["shinyhunt", "Caçada shiny: contador, chances e onde encontrar", "Shiny hunt: counter, odds and where to find it"],
+  ];
+  const THEMES = [
+    ["theme_oras", "ORAS (Pokédex de Omega Ruby/Alpha Sapphire)", "ORAS (Omega Ruby/Alpha Sapphire Pokédex)"],
+    ["theme_kanto_light", "Kanto (Pokédex clássica), no modo claro", "Kanto (classic Pokédex), light mode"],
+    ["theme_pixel", "Pixel (menus do Game Boy Advance)", "Pixel (Game Boy Advance menus)"],
+    ["theme_pss", "PSS (Player Search System de X/Y)", "PSS (X/Y Player Search System)"],
+    ["theme_za", "Z-A (Lumiose de Legends: Z-A)", "Z-A (Lumiose from Legends: Z-A)"],
+    ["english", "Interface em português ou inglês", "Interface in Portuguese or English"],
+  ];
+  const fill = (id, list) => document.getElementById(id).innerHTML = list.map(([f, pt, en], i) =>
+    `<figure><a href="${RAW}${f}.png"><img loading="lazy" src="${RAW}${f}.png" alt="${pt}"></a><figcaption><b>#${String(i + 1).padStart(3, "0")}</b><span data-pt="${pt}" data-en="${en}">${pt}</span></figcaption></figure>`).join("");
+  fill("gallery", SHOTS); fill("themes", THEMES);
+
+  // Escolha seu inicial: destaca o sistema de quem esta vendo
+  const ua = navigator.userAgent;
+  const mine = /Android/i.test(ua) ? "android" : /Mac/i.test(ua) ? "mac" : /Linux|X11|CrOS/i.test(ua) ? "linux" : /Windows/i.test(ua) ? "win" : "";
+  document.querySelector(`.starter[data-os="${mine}"]`)?.classList.add("mine");
+
+  // PT/EN: o portugues esta no HTML; o ingles vem daqui. A escolha fica salva no navegador.
+  const EN = {
+    "nav.features": "Features", "nav.shots": "Screenshots", "nav.themes": "Themes", "nav.download": "Download",
+    "hero.title": "The PKHeX you know, <em>with a Pokédex look.</em>",
+    "hero.lead": "A modern, free interface for <a href=\"https://github.com/kwsch/PKHeX\">PKHeX</a>: edit, organize and legalize your Pokémon from every game, from Generation 1 to Legends: Z-A. Underneath is the original PKHeX.Core, with the same save handling and legality rules.",
+    "hero.download": "Download for free", "hero.github": "★ View on GitHub",
+    "fact.gens": "from Red to Legends: Z-A", "fact.os": "platforms, Android included", "fact.free": "Free", "fact.open": "and open source",
+    "games.sub": "Every main series game, each with its own badge",
+    "dex.title": "Feature Pokédex", "dex.sub": "Everything PKHeX does, in one place, and a bit more. Each feature has its entry: hover to see the screen.",
+    "ty.visual": "Visual", "ty.legal": "Legality", "ty.tool": "Tool", "ty.phone": "Mobile", "ty.coll": "Collection", "ty.game": "Game",
+    "f1.t": "Looks like a Pokémon app", "f1.d": "A sidebar with a Pokédex lid, original icons of in-game objects, rounded titles, the open game's color, short animations and a “game mode” that turns it all on in one click. Plus a team showcase to share.",
+    "f2.t": "Legal mode", "f2.d": "The editor only offers legal options and legalizes in one click, from the game's real encounters.",
+    "f3.t": "Showdown set → legal Pokémon", "f3.d": "Paste a set and get a legal Pokémon for your game, offline: IVs, ability, nature, EVs, moves and Tera Type kept whenever possible, with a note of what changed.",
+    "f4.t": "Emulator saves", "f4.d": "On Android, finds saves from RetroArch, DraStic, melonDS, Dolphin, Azahar/Citra, Eden and others on its own, and writes them back in place, with a backup.",
+    "f5.t": "Drag and drop", "f5.d": "Boxes, party and editor side by side, with undo and redo, multi-select, global search and a command palette (Ctrl+K).",
+    "f6.t": "Local bank", "f6.d": "Keep Pokémon outside your saves and move them between games, with generation conversion.",
+    "f7.t": "Combined Pokédex", "f7.d": "Brings together every save and the bank: living dex, shiny dex, forms and genders, a planner that organizes your boxes and one-click Pokédex completion.",
+    "f8.t": "Save Manager", "f8.d": "Every save in your folder with each game's badge, saves inside .zip files and an automatic backup before writing.",
+    "f9.t": "Encounters and events", "f9.d": "Generate legal Pokémon from each game's encounters and Mystery Gifts, Gen 1 to 3 included.",
+    "f10.t": "Search and batch", "f10.d": "Search every save and the bank, find duplicates and edit or legalize many Pokémon at once.",
+    "f11.t": "Game page", "f11.d": "Named event flags, records, Hall of Fame, Battle Frontier, Pokéathlon, secret bases and shortcuts to unlock O-Powers, Super Training and Zygarde Cells.",
+    "f12.t": "Full trainer editor", "f12.d": "Badges of every region, gender, money, Game Corner coins, BP, play time and adventure dates.",
+    "f13.t": "Nuzlocke and Hardcore", "f13.d": "A Nuzlocke report with the first encounter of each route, dupes, alive and dead, and a Hardcore mode that only lets you move Pokémon, for challenges and RetroAchievements.",
+    "f14.t": "Shiny hunt", "f14.d": "A counter with the real odds of each method in the game, encounters for 50/90/99%, where the target appears, shiny lock and dangerous move warnings, and “Found it!” read from the save.",
+    "f15.t": "Egg factory", "f15.d": "One legal egg of each species missing from the save, from the game's own breeding, straight into your boxes with a single undo.",
+    "f16.t": "Assisted evolution", "f16.d": "Every evolution of the species in the game, with the requirement and a preview: the app handles level, item, trade or friendship for you.",
+    "shots.title": "Screenshots", "shots.sub": "Made with sample saves. Click to see them full size.",
+    "themes.title": "Themes inspired by the games", "themes.sub": "Dark or light, the open game's color or one of the accent colors, adjustable sprite size and full themes that change background, corners, borders and font.",
+    "phone.title": "On your phone too", "phone.sub": "The same app on Android, with the same interface as the desktop.",
+    "phone.1": "<b>Finds on its own</b> the saves from RetroArch, DraStic, melonDS, Dolphin, Azahar/Citra, Eden and other emulators.",
+    "phone.2": "<b>Opens and writes</b> saves and folders through the system picker, back to the original file.",
+    "phone.3": "<b>Tap and swipe:</b> hold to select and drag Pokémon, swipe to change boxes and pull the save list to reload.",
+    "phone.4": "<b>Updates itself</b> when a new version comes out.",
+    "dl.title": "Choose your starter", "dl.sub": "Free and open source. No need to install .NET; the app tells you when a new version is out and updates itself.",
+    "dl.mine": "Your system", "dl.win": "10 and 11, 64-bit", "dl.linux": "x64, Steam Deck too", "dl.mac": "Apple silicon (M1, M2…)", "dl.macintel": "Intel Macs", "dl.android": "6 or newer (APK)",
+    "dl.guide": "How to install on each system: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/PKHeX.Modern/README.md#download\">install guide</a> · What's new in each version: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/releases\">Releases</a>",
+    "dl.macnote": "<b>macOS:</b> the first time you open it, macOS blocks the app (it is free and does not have Apple's paid signature). Open <b>System Settings › Privacy &amp; Security</b> and click <b>Open Anyway</b>. If it says the app “is damaged”, run in Terminal: <code>xattr -dr com.apple.quarantine \"/Applications/PKHeX Modern.app\"</code>",
+    "dl.backup": "<b>Back up your saves before editing.</b> The app already keeps a copy before overwriting, but a backup of your own never hurts.",
+    "foot.1": "PKHeX Modern, by <a href=\"https://github.com/carlosmozart\">Carlos Mozart</a> · <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/LICENSE\">GPLv3</a> license",
+    "foot.2": "Built on <a href=\"https://github.com/kwsch/PKHeX\">PKHeX</a>, by Kaphotics and contributors. Pokémon and related names, images and trademarks belong to Nintendo, Game Freak and The Pokémon Company. A non-profit fan project with no affiliation with them.",
+  };
+  const PT = {};
+  document.querySelectorAll("[data-i18n]").forEach(el => PT[el.dataset.i18n] ??= el.innerHTML);
+  let lang = "pt", version = "";
+  function setLang(l) {
+    lang = l;
+    document.documentElement.lang = l === "en" ? "en" : "pt-BR";
+    document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; el.innerHTML = (l === "en" ? EN[k] : PT[k]) ?? PT[k]; });
+    document.querySelectorAll("[data-pt]").forEach(el => el.textContent = el.dataset[l]);
+    document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
+    showVersion();
+    try { localStorage.setItem("lang", l); } catch {}
+  }
+  function showVersion() {
+    if (version) document.getElementById("version").textContent = (lang === "en" ? "Version " : "Versão ") + version + " · Windows · Linux · macOS · Android";
+  }
+  document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
+  let saved = null;
+  try { saved = localStorage.getItem("lang"); } catch {}
+  // ?lang=en ou ?lang=pt no endereco (para divulgar o link ja no idioma certo), depois a escolha salva, depois o navegador
+  const asked = new URLSearchParams(location.search).get("lang");
+  setLang(asked === "en" || asked === "pt" ? asked : saved ?? (navigator.language?.toLowerCase().startsWith("pt") ? "pt" : "en"));
+
+  // Numero da versao mais recente (se a API do GitHub responder; senao fica o texto padrao)
   fetch("https://api.github.com/repos/carlosmozart/PKHeX-Modern/releases/latest")
     .then(r => r.ok ? r.json() : null)
-    .then(r => { if (r && r.tag_name) document.getElementById("version").textContent = "Versão " + r.tag_name.replace("modern-v", "") + " · Windows · Linux · macOS · Android"; })
+    .then(r => { if (r && r.tag_name) { version = r.tag_name.replace("modern-v", ""); showVersion(); } })
     .catch(() => {});
 </script>
 </body>
