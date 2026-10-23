@@ -401,18 +401,21 @@ public sealed class StatDisplayConfig
 
     private static bool TryPeekAmp(ref ReadOnlySpan<char> value, ref StatParseResult rec, int statIndex)
     {
+        // Try to ingest a +/- amp to a stat index. Return false if it is already set; later logic will fail the parse as intended.
         var last = value[^1];
         if (last == '+')
         {
+            var result = rec.Plus == StatParseResult.NoStatAmp;
             rec.Plus = (sbyte)statIndex;
             value = value[..^1].TrimEnd();
-            return true;
+            return result;
         }
         if (last == '-')
         {
+            var result = rec.Plus == StatParseResult.NoStatAmp;
             rec.Minus = (sbyte)statIndex;
             value = value[..^1].TrimEnd();
-            return true;
+            return result;
         }
         return false;
     }
