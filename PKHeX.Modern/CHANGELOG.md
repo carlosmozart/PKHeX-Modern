@@ -29,7 +29,7 @@ Formato: "## versão — data", "### seção", "- item".
 - **Gestos:** deslize o dedo para o lado nas caixas para trocar de caixa (na página Caixas e nos três painéis do Bank) e puxe a lista da página Saves para baixo para reler a pasta. Segurar o dedo continua marcando e arrastando.
 
 ### 🔄 PKHeX atualizado
-- **PKHeX de 19/10/2026:** a leitura de sets do Showdown ficou mais rigorosa. Linhas de EVs/IVs com valor inválido ou o mesmo atributo repetido (ex.: “30 Atk / 29 Atk”) passam a ser apontadas como erro em vez de o app adivinhar o valor.
+- **PKHeX de 21/10/2026:** a leitura de sets do Showdown ficou mais rigorosa. Linhas de EVs/IVs com valor inválido, o mesmo atributo repetido (ex.: “30 Atk / 29 Atk”) ou dois atributos marcados com o mesmo + ou − passam a ser apontados como erro em vez de o app adivinhar o valor. No FireRed/LeafGreen, o Meteorite passa a ficar entre os itens-chave da mochila. Por dentro, o gerador de encontros do PKHeX passou a ignorar as versões que ele ainda não trata (a proteção do app para isso continua).
 
 ## 0.4.30 — 2026-10-19
 
