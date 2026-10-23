@@ -66,7 +66,7 @@ O usuário delega levas de funções ao Codex com enunciados `TAREFA-CODEX-FUNCO
 
 ## Pendências em aberto (23/10/2026)
 
-Última release: **0.5.0** (25/10/2026). Nenhuma tarefa pedida ficou pela metade; o que segue são ideias e conferências ainda não feitas.
+Última release: **0.5.0** (23/10/2026). Nenhuma tarefa pedida ficou pela metade; o que segue são ideias e conferências ainda não feitas.
 
 - **No celular (testar no aparelho do usuário, tema ORAS + fonte Pokémon GB):** as telas da 0.4.26 e 0.4.27 (Início com status, barra lateral em grupos com ícones, resumo e fábrica de ovos da Pokédex, aba Nuzlocke, cartão e editor do modo Hardcore); também a tela cheia (0.4.18), o toque longo nos botões e o segurar-e-arrastar de slot (0.4.16); e os gestos da 0.5.0 (deslizar entre caixas sem atrapalhar o segurar-e-arrastar nem a rolagem, e puxar a lista de Saves para reler). Para conferir sem o aparelho, renderize o `MobileShell` em 892×412 (como o `Tools/PKHeX.Modern.Tests/Docs` faz com a captura `android.png`).
 - **Ideias vindas do PKForge** (github.com/sofianeelhor/PKForge, concorrente no Android, analisado em 16/10/2026), em ordem de interesse:

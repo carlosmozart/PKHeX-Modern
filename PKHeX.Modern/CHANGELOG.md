@@ -6,7 +6,7 @@ Ao adicionar uma função, anote em "Próxima versão"; na release, troque o tí
 Formato: "## versão — data", "### seção", "- item".
 -->
 
-## 0.5.0 — 2026-10-25
+## 0.5.0 — 2026-10-23
 
 ### 🎨 Interface
 - **Títulos com personalidade:** os títulos grandes (páginas, nome do save, Pokémon no editor, logo e vitrine) passaram a usar a Fredoka, uma fonte arredondada; o texto continua na Inter. ⚙ › Fonte › Inter volta tudo para a Inter.
