@@ -95,3 +95,14 @@ public sealed class SubtractConverter : IValueConverter
 
     public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();
 }
+
+/// <summary>Valor da bola (o <c>ComboItem.Value</c> da lista de bolas) → sprite da bola, para a lista do editor.</summary>
+public sealed class BallSpriteConverter : IValueConverter
+{
+    public static readonly BallSpriteConverter Instance = new();
+
+    public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
+        => value is int ball and > 0 and <= byte.MaxValue ? PKHeX.Modern.Services.SpriteService.GetBallSprite((byte)ball) : null;
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) => throw new NotSupportedException();
+}

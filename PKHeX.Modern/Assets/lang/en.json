@@ -2588,5 +2588,7 @@
   "Títulos em Fredoka": "Fredoka titles",
   "Nos temas com a Inter, os títulos grandes (nome da página, do save e do Pokémon no editor, o logo e a vitrine da equipe) usam a Fredoka, uma fonte arredondada; o resto do texto continua na Inter. Para deixar tudo na Inter, escolha ⚙ › Fonte › Inter. No tema Pixel e nas outras fontes do ⚙, os títulos seguem a fonte escolhida.": "In themes that use Inter, large titles (page, save and editor Pokémon names, the logo and the team showcase) use Fredoka, a rounded font; the rest of the text stays in Inter. To keep everything in Inter, choose ⚙ › Font › Inter. In the Pixel theme and with the other ⚙ fonts, titles follow the chosen font.",
   "Usa a fonte do tema escolhido (Pixelify Sans no tema Pixel, Inter com os títulos em Fredoka nos outros).": "Uses the chosen theme's font (Pixelify Sans in the Pixel theme, Inter with Fredoka titles in the others).",
-  "Fonte moderna e legível em tudo, inclusive nos títulos.": "Modern, readable font everywhere, titles included."
+  "Fonte moderna e legível em tudo, inclusive nos títulos.": "Modern, readable font everywhere, titles included.",
+  "A bola de captura aparece na ficha do Pokémon, no topo do editor: clique nela para ir à aba Encontro, com a lista de bolas já em foco. Na lista, cada bola aparece com o seu sprite. No modo legal, só as bolas possíveis para aquele Pokémon aparecem.": "The capture ball is shown on the Pokémon sheet at the top of the editor: click it to go to the Encounter tab, with the ball list already focused. In the list, each ball has its sprite. In legal mode, only the balls that are possible for that Pokémon are listed.",
+  "Bola de captura: clique para trocar (aba Encontro)": "Capture ball: click to change it (Encounter tab)"
 }

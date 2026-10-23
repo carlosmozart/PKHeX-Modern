@@ -6,6 +6,11 @@ Ao adicionar uma função, anote em "Próxima versão"; na release, troque o tí
 Formato: "## versão — data", "### seção", "- item".
 -->
 
+## Próxima versão
+
+### 🎨 Interface
+- **Bola com sprite e atalho:** a lista de bolas do editor mostra o sprite de cada bola, e clicar na bola da ficha do Pokémon leva direto para a aba Encontro, com a lista em foco.
+
 ## 0.5.0 — 2026-10-23
 
 ### 🎨 Interface

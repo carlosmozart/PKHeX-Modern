@@ -22,6 +22,17 @@ public sealed partial class PokemonEditorView : UserControl
     /// <summary>Simbolo do genero: troca macho/femea (a forma acompanha nas especies em que a forma e o genero).</summary>
     private void OnGenderClick(object? sender, RoutedEventArgs e) => VM?.ToggleGender();
 
+    /// <summary>Bola da ficha: abre a aba Encontro e põe o foco na lista de bolas.</summary>
+    private void OnBallClick(object? sender, RoutedEventArgs e)
+    {
+        if (VM is not { } vm) return;
+        vm.SelectedTab = EncounterTab;
+        Avalonia.Threading.Dispatcher.UIThread.Post(() => BallCombo.Focus(), Avalonia.Threading.DispatcherPriority.Loaded);
+    }
+
+    /// <summary>Índice da aba Encontro no TabControl do editor.</summary>
+    public const int EncounterTab = 3;
+
     /// <summary>Estrela / "Tornar shiny": Alt mantem o PID (troca o SID), Shift = quadrado, Ctrl = estrela.</summary>
     private void OnShinyClick(object? sender, RoutedEventArgs e)
     {

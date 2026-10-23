@@ -11,6 +11,13 @@
     <DataTemplate x:Key="ComboItemTemplate" DataType="core:ComboItem">
       <TextBlock Text="{Binding Text}" />
     </DataTemplate>
+    <!-- Lista de bolas: o sprite de cada bola ao lado do nome (tambem na caixa fechada) -->
+    <DataTemplate x:Key="BallItemTemplate" DataType="core:ComboItem">
+      <StackPanel Orientation="Horizontal" Spacing="8">
+        <Image Source="{Binding Value, Converter={x:Static c:BallSpriteConverter.Instance}}" Width="20" Height="20" VerticalAlignment="Center" />
+        <TextBlock Text="{Binding Text}" VerticalAlignment="Center" />
+      </StackPanel>
+    </DataTemplate>
   </UserControl.Resources>
   <UserControl.DataTemplates>
     <DataTemplate DataType="vm:MemoryViewModel">
@@ -78,10 +85,14 @@
           </WrapPanel>
           <TextBlock Text="{Binding CardLine}" FontSize="13" Classes="muted" TextTrimming="CharacterEllipsis" />
           <WrapPanel ItemSpacing="10" LineSpacing="4">
-            <StackPanel Orientation="Horizontal" Spacing="4" IsVisible="{Binding HasCardBall}" ToolTip.Tip="Bola de captura">
-              <Image Source="{Binding CardBallSprite}" Width="18" Height="18" />
-              <TextBlock Text="{Binding CardBallName}" FontSize="12" VerticalAlignment="Center" />
-            </StackPanel>
+            <!-- Clicar na bola leva para a aba Encontro, com a lista de bolas em foco -->
+            <Button Classes="ghost cardBall" Padding="4,1" Margin="-4,-1" IsVisible="{Binding HasCardBall}" Click="OnBallClick"
+                    ToolTip.Tip="Bola de captura: clique para trocar (aba Encontro)">
+              <StackPanel Orientation="Horizontal" Spacing="4">
+                <Image Source="{Binding CardBallSprite}" Width="18" Height="18" />
+                <TextBlock Text="{Binding CardBallName}" FontSize="12" VerticalAlignment="Center" />
+              </StackPanel>
+            </Button>
             <Border Classes="chip originChip" IsVisible="{Binding HasCardOrigin}" ToolTip.Tip="Jogo de origem">
               <TextBlock Text="{Binding CardOrigin}" />
             </Border>
@@ -434,8 +445,8 @@
                           ItemsSource="{Binding EncounterOptions}" SelectedItem="{Binding SelectedEncounter}" PlaceholderText="Escolha outro encontro deste jogo"
                           ToolTip.Tip="Modo legal: em vez de mudar local e nível à mão, escolha um encontro real; o Pokémon é gerado de novo a partir dele, mantendo natureza, nível, item, apelido e golpes quando possível." />
                 <TextBlock Grid.Row="1" Text="Bola" VerticalAlignment="Center" />
-                <ComboBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding BallList}"
-                          SelectedItem="{Binding Ball}" ItemTemplate="{StaticResource ComboItemTemplate}" />
+                <ComboBox x:Name="BallCombo" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding BallList}" MaxDropDownHeight="360"
+                          SelectedItem="{Binding Ball}" ItemTemplate="{StaticResource BallItemTemplate}" />
                 <TextBlock Grid.Row="2" Text="Local" VerticalAlignment="Center" />
                 <ComboBox Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" ItemsSource="{Binding MetLocationList}"
                           SelectedItem="{Binding MetLocation}" ItemTemplate="{StaticResource ComboItemTemplate}"
