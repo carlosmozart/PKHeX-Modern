@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- Pagina de divulgacao do PKHeX Modern (GitHub Pages, pasta /docs do branch modern-ui). Visual de Pokedex (0.5.0):
-     tampa com lente e luzes, fichas numeradas das funcoes e "escolha seu inicial" no download; PT no HTML, EN no script.
+     tampa com lente e luzes, fichas numeradas das funcoes e "escolha seu inicial" no download; PT no HTML, EN e ES no script.
      As imagens vem de PKHeX.Modern/docs no proprio repositorio (capturas headless com saves sinteticos). -->
 <html lang="pt-BR">
 <head>
@@ -13,6 +13,9 @@
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#e5484d">
 <link rel="canonical" href="https://carlosmozart.github.io/PKHeX-Modern/">
+<link rel="alternate" hreflang="pt-BR" href="https://carlosmozart.github.io/PKHeX-Modern/">
+<link rel="alternate" hreflang="en" href="https://carlosmozart.github.io/PKHeX-Modern/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://carlosmozart.github.io/PKHeX-Modern/">
 <link rel="icon" href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern.Android/Resources/drawable/app_icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PKHeX Modern">
@@ -222,7 +225,7 @@
       <a href="#temas" data-i18n="nav.themes">Temas</a>
       <a href="#download" data-i18n="nav.download">Download</a>
       <a href="https://github.com/carlosmozart/PKHeX-Modern">GitHub</a>
-      <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="pt" aria-pressed="true">PT</button><button type="button" data-lang="en" aria-pressed="false">EN</button></div>
+      <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-lang="pt" aria-pressed="true">PT</button><button type="button" data-lang="en" aria-pressed="false">EN</button><button type="button" data-lang="es" aria-pressed="false" hidden>ES</button></div>
     </nav>
   </div>
 </header>
@@ -406,32 +409,32 @@
   document.getElementById("strip").innerHTML = GAMES.map(([gen, list]) => `<div class="genrow"><span class="gen">${gen}</span>` +
     list.map(([n, c, lt]) => `<span class="${lt ? "lt" : ""}" style="background:${c}">${n}</span>`).join("") + `</div>`).join("");
 
-  // Capturas e temas: [arquivo, legenda PT, legenda EN]
+  // Capturas e temas: [arquivo, legenda PT, legenda EN, legenda ES]
   const SHOTS = [
-    ["showdown", "Set do Showdown colado e legalizado, com o mesmo set", "A Showdown set pasted and legalized, keeping the set"],
-    ["emulators", "Saves dos emuladores achados sozinhos no Android", "Emulator saves found automatically on Android"],
-    ["home", "Início: o jogo, a equipe, a linha do tempo e atalhos para tudo", "Home: the game, the team, the timeline and shortcuts to everything"],
-    ["pokedex", "Pokédex centralizada de todos os saves", "Combined Pokédex across all saves"],
-    ["moves", "Golpes com busca: em verde, os que o Pokémon aprende", "Searchable moves: the ones the Pokémon learns in green"],
-    ["encounters", "Banco de encontros: onde e como cada espécie aparece", "Encounter database: where and how each species appears"],
-    ["bank", "Bank com seleção múltipla e conversão de geração", "Bank with multi-select and generation conversion"],
-    ["savemanager", "Save Manager com o selo de cada jogo", "Save Manager with each game's badge"],
-    ["trainer", "Treinador com insígnias, BP e datas", "Trainer with badges, BP and dates"],
-    ["beauty", "Evolução assistida, inclusive Feebas por Beauty", "Assisted evolution, Feebas by Beauty included"],
-    ["nuzlocke", "Relatório de Nuzlocke: primeiro encontro de cada rota", "Nuzlocke report: first encounter of each route"],
-    ["eggs", "Fábrica de ovos: um ovo de cada espécie que falta", "Egg factory: one egg of each missing species"],
-    ["shinyhunt", "Caçada shiny: contador, chances e onde encontrar", "Shiny hunt: counter, odds and where to find it"],
+    ["showdown", "Set do Showdown colado e legalizado, com o mesmo set", "A Showdown set pasted and legalized, keeping the set", "Set de Showdown pegado y legalizado, con el mismo set"],
+    ["emulators", "Saves dos emuladores achados sozinhos no Android", "Emulator saves found automatically on Android", "Partidas de los emuladores encontradas solas en Android"],
+    ["home", "Início: o jogo, a equipe, a linha do tempo e atalhos para tudo", "Home: the game, the team, the timeline and shortcuts to everything", "Inicio: el juego, el equipo, la línea de tiempo y accesos a todo"],
+    ["pokedex", "Pokédex centralizada de todos os saves", "Combined Pokédex across all saves", "Pokédex unificada de todas las partidas"],
+    ["moves", "Golpes com busca: em verde, os que o Pokémon aprende", "Searchable moves: the ones the Pokémon learns in green", "Movimientos con búsqueda: en verde, los que el Pokémon aprende"],
+    ["encounters", "Banco de encontros: onde e como cada espécie aparece", "Encounter database: where and how each species appears", "Base de encuentros: dónde y cómo aparece cada especie"],
+    ["bank", "Bank com seleção múltipla e conversão de geração", "Bank with multi-select and generation conversion", "Bank con selección múltiple y conversión de generación"],
+    ["savemanager", "Save Manager com o selo de cada jogo", "Save Manager with each game's badge", "Save Manager con el sello de cada juego"],
+    ["trainer", "Treinador com insígnias, BP e datas", "Trainer with badges, BP and dates", "Entrenador con medallas, PB y fechas"],
+    ["beauty", "Evolução assistida, inclusive Feebas por Beauty", "Assisted evolution, Feebas by Beauty included", "Evolución asistida, incluso Feebas por Belleza"],
+    ["nuzlocke", "Relatório de Nuzlocke: primeiro encontro de cada rota", "Nuzlocke report: first encounter of each route", "Informe Nuzlocke: primer encuentro de cada ruta"],
+    ["eggs", "Fábrica de ovos: um ovo de cada espécie que falta", "Egg factory: one egg of each missing species", "Fábrica de huevos: un huevo de cada especie que falta"],
+    ["shinyhunt", "Caçada shiny: contador, chances e onde encontrar", "Shiny hunt: counter, odds and where to find it", "Caza shiny: contador, probabilidades y dónde encontrarlo"],
   ];
   const THEMES = [
-    ["theme_oras", "ORAS (Pokédex de Omega Ruby/Alpha Sapphire)", "ORAS (Omega Ruby/Alpha Sapphire Pokédex)"],
-    ["theme_kanto_light", "Kanto (Pokédex clássica), no modo claro", "Kanto (classic Pokédex), light mode"],
-    ["theme_pixel", "Pixel (menus do Game Boy Advance)", "Pixel (Game Boy Advance menus)"],
-    ["theme_pss", "PSS (Player Search System de X/Y)", "PSS (X/Y Player Search System)"],
-    ["theme_za", "Z-A (Lumiose de Legends: Z-A)", "Z-A (Lumiose from Legends: Z-A)"],
-    ["english", "Interface em português ou inglês", "Interface in Portuguese or English"],
+    ["theme_oras", "ORAS (Pokédex de Omega Ruby/Alpha Sapphire)", "ORAS (Omega Ruby/Alpha Sapphire Pokédex)", "ORAS (Pokédex de Omega Ruby/Alpha Sapphire)"],
+    ["theme_kanto_light", "Kanto (Pokédex clássica), no modo claro", "Kanto (classic Pokédex), light mode", "Kanto (Pokédex clásica), en modo claro"],
+    ["theme_pixel", "Pixel (menus do Game Boy Advance)", "Pixel (Game Boy Advance menus)", "Pixel (menús de Game Boy Advance)"],
+    ["theme_pss", "PSS (Player Search System de X/Y)", "PSS (X/Y Player Search System)", "PSS (Player Search System de X/Y)"],
+    ["theme_za", "Z-A (Lumiose de Legends: Z-A)", "Z-A (Lumiose from Legends: Z-A)", "Z-A (Lumiose de Legends: Z-A)"],
+    ["english", "Interface em português ou inglês", "Interface in Portuguese or English", "Interfaz en portugués o inglés (español en camino)"],
   ];
-  const fill = (id, list) => document.getElementById(id).innerHTML = list.map(([f, pt, en], i) =>
-    `<figure><a href="${RAW}${f}.png"><img loading="lazy" src="${RAW}${f}.png" alt="${pt}"></a><figcaption><b>#${String(i + 1).padStart(3, "0")}</b><span data-pt="${pt}" data-en="${en}">${pt}</span></figcaption></figure>`).join("");
+  const fill = (id, list) => document.getElementById(id).innerHTML = list.map(([f, pt, en, es], i) =>
+    `<figure><a href="${RAW}${f}.png"><img loading="lazy" src="${RAW}${f}.png" alt="${pt}"></a><figcaption><b>#${String(i + 1).padStart(3, "0")}</b><span data-pt="${pt}" data-en="${en}" data-es="${es}">${pt}</span></figcaption></figure>`).join("");
   fill("gallery", SHOTS); fill("themes", THEMES);
 
   // Escolha seu inicial: destaca o sistema de quem esta vendo
@@ -439,7 +442,7 @@
   const mine = /Android/i.test(ua) ? "android" : /Mac/i.test(ua) ? "mac" : /Linux|X11|CrOS/i.test(ua) ? "linux" : /Windows/i.test(ua) ? "win" : "";
   document.querySelector(`.starter[data-os="${mine}"]`)?.classList.add("mine");
 
-  // PT/EN: o portugues esta no HTML; o ingles vem daqui. A escolha fica salva no navegador.
+  // PT/EN/ES: o portugues esta no HTML; o ingles e o espanhol vem daqui. A escolha fica salva no navegador.
   const EN = {
     "nav.features": "Features", "nav.shots": "Screenshots", "nav.themes": "Themes", "nav.download": "Download",
     "hero.title": "The PKHeX you know, <em>with a Pokédex look.</em>",
@@ -480,27 +483,77 @@
     "foot.1": "PKHeX Modern, by <a href=\"https://github.com/carlosmozart\">Carlos Mozart</a> · <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/LICENSE\">GPLv3</a> license",
     "foot.2": "Built on <a href=\"https://github.com/kwsch/PKHeX\">PKHeX</a>, by Kaphotics and contributors. Pokémon and related names, images and trademarks belong to Nintendo, Game Freak and The Pokémon Company. A non-profit fan project with no affiliation with them.",
   };
+  // Espanhol neutro, tratando por "tu", com os termos dos jogos em espanhol (Caja, Equipo, Medallas, Regalo Misterioso...).
+  // Nomes proprios do jogo (Battle Frontier, O-Powers, Game Corner) ficam em ingles, como no app.
+  const ES = {
+    "nav.features": "Funciones", "nav.shots": "Capturas", "nav.themes": "Temas", "nav.download": "Descargar",
+    "hero.title": "El PKHeX que ya conoces, <em>con aspecto de Pokédex.</em>",
+    "hero.lead": "Una interfaz moderna y gratuita para <a href=\"https://github.com/kwsch/PKHeX\">PKHeX</a>: edita, organiza y legaliza tus Pokémon de todos los juegos, de la primera generación a Legends: Z-A. Por debajo sigue el PKHeX.Core original, con las mismas reglas de partidas guardadas y de legalidad.",
+    "hero.download": "Descargar gratis", "hero.github": "★ Ver en GitHub",
+    "fact.gens": "de Red a Legends: Z-A", "fact.os": "sistemas, con Android", "fact.free": "Gratis", "fact.open": "y de código abierto",
+    "games.sub": "Todos los juegos principales, cada uno con su sello",
+    "dex.title": "Pokédex de funciones", "dex.sub": "Todo lo que hace PKHeX, en un solo lugar, y un poco más. Cada función tiene su ficha: pasa el ratón para ver la pantalla.",
+    "ty.visual": "Visual", "ty.legal": "Legalidad", "ty.tool": "Herramienta", "ty.phone": "Móvil", "ty.coll": "Colección", "ty.game": "Juego",
+    "f1.t": "Aspecto de app de Pokémon", "f1.d": "Barra lateral con la tapa de la Pokédex, iconos propios de objetos de los juegos, títulos redondeados, el color del juego abierto, animaciones cortas y un “modo juego” que lo activa todo con un clic. Además, una vitrina del equipo para compartir.",
+    "f2.t": "Modo legal", "f2.d": "El editor solo ofrece opciones legales y legaliza con un clic, a partir de encuentros reales del juego.",
+    "f3.t": "Set de Showdown → Pokémon legal", "f3.d": "Pega un set y recibe un Pokémon legal para tu juego, sin conexión: IV, habilidad, naturaleza, EV, movimientos y teratipo se mantienen siempre que se pueda, con un aviso de lo que cambió.",
+    "f4.t": "Partidas de emuladores", "f4.d": "En Android, encuentra solo las partidas de RetroArch, DraStic, melonDS, Dolphin, Azahar/Citra, Eden y otros, y las guarda de vuelta en su sitio, con copia de seguridad.",
+    "f5.t": "Arrastrar y soltar", "f5.d": "Cajas, equipo y editor lado a lado, con deshacer y rehacer, selección múltiple, búsqueda global y paleta de comandos (Ctrl+K).",
+    "f6.t": "Bank local", "f6.d": "Guarda Pokémon fuera de tus partidas y llévalos de un juego a otro, con conversión de generación.",
+    "f7.t": "Pokédex unificada", "f7.d": "Reúne todas tus partidas y el bank: living dex, shiny dex, formas y géneros, un planificador que ordena tus cajas y completar la Pokédex de la partida con un clic.",
+    "f8.t": "Save Manager", "f8.d": "Todas las partidas de tu carpeta con el sello de cada juego, partidas dentro de archivos .zip y copia de seguridad automática antes de guardar.",
+    "f9.t": "Encuentros y eventos", "f9.d": "Genera Pokémon legales a partir de los encuentros y Regalos Misteriosos de cada juego, incluso los de la Gen 1 a la 3.",
+    "f10.t": "Búsqueda y edición en lote", "f10.d": "Busca en todas tus partidas y en el bank, encuentra duplicados y edita o legaliza muchos Pokémon a la vez.",
+    "f11.t": "Página Juego", "f11.d": "Flags de evento con nombre, récords, Hall de la Fama, Battle Frontier, Pokéathlon, bases secretas y atajos para desbloquear O-Powers, Super Training y Zygarde Cells.",
+    "f12.t": "Entrenador completo", "f12.d": "Medallas de cada región, género, dinero, fichas del Game Corner, PB, tiempo de juego y fechas de la aventura.",
+    "f13.t": "Nuzlocke y Hardcore", "f13.d": "Informe de Nuzlocke con el primer encuentro de cada ruta, repetidos, vivos y caídos, y un modo Hardcore que solo deja mover Pokémon, para retos y RetroAchievements.",
+    "f14.t": "Caza shiny", "f14.d": "Contador con las probabilidades reales de cada método del juego, encuentros para el 50/90/99 %, dónde aparece el objetivo, avisos de shiny lock y de movimientos peligrosos, y el “¡Lo encontré!” leído de la partida.",
+    "f15.t": "Fábrica de huevos", "f15.d": "Un huevo legal de cada especie que falta en la partida, de la crianza del propio juego, directo a tus cajas y con un solo deshacer.",
+    "f16.t": "Evolución asistida", "f16.d": "Todas las evoluciones de la especie en el juego, con el requisito y una vista previa: la app cumple nivel, objeto, intercambio o amistad por ti.",
+    "shots.title": "Capturas", "shots.sub": "Hechas con partidas de ejemplo. Haz clic para verlas a tamaño real.",
+    "themes.title": "Temas inspirados en los juegos", "themes.sub": "Oscuro o claro, el color del juego abierto o uno de los colores de acento, tamaño de sprites ajustable y temas completos que cambian fondo, esquinas, bordes y fuente.",
+    "phone.title": "También en el móvil", "phone.sub": "La misma app en Android, con la misma interfaz que en el ordenador.",
+    "phone.1": "<b>Encuentra sola</b> las partidas de RetroArch, DraStic, melonDS, Dolphin, Azahar/Citra, Eden y otros emuladores.",
+    "phone.2": "<b>Abre y guarda</b> partidas y carpetas con el selector del sistema, de vuelta en el archivo original.",
+    "phone.3": "<b>Toca y desliza:</b> mantén pulsado para marcar y arrastrar Pokémon, desliza para cambiar de caja y tira de la lista de partidas para recargarla.",
+    "phone.4": "<b>Se actualiza sola</b> cuando sale una versión nueva.",
+    "dl.title": "Elige a tu inicial", "dl.sub": "Gratis y de código abierto. No hace falta instalar .NET; la app avisa cuando sale una versión nueva y se actualiza sola. Por ahora la interfaz está en inglés y en portugués; la traducción al español está en camino.",
+    "dl.mine": "Tu sistema", "dl.win": "10 y 11, 64 bits", "dl.linux": "x64, también Steam Deck", "dl.mac": "chip Apple (M1, M2…)", "dl.macintel": "Macs con Intel", "dl.android": "6 o más reciente (APK)",
+    "dl.guide": "Cómo instalar en cada sistema: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/PKHeX.Modern/README.md#download\">guía de instalación</a> (en inglés y portugués) · Novedades de cada versión: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/releases\">Releases</a>",
+    "dl.macnote": "<b>macOS:</b> la primera vez que la abres, macOS bloquea la app (es gratuita y no tiene la firma de pago de Apple). Abre <b>Ajustes del Sistema › Privacidad y seguridad</b> y haz clic en <b>Abrir igualmente</b>. Si dice que la app “está dañada”, ejecuta en la Terminal: <code>xattr -dr com.apple.quarantine \"/Applications/PKHeX Modern.app\"</code>",
+    "dl.backup": "<b>Haz una copia de seguridad de tus partidas antes de editar.</b> La app ya guarda una copia antes de sobrescribir, pero una copia tuya nunca está de más.",
+    "foot.1": "PKHeX Modern, de <a href=\"https://github.com/carlosmozart\">Carlos Mozart</a> · Licencia <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/LICENSE\">GPLv3</a>",
+    "foot.2": "Basado en <a href=\"https://github.com/kwsch/PKHeX\">PKHeX</a>, de Kaphotics y colaboradores. Pokémon y los nombres, imágenes y marcas relacionados pertenecen a Nintendo, Game Freak y The Pokémon Company. Proyecto de fans, sin ánimo de lucro y sin vínculo con ellas.",
+  };
   const PT = {};
   document.querySelectorAll("[data-i18n]").forEach(el => PT[el.dataset.i18n] ??= el.innerHTML);
   let lang = "pt", version = "";
-  function setLang(l) {
+  function setLang(l, remember = true) {
     lang = l;
-    document.documentElement.lang = l === "en" ? "en" : "pt-BR";
-    document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; el.innerHTML = (l === "en" ? EN[k] : PT[k]) ?? PT[k]; });
+    document.documentElement.lang = l === "pt" ? "pt-BR" : l;
+    const dict = l === "en" ? EN : l === "es" ? ES : PT;
+    document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; el.innerHTML = dict[k] ?? PT[k]; });
     document.querySelectorAll("[data-pt]").forEach(el => el.textContent = el.dataset[l]);
     document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
     showVersion();
-    try { localStorage.setItem("lang", l); } catch {}
+    if (remember) try { localStorage.setItem("lang", l); } catch {}
   }
   function showVersion() {
-    if (version) document.getElementById("version").textContent = (lang === "en" ? "Version " : "Versão ") + version + " · Windows · Linux · macOS · Android";
+    if (version) document.getElementById("version").textContent = ({ en: "Version ", es: "Versión " }[lang] ?? "Versão ") + version + " · Windows · Linux · macOS · Android";
   }
   document.querySelectorAll(".lang button").forEach(b => b.addEventListener("click", () => setLang(b.dataset.lang)));
   let saved = null;
   try { saved = localStorage.getItem("lang"); } catch {}
-  // ?lang=en ou ?lang=pt no endereco (para divulgar o link ja no idioma certo), depois a escolha salva, depois o navegador
+  // ?lang=pt, ?lang=en ou ?lang=es no endereco (para divulgar o link ja no idioma certo), depois a escolha salva, depois o navegador
+  // Espanhol pronto, mas desligado ate o app ter o es.json: so abre com ?lang=es (previa), sem botao, sem detectar
+  // pelo navegador e sem ficar salvo. Para ligar: ES_READY = true e, no <head>, og:locale:alternate es_ES e o hreflang "es".
+  const ES_READY = false;
+  const LANGS = ES_READY ? ["pt", "en", "es"] : ["pt", "en"];
+  if (ES_READY) document.querySelector('.lang button[data-lang="es"]').hidden = false;
   const asked = new URLSearchParams(location.search).get("lang");
-  setLang(asked === "en" || asked === "pt" ? asked : saved ?? (navigator.language?.toLowerCase().startsWith("pt") ? "pt" : "en"));
+  const browser = navigator.language?.toLowerCase().slice(0, 2);
+  if (asked === "es" && !ES_READY) setLang("es", false);
+  else setLang(LANGS.includes(asked) ? asked : LANGS.includes(saved) ? saved : LANGS.includes(browser) ? browser : "en");
 
   // Numero da versao mais recente (se a API do GitHub responder; senao fica o texto padrao)
   fetch("https://api.github.com/repos/carlosmozart/PKHeX-Modern/releases/latest")
