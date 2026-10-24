@@ -276,9 +276,10 @@ public sealed partial class GamePageViewModel : PageViewModel
             return;
         }
         var nickname = (FameNickname ?? "").Trim();
-        // Sem apelido: o nome da especie, em maiusculas no Gen 1-3 como nos jogos (no X/Y o servico usa o nome do jogo).
+        // Sem apelido: o nome da especie no idioma do save (nao no da tela), em maiusculas no Gen 1-3 como nos jogos
+        // (no X/Y o servico usa o nome do jogo).
         if (FameHasNickname && nickname.Length == 0 && !FameHasShiny)
-            nickname = GameInfo.Strings.Species[index].ToUpperInvariant();
+            nickname = SpeciesName.GetSpeciesNameGeneration((ushort)index, _sav.Language, _sav.Generation).ToUpperInvariant();
         if (FameHasNickname && nickname.Length > FameCaps.NicknameLength)
             nickname = nickname[..FameCaps.NicknameLength];
         Edit($"Hall da Fama: {GameInfo.Strings.Species[index]} em {m.TeamTitle}", () => HallOfFame.SetMember(_sav, m.TeamIndex, m.Member.Slot, (ushort)index, nickname, (int)(FameLevel ?? 1), FameShiny));

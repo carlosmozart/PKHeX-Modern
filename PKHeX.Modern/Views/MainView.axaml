@@ -123,14 +123,19 @@
             <Button Grid.Column="1" x:Name="LanguageButton" Classes="ghost small" Padding="6,4" Content="{Binding LanguageShort}" ToolTip.Tip="{Binding LanguageTip}">
               <Button.Flyout>
                 <Flyout Placement="RightEdgeAlignedBottom">
-                  <ItemsControl ItemsSource="{Binding LanguageOptions}" Width="200" Margin="2">
-                    <ItemsControl.ItemTemplate>
-                      <DataTemplate x:DataType="vm:LanguageOptionViewModel">
-                        <Button Classes="ghost" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="8,6"
-                                Content="{Binding Header}" Command="{Binding SelectCommand}" />
-                      </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                  </ItemsControl>
+                  <StackPanel Width="220" Margin="2" Spacing="4">
+                    <ItemsControl ItemsSource="{Binding LanguageOptions}">
+                      <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="vm:LanguageOptionViewModel">
+                          <Button Classes="ghost" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="8,6"
+                                  Content="{Binding Header}" Command="{Binding SelectCommand}" />
+                        </DataTemplate>
+                      </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <!-- So nos idiomas em que o PKHeX.Core tem os nomes do jogo (espanhol) -->
+                    <CheckBox Content="Nomes do jogo em inglês" FontSize="12" IsChecked="{Binding GameNamesInEnglish}" IsVisible="{Binding HasGameNamesOption}"
+                              Margin="8,2,0,2" ToolTip.Tip="Espécies, golpes, habilidades, itens e mensagens de legalidade em inglês, como no Showdown. Desmarcado, aparecem no idioma da interface. Vale ao reiniciar." />
+                  </StackPanel>
                 </Flyout>
               </Button.Flyout>
             </Button>
@@ -214,6 +219,8 @@
                         </DataTemplate>
                       </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    <CheckBox Content="Nomes do jogo em inglês" FontSize="12" IsChecked="{Binding GameNamesInEnglish}" IsVisible="{Binding HasGameNamesOption}"
+                              Margin="0,4,0,0" ToolTip.Tip="Espécies, golpes, habilidades, itens e mensagens de legalidade em inglês, como no Showdown. Desmarcado, aparecem no idioma da interface. Vale ao reiniciar." />
                     <CheckBox Content="Abrir último save ao iniciar" FontSize="12" Margin="0,8,0,0" IsChecked="{Binding OpenLastSaveOnStartup}" />
                     <CheckBox Content="Oferecer legalizar ao clicar num ilegal" FontSize="12" IsChecked="{Binding AskLegalizeOnClick}"
                               ToolTip.Tip="Ao clicar num Pokémon ilegal, mostra a prévia do Legalizar. Desligado, o Pokémon só abre no editor (o botão Legalizar continua lá)." />

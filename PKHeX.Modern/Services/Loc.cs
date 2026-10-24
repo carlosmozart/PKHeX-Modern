@@ -42,14 +42,14 @@ public static class Loc
             "The interface language changes when the app restarts.",
             "Restart now", "Later",
             "Close and reopen the app to use English.",
-            "Language set to English: it takes effect the next time you open the app."),
+            "Language set to English: it takes effect the next time you open the app.", GameCode: English),
         new(Spanish, "Español", "ES", "Idioma",
             "¿Reiniciar para usar Español?",
-            "El idioma de la interfaz cambia al reiniciar la app. Los nombres del juego (especies, movimientos, objetos) siguen en inglés.",
+            "El idioma de la interfaz cambia al reiniciar la app. Los nombres del juego (especies, movimientos, objetos) también aparecen en español; puedes dejarlos en inglés en ⚙ › Idioma.",
             "El idioma de la interfaz cambia al reiniciar la app.",
             "Reiniciar ahora", "Más tarde",
             "Cierra y vuelve a abrir la app para usar Español.",
-            "Idioma configurado en Español: se aplicará la próxima vez que abras la app."),
+            "Idioma configurado en Español: se aplicará la próxima vez que abras la app.", GameCode: "es"),
     ];
 
     /// <summary>Idiomas oferecidos no seletor: o portugues e os que tem dicionario embutido.</summary>
@@ -72,6 +72,16 @@ public static class Loc
         var two = culture.TwoLetterISOLanguageName;
         return Languages.FirstOrDefault(l => string.Equals(l.Code.Split('-')[0], two, StringComparison.OrdinalIgnoreCase))?.Code ?? English;
     }
+
+    /// <summary>
+    /// Idioma dos nomes do jogo no PKHeX.Core (especies, golpes, itens, legalidade) para a interface <paramref name="uiCode"/>:
+    /// o mesmo idioma quando o Core o tem (espanhol), senao ingles (o Core nao tem portugues). <paramref name="english"/>
+    /// mantem o ingles.
+    /// </summary>
+    public static string GameLanguageFor(string? uiCode, bool english) => english ? English : Find(uiCode).GameCode ?? English;
+
+    /// <summary>O idioma tem nomes do jogo proprios no Core (a opcao "Nomes do jogo em ingles" so aparece nele).</summary>
+    public static bool HasGameNames(string? uiCode) => Find(uiCode).GameCode is { } code && code != English;
 
     public static string Current { get; private set; } = Portuguese;
     public static bool IsTranslating => _exact.Count > 0;
@@ -314,5 +324,6 @@ public static class Loc
 }
 
 /// <summary>Um idioma da interface, com os textos da troca escritos nele mesmo.</summary>
+/// <remarks><see cref="GameCode"/>: idioma dos nomes do jogo no PKHeX.Core, ou null quando o Core nao o tem (portugues).</remarks>
 public sealed record LanguageInfo(string Code, string Name, string Short, string Word, string RestartTitle, string RestartBody,
-    string RestartNote, string RestartNow, string Later, string Reopen, string Saved);
+    string RestartNote, string RestartNow, string Later, string Reopen, string Saved, string? GameCode = null);

@@ -57,6 +57,11 @@ public sealed class AppSettings
     /// abertura o app usa o idioma do sistema (<see cref="Loc.Detect"/>) e grava a escolha.
     /// </summary>
     public string? UiLanguage { get; set; }
+    /// <summary>
+    /// Nomes do jogo (especies, golpes, itens, legalidade) sempre em ingles, mesmo num idioma que o PKHeX.Core tem
+    /// (espanhol). Desligado (padrao), seguem o idioma da interface, como no PKHeX original. Vale ao reiniciar.
+    /// </summary>
+    public bool GameNamesInEnglish { get; set; }
 
     /// <summary>So grava em disco instancias carregadas via <see cref="Load"/> (testes usam instancias em memoria).</summary>
     [System.Text.Json.Serialization.JsonIgnore]

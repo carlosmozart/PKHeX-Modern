@@ -38,7 +38,7 @@ No GitHub, o workflow `.github/workflows/modern-build.yml` publica a cada push n
 - **Avalonia (e não um reskin do WinForms nem Blazor)**, para ter um visual moderno e permitir multiplataforma no futuro.
 - **Não mexer no core.** Só `PKHeX.Modern/` e `Tools/` são do fork. Tudo que vem do Core passa por `Services/CoreAdapter.cs`.
 - **Branch de trabalho: `modern-ui`.** O `master` acompanha o upstream.
-- **Interface em português (PT-BR).** Os nomes do jogo (espécies, golpes, itens) ficam em inglês, como no PKHeX.
+- **Interface em português (PT-BR), inglês ou espanhol.** Os nomes do jogo (espécies, golpes, itens) ficam em inglês em português e inglês (o PKHeX não tem nomes em português) e em espanhol na interface em espanhol, salvo “Nomes do jogo em inglês”.
 - **Cor de destaque vermelha**, inspirada na Pokébola. A referência visual usa ciano, o que fica como opção futura (ver ROADMAP).
 - **Toda função nova entra na Ajuda e no changelog.** Ao adicionar ou mudar uma função: atualize `Services/HelpContent.cs` (Ajuda › Funções) e a seção "Próxima versão" do `CHANGELOG.md` (Ajuda › Novidades). Na release, troque "Próxima versão" pelo número e a data, suba o `<Version>` do csproj e use o texto do changelog nas notas da release.
 - **Atualização automática depende do nome do zip.** O app procura o asset `PKHeX.Modern-win-x64.zip` (com o `PKHeX.Modern.exe` na raiz) nas releases `modern-v*`. Não mude esse nome no workflow sem mudar `AutoUpdater.AssetName`. A versão comparada é o `<Version>` do csproj: suba-o a cada release, senão o app acha que está desatualizado.
@@ -104,7 +104,7 @@ No GitHub, o workflow `.github/workflows/modern-build.yml` publica a cada push n
 
 - **Avisos de legalidade:** `CoreAdapter.GetLegalityIssues` lê `la.Results` direto (Invalid primeiro, depois Fishy) com `LegalityLocalizationContext.Humanize`; o `Report()` resumido do Core não inclui os avisos Fishy.
 
-- **Idioma:** só a interface é em PT-BR; os nomes do jogo ficam em inglês (`CoreAdapter.SetLanguage("en")`). Se um dia voltar a ter troca de idioma: `SetLanguage` precisa trocar `GameInfo.Strings` (não só `CurrentLanguage`) e recriar `FilteredSources`.
+- **Idioma dos nomes do jogo:** o `MainViewModel` chama `CoreAdapter.SetLanguage(Loc.GameLanguageFor(Loc.Current, Settings.GameNamesInEnglish))` na partida: `es` na interface em espanhol, `en` nas outras ou com “Nomes do jogo em inglês” (a troca pede reiniciar). `SetLanguage` troca `GameInfo.Strings` (não só `CurrentLanguage`) e recria `FilteredSources`. Nada que vai para o save pode usar `GameInfo.Strings` (é o idioma da tela): use `SpeciesName.GetSpeciesNameGeneration(species, sav.Language, gen)` ou `ClearNickname` (o Hall da Fama gravava o nome da tela). O Showdown exporta em inglês (`ShowdownParsing.GetShowdownText`) e importa em qualquer idioma. Os 16 mil nomes do jogo em espanhol não colidem com chaves do `es.json` (conferido com os textos do Core).
 - **Workflow do GitHub:** a primeira execução passou (build em ~2 min, artefato `PKHeX.Modern-win-x64`).
 
 - **Itens:** o `HeldItem` usa a numeração do formato (na Gen 3 o Lucky Egg é 197, não o índice da `itemlist`). Para nomes, use `CoreAdapter.GetItemNames(pk|sav)` / `GetHeldItemName(pk)`; para a lista de itens que podem ser segurados, `GameInfo.FilteredSources.Items` (`ComboItem` com o valor certo). `CoreAdapter.ItemNames` é só a lista geral (Gen 4+).

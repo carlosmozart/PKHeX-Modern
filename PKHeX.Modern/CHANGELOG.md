@@ -9,7 +9,8 @@ Formato: "## versão — data", "### seção", "- item".
 ## Próxima versão
 
 ### 🌐 Idioma
-- **Interface em espanhol:** o app inteiro agora também está em espanhol, com os termos oficiais dos jogos em espanhol (Caja, Equipo, Bolsa, Guardería Pokémon, Hall de la Fama, Teratipo...); nomes de espécies, golpes e itens continuam em inglês. Escolha “Español” no botão 🌐 ou no ⚙.
+- **Interface em espanhol:** o app inteiro agora também está em espanhol, com os termos oficiais dos jogos em espanhol (Caja, Equipo, Bolsa, Guardería Pokémon, Hall de la Fama, Teratipo...).. Escolha “Español” no botão 🌐 ou no ⚙.
+- **Nomes do jogo no idioma da interface:** em espanhol, espécies, golpes, habilidades, itens, naturezas e mensagens de legalidade também aparecem em espanhol, com os nomes oficiais dos jogos, como no PKHeX original. “Nomes do jogo em inglês”, no 🌐 e no ⚙, mantém o inglês. Em português e inglês nada muda (o PKHeX não tem os nomes em português). Copiar para o Showdown continua em inglês, e colar um set aceita qualquer idioma.
 - **Idioma do sistema na primeira abertura:** quem instala o app agora começa no idioma do computador ou do celular (português em qualquer país, espanhol nos sistemas em espanhol e inglês nos outros), em vez de sempre em português. Quem já usa o app continua no idioma que tinha.
 - **Textos que faltavam em inglês:** as siglas dos atributos (Atk, SpA, SpD, Spe, HP), “Missing” na Living Dex, “Ready” na barra de status e títulos da Ajuda apareciam em português na interface em inglês.
 - **Botão 🌐 no rodapé da barra lateral:** ao lado de Ajuda, mostra o idioma atual (PT, EN, ES) e abre a lista com cada idioma escrito nele mesmo, para achar sem ler a tela. A pergunta de reiniciar aparece no idioma escolhido.

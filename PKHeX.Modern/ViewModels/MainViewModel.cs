@@ -21,8 +21,9 @@ public sealed partial class MainViewModel : ViewModelBase
         BoxLocks.Settings = Settings;
         BoxLocks.Report = message => Status = message;
         OpenLastCommand = new RelayCommand(() => { if (HasLastSave) _ = OpenAsync(Settings.LastSavePath!); });
-        // So a interface e em portugues; nomes do jogo (especies, golpes, itens) seguem o ingles do PKHeX.
-        CoreAdapter.SetLanguage("en");
+        // Nomes do jogo (especies, golpes, itens, legalidade): no idioma da interface quando o PKHeX.Core o tem (espanhol),
+        // senao em ingles; "Nomes do jogo em ingles" mantem o ingles. Vale na partida, como o idioma da interface.
+        CoreAdapter.SetLanguage(Loc.GameLanguageFor(Loc.Current, Settings.GameNamesInEnglish));
         var accent = Settings.AccentColor == Theme.AccentTheme.GameKey ? Theme.AccentTheme.GameOption : Theme.AccentTheme.Find(Settings.AccentColor);
         AccentOptions = [.. Theme.AccentTheme.Presets.Append(Theme.AccentTheme.GameOption).Select(p => new AccentOptionViewModel(p) { IsSelected = p == accent })];
         SetAccentCommand = new RelayCommand(p => { if (p is AccentOptionViewModel o) SetAccent(o.Preset); });
@@ -409,6 +410,39 @@ public sealed partial class MainViewModel : ViewModelBase
     /// <summary>Reiniciar o app (definido pela janela; o mesmo fluxo do Reiniciar da atualizacao).</summary>
     public Func<Task>? RestartAppRequested { get; set; }
 
+    /// <summary>"Nomes do jogo em ingles" so aparece nos idiomas em que o PKHeX.Core tem os nomes (espanhol).</summary>
+    public bool HasGameNamesOption => Loc.HasGameNames(UiLanguage);
+    public bool GameNamesInEnglish
+    {
+        get => Settings.GameNamesInEnglish;
+        set
+        {
+            if (value == Settings.GameNamesInEnglish)
+                return;
+            Settings.GameNamesInEnglish = value;
+            Settings.Save();
+            Raise();
+            _ = OfferGameNamesRestartAsync();
+        }
+    }
+
+    /// <summary>Os nomes vem do Core na partida: oferece reiniciar quando a troca vale para o idioma que esta na tela.</summary>
+    private async Task OfferGameNamesRestartAsync()
+    {
+        if (!Loc.HasGameNames(Loc.Current) || UiLanguage != Loc.Current)
+            return; // vale junto com a troca de idioma ja pendente
+        if (RestartAppRequested is not { } run)
+        {
+            Status = "Nomes do jogo: feche e abra o app para aplicar.";
+            return;
+        }
+        if (await ConfirmAsync("Reiniciar para trocar os nomes do jogo?", "Espécies, golpes, habilidades, itens e mensagens de legalidade mudam de idioma ao reiniciar o app.",
+                "Reiniciar agora", cancelText: "Depois", icon: "🌐"))
+            await run();
+        else
+            Status = "Nomes do jogo: vale na próxima vez que abrir o app.";
+    }
+
     /// <summary>Troca o idioma da interface: salva a preferencia e oferece reiniciar (a traducao e instalada na partida).</summary>
     private async Task SetLanguageAsync(string code)
     {
@@ -419,6 +453,7 @@ public sealed partial class MainViewModel : ViewModelBase
         foreach (var l in LanguageOptions)
             l.IsSelected = l.Code == code;
         Raise(nameof(LanguageShort));
+        Raise(nameof(HasGameNamesOption));
         // Voltou ao idioma que ja esta na tela: nada a reiniciar.
         if (code == Loc.Current)
             return;

@@ -66,6 +66,9 @@ var lib = Path.Combine(work, "saves"); Directory.CreateDirectory(lib);
 var path = Path.Combine(lib, "Black.sav"); File.WriteAllBytes(path, sav.Write().ToArray());
 
 var vm = new MainViewModel(new AppSettings { SavesFolder = lib, UiLanguage = lang });
+// Nomes do jogo: em espanhol, os do PKHeX.Core em espanhol (como no PKHeX original); em ingles, os de sempre.
+Check("nomes do jogo no idioma da interface", GameInfo.CurrentLanguage == (es ? "es" : "en") && CoreAdapter.MoveNames[85] == (es ? "Rayo" : "Thunderbolt"));
+Check("opção dos nomes " + (es ? "visível" : "escondida"), vm.HasGameNamesOption == es);
 var win = new MainWindow { DataContext = vm, Width = 1440, Height = 900 }; win.Show();
 void Pump(int n = 10) { for (int i = 0; i < n; i++) { Dispatcher.UIThread.RunJobs(); AvaloniaHeadlessPlatform.ForceRenderTimerTick(); } }
 // No espanhol, acentos e palavras como "de", "para", "que", "abrir" e "dos" existem nos dois idiomas: conta so o que e exclusivo do portugues.
@@ -205,4 +208,14 @@ Check("botão mostra PT e status em português", langButton.Content as string ==
 // Voltar ao idioma da tela nao pergunta nada.
 vm.LanguageOptions.Single(l => l.Code == lang).SelectCommand.Execute(null); Pump();
 Check("voltar ao idioma atual sem pergunta", vm.Dialog is null && vm.Settings.UiLanguage == lang);
+// "Nomes do jogo em ingles": no espanhol, pergunta se pode reiniciar; a troca vale na partida seguinte.
+if (es)
+{
+    vm.GameNamesInEnglish = true; Pump();
+    Check("pergunta de reiniciar ao trocar os nomes", vm.Dialog?.Title == "Reiniciar para trocar os nomes do jogo?" && vm.Settings.GameNamesInEnglish);
+    vm.Dialog?.Complete(false); Pump();
+}
+_ = new MainViewModel(new AppSettings { SavesFolder = lib, UiLanguage = lang, GameNamesInEnglish = true });
+Check("nomes do jogo em inglês com a opção", GameInfo.CurrentLanguage == "en" && CoreAdapter.MoveNames[85] == "Thunderbolt");
+Check("português sem nomes próprios no Core", Loc.GameLanguageFor(Loc.Portuguese, false) == "en" && !Loc.HasGameNames(Loc.Portuguese) && !Loc.HasGameNames(Loc.English));
 Console.WriteLine(fails == 0 ? "TUDO OK" : $"{fails} FALHAS"); return fails == 0 ? 0 : 1;
