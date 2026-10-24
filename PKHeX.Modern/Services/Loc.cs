@@ -20,11 +20,71 @@ public static class Loc
     public const string Portuguese = "pt-BR";
     public const string English = "en";
 
-    /// <summary>Idiomas oferecidos no seletor (codigo, nome no proprio idioma).</summary>
-    public static IReadOnlyList<(string Code, string Name)> Languages { get; } = [(Portuguese, "Português (Brasil)"), (English, "English")];
+    public const string Spanish = "es";
+
+    /// <summary>
+    /// Idiomas conhecidos, com os textos da troca ja no proprio idioma (a pergunta de reiniciar aparece no idioma
+    /// escolhido, e nao no da tela). So entram no seletor os que tem dicionario embutido (<see cref="Languages"/>):
+    /// basta acrescentar Assets/lang/es.json para o espanhol aparecer.
+    /// </summary>
+    private static readonly LanguageInfo[] Catalog =
+    [
+        new(Portuguese, "Português (Brasil)", "PT", "Idioma",
+            "Reiniciar para usar Português?",
+            "O idioma da interface muda ao reiniciar o app. Nomes do jogo (espécies, golpes, itens) continuam em inglês.",
+            "A interface muda de idioma ao reiniciar o app.",
+            "Reiniciar agora", "Depois",
+            "Feche e abra o app de novo para usar Português.",
+            "Idioma definido para Português: vale na próxima vez que abrir o app."),
+        new(English, "English", "EN", "Language",
+            "Restart to switch to English?",
+            "The interface language changes when the app restarts. Game names (species, moves, items) stay in English.",
+            "The interface language changes when the app restarts.",
+            "Restart now", "Later",
+            "Close and reopen the app to use English.",
+            "Language set to English: it takes effect the next time you open the app."),
+        new(Spanish, "Español", "ES", "Idioma",
+            "¿Reiniciar para usar Español?",
+            "El idioma de la interfaz cambia al reiniciar la app. Los nombres del juego (especies, movimientos, objetos) siguen en inglés.",
+            "El idioma de la interfaz cambia al reiniciar la app.",
+            "Reiniciar ahora", "Más tarde",
+            "Cierra y vuelve a abrir la app para usar Español.",
+            "Idioma configurado en Español: se aplicará la próxima vez que abras la app."),
+    ];
+
+    /// <summary>Idiomas oferecidos no seletor: o portugues e os que tem dicionario embutido.</summary>
+    public static IReadOnlyList<LanguageInfo> Languages { get; } = [.. Catalog.Where(l => l.Code == Portuguese || HasDictionary(l.Code))];
+
+    private static bool HasDictionary(string code) => typeof(Loc).Assembly.GetManifestResourceInfo($"lang.{code}.json") is not null;
+
+    /// <summary>Dados do idioma (o portugues se o codigo nao for conhecido).</summary>
+    public static LanguageInfo Find(string? code) => Catalog.FirstOrDefault(l => l.Code == code) ?? Catalog[0];
+
+    /// <summary>
+    /// Idioma para a primeira abertura, pelo idioma do sistema: o oferecido com o mesmo codigo ("es-MX" vale "es",
+    /// "pt-PT" vale "pt-BR"), ou ingles quando o app nao tem o idioma do sistema.
+    /// </summary>
+    public static string Detect(System.Globalization.CultureInfo culture)
+    {
+        var exact = Languages.FirstOrDefault(l => string.Equals(l.Code, culture.Name, StringComparison.OrdinalIgnoreCase));
+        if (exact is not null)
+            return exact.Code;
+        var two = culture.TwoLetterISOLanguageName;
+        return Languages.FirstOrDefault(l => string.Equals(l.Code.Split('-')[0], two, StringComparison.OrdinalIgnoreCase))?.Code ?? English;
+    }
 
     public static string Current { get; private set; } = Portuguese;
     public static bool IsTranslating => _exact.Count > 0;
+
+    // Textos ja escritos no idioma certo (nomes dos idiomas, pergunta de reiniciar): passam sem traducao.
+    private static readonly HashSet<string> _keep = new(StringComparer.Ordinal);
+
+    /// <summary>Marca um texto para aparecer como esta, sem passar pelo dicionario.</summary>
+    public static string Keep(string text)
+    {
+        _keep.Add(text);
+        return text;
+    }
 
     private static Dictionary<string, string> _exact = [];
     private static List<(Regex Pattern, string Template, string Prefix)> _patterns = [];
@@ -100,7 +160,7 @@ public static class Loc
     /// <summary>Traducao do texto (ou o proprio texto, se nao houver).</summary>
     public static string T(string? text)
     {
-        if (string.IsNullOrEmpty(text) || _exact.Count == 0)
+        if (string.IsNullOrEmpty(text) || _exact.Count == 0 || _keep.Contains(text))
             return text ?? "";
         if (_exact.TryGetValue(text, out var exact))
             return exact;
@@ -252,3 +312,7 @@ public static class Loc
     public static IEnumerable<string> FindMissing(IEnumerable<string> texts)
         => texts.Where(t => !string.IsNullOrWhiteSpace(t) && T(t) == t && t.Any(char.IsLetter)).Distinct();
 }
+
+/// <summary>Um idioma da interface, com os textos da troca escritos nele mesmo.</summary>
+public sealed record LanguageInfo(string Code, string Name, string Short, string Word, string RestartTitle, string RestartBody,
+    string RestartNote, string RestartNow, string Later, string Reopen, string Saved);

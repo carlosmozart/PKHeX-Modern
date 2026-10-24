@@ -23,12 +23,22 @@ public sealed class App : Application
             Avalonia.Media.RenderOptions.SetBitmapInterpolationMode(img, Avalonia.Media.Imaging.BitmapInterpolationMode.LowQuality));
     }
 
+    /// <summary>Primeira abertura (idioma nunca escolhido): usa o idioma do sistema, ou ingles se o app nao o tiver.</summary>
+    private static void ChooseFirstLanguage(Services.AppSettings settings)
+    {
+        if (settings.UiLanguage is not null)
+            return;
+        settings.UiLanguage = Services.Loc.Detect(System.Globalization.CultureInfo.CurrentUICulture);
+        settings.Save();
+    }
+
     public override void OnFrameworkInitializationCompleted()
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             var settings = Services.AppSettings.Load();
             // Idioma antes de criar qualquer tela: os tratadores traduzem os textos conforme aparecem.
+            ChooseFirstLanguage(settings);
             Services.Loc.Load(settings.UiLanguage);
             Services.Loc.Hook();
             RequestedThemeVariant = settings.DarkTheme ? ThemeVariant.Dark : ThemeVariant.Light;
@@ -55,6 +65,7 @@ public sealed class App : Application
             settings.SavesFolder = System.IO.Path.Combine(root, "documents");
             Services.SaveBackup.Folder = System.IO.Path.Combine(root, "backups");
             Services.BankStorage.Root = System.IO.Path.Combine(root, "bank");
+            ChooseFirstLanguage(settings);
             Services.Loc.Load(settings.UiLanguage);
             Services.Loc.Hook();
             RequestedThemeVariant = settings.DarkTheme ? ThemeVariant.Dark : ThemeVariant.Light;

@@ -52,8 +52,11 @@ public sealed class AppSettings
     public bool AutoUpdate { get; set; } = true;
     /// <summary>Android: a 0.4.7/0.4.8 gravavam a verificacao desligada; na primeira abertura com atualizacao, religa uma vez.</summary>
     public bool AndroidUpdatesReady { get; set; }
-    /// <summary>Idioma da interface (Services.Loc): "pt-BR" (padrao) ou "en". Vale ao reiniciar.</summary>
-    public string UiLanguage { get; set; } = Loc.Portuguese;
+    /// <summary>
+    /// Idioma da interface (Services.Loc): "pt-BR", "en"... Vale ao reiniciar. Null = nunca escolhido: na primeira
+    /// abertura o app usa o idioma do sistema (<see cref="Loc.Detect"/>) e grava a escolha.
+    /// </summary>
+    public string? UiLanguage { get; set; }
 
     /// <summary>So grava em disco instancias carregadas via <see cref="Load"/> (testes usam instancias em memoria).</summary>
     [System.Text.Json.Serialization.JsonIgnore]

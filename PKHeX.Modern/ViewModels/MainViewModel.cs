@@ -30,8 +30,8 @@ public sealed partial class MainViewModel : ViewModelBase
         ThemeOptions = [.. Theme.AppTheme.Presets.Select(t => new ThemeOptionViewModel(t, t == theme, new RelayCommand(() => SetTheme(t))))];
         var font = Theme.AppTheme.FindFont(Settings.FontKey);
         FontOptions = [.. Theme.AppTheme.Fonts.Select(f => new FontOptionViewModel(f, f == font, new RelayCommand(() => SetFont(f))))];
-        LanguageOptions = [.. Loc.Languages.Select(l => new LanguageOptionViewModel(l.Code, l.Name, l.Code == (Settings.UiLanguage ?? Loc.Portuguese),
-            new RelayCommand(() => _ = SetLanguageAsync(l.Code, l.Name))))];
+        LanguageOptions = [.. Loc.Languages.Select(l => new LanguageOptionViewModel(l.Code, l.Name, l.Code == UiLanguage,
+            new RelayCommand(() => _ = SetLanguageAsync(l.Code))))];
         ToggleThemeCommand = new RelayCommand(() =>
         {
             Settings.DarkTheme = App.ToggleTheme();
@@ -401,31 +401,39 @@ public sealed partial class MainViewModel : ViewModelBase
 
     /// <summary>Idiomas da interface (menu "🌐 Idioma" da barra lateral).</summary>
     public IReadOnlyList<LanguageOptionViewModel> LanguageOptions { get; }
-    /// <summary>Botao compacto da barra lateral: "🌐 PT" / "🌐 EN".</summary>
-    public string LanguageShort => "🌐 " + ((Settings.UiLanguage ?? Loc.Portuguese) == Loc.English ? "EN" : "PT");
-    public string LanguageText => "🌐  " + Loc.T("Idioma") + ": " + (LanguageOptions.FirstOrDefault(l => l.IsSelected)?.Code == Loc.English ? "English" : "Português");
+    private string UiLanguage => Settings.UiLanguage ?? Loc.Portuguese;
+    /// <summary>Botao 🌐 do rodape da barra lateral: "🌐 PT", "🌐 EN"...</summary>
+    public string LanguageShort => Loc.Keep("🌐 " + Loc.Find(UiLanguage).Short);
+    /// <summary>Dica do botao 🌐 com a palavra "idioma" em todos os idiomas, para quem nao le o atual.</summary>
+    public string LanguageTip => Loc.Keep(string.Join(" · ", Loc.Languages.Select(l => l.Word).Distinct()));
     /// <summary>Reiniciar o app (definido pela janela; o mesmo fluxo do Reiniciar da atualizacao).</summary>
     public Func<Task>? RestartAppRequested { get; set; }
 
     /// <summary>Troca o idioma da interface: salva a preferencia e oferece reiniciar (a traducao e instalada na partida).</summary>
-    private async Task SetLanguageAsync(string code, string name)
+    private async Task SetLanguageAsync(string code)
     {
-        if (code == (Settings.UiLanguage ?? Loc.Portuguese))
+        if (code == UiLanguage)
             return;
         Settings.UiLanguage = code;
         Settings.Save();
         foreach (var l in LanguageOptions)
             l.IsSelected = l.Code == code;
-        Raise(nameof(LanguageText));
         Raise(nameof(LanguageShort));
-        // A pergunta aparece nos dois idiomas: a tela atual ainda esta no idioma antigo.
-        var restart = code == Loc.English
-            ? await ConfirmAsync("Restart to switch to English?", "The interface language changes when the app restarts. Game names (species, moves, items) stay in English.\n\nA interface muda de idioma ao reiniciar o app.", "Restart now", cancelText: "Later", icon: "🌐")
-            : await ConfirmAsync("Reiniciar para usar Português?", "O idioma da interface muda ao reiniciar o app. Nomes do jogo (espécies, golpes, itens) continuam em inglês.\n\nThe interface language changes when the app restarts.", "Reiniciar agora", cancelText: "Depois", icon: "🌐");
-        if (restart && RestartAppRequested is { } run)
+        // Voltou ao idioma que ja esta na tela: nada a reiniciar.
+        if (code == Loc.Current)
+            return;
+        // A pergunta vem no idioma escolhido (quem nao le o atual entende), com uma linha no idioma da tela.
+        var target = Loc.Find(code);
+        if (RestartAppRequested is not { } run)
+        {
+            Status = Loc.Keep(target.Reopen); // Android: o app nao se reabre sozinho
+            return;
+        }
+        var message = target.RestartBody + "\n\n" + Loc.Find(Loc.Current).RestartNote;
+        if (await ConfirmAsync(Loc.Keep(target.RestartTitle), Loc.Keep(message), Loc.Keep(target.RestartNow), cancelText: Loc.Keep(target.Later), icon: "🌐"))
             await run();
         else
-            Status = code == Loc.English ? "Language set to English: it takes effect the next time you open the app." : "Idioma definido para Português: vale na próxima vez que abrir o app.";
+            Status = Loc.Keep(target.Saved);
     }
     public RelayCommand SetAccentCommand { get; }
 
@@ -2554,7 +2562,7 @@ public sealed class LanguageOptionViewModel(string code, string name, bool selec
     public string Name { get; } = name;
     private bool _isSelected = selected;
     public bool IsSelected { get => _isSelected; set { if (Set(ref _isSelected, value)) Raise(nameof(Header)); } }
-    public string Header => (IsSelected ? "✓  " : "     ") + Name;
+    public string Header => Loc.Keep((IsSelected ? "✓  " : "     ") + Name);
     public RelayCommand SelectCommand { get; } = select;
 }
 

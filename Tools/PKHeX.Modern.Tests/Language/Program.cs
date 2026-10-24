@@ -139,4 +139,31 @@ File.WriteAllLines(Path.Combine(work, "missing.txt"), missing.Select(m => $"{m.V
 Console.WriteLine($"Textos em português na tela: {missing.Count} (lista em {Path.Combine(work, "missing.txt")})");
 foreach (var m in missing.Take(400)) Console.WriteLine($"  [{m.Value}] {m.Key.Replace("\n", "\n")}");
 Check("sem textos em português na interface", missing.Count == 0);
+
+// Primeira abertura: idioma do sistema (portugues de qualquer pais, espanhol so com dicionario, o resto em ingles).
+Check("primeira abertura sem idioma gravado", new AppSettings().UiLanguage is null);
+string Detect(string culture) => Loc.Detect(new System.Globalization.CultureInfo(culture));
+bool hasEs = Loc.Languages.Any(l => l.Code == Loc.Spanish);
+Check("sistema pt-BR/pt-PT → português", Detect("pt-BR") == Loc.Portuguese && Detect("pt-PT") == Loc.Portuguese);
+Check("sistema en-US/ja-JP/fr-FR → inglês", Detect("en-US") == Loc.English && Detect("ja-JP") == Loc.English && Detect("fr-FR") == Loc.English);
+Check("sistema es-MX → " + (hasEs ? "espanhol" : "inglês (sem es.json)"), Detect("es-MX") == (hasEs ? Loc.Spanish : Loc.English));
+// Botao 🌐 sempre visivel no rodape, com os nomes de cada idioma nele mesmo.
+var langButton = win.GetVisualDescendants().OfType<Button>().Single(b => b.Name == "LanguageButton");
+Check("botão 🌐 visível", langButton.IsEffectivelyVisible && langButton.Content as string == "🌐 EN");
+Check("dica do 🌐 em todos os idiomas", ToolTip.GetTip(langButton) is string langTip && langTip.Contains("Idioma") && langTip.Contains("Language"));
+langButton.Flyout!.ShowAt(langButton); Pump();
+var langNames = ((langButton.Flyout as Flyout)!.Content as Control)!.GetVisualDescendants().OfType<TextBlock>().Select(t => t.Text ?? "").ToList();
+Check("menu com Português (Brasil) sem traduzir", langNames.Any(t => t.Contains("Português (Brasil)")) && langNames.Any(t => t.Contains("✓") && t.Contains("English")));
+langButton.Flyout.Hide();
+// Trocar para portugues numa tela em ingles: a pergunta vem em portugues (o idioma escolhido), com uma linha em ingles.
+vm.LanguageOptions.Single(l => l.Code == Loc.Portuguese).SelectCommand.Execute(null); Pump();
+var langDialog = vm.Dialog;
+Check("pergunta no idioma escolhido", langDialog?.Title == "Reiniciar para usar Português?" && langDialog.Message.Contains("The interface language changes"));
+var shownTexts = win.GetVisualDescendants().OfType<TextBlock>().Where(t => t.IsEffectivelyVisible).Select(t => t.Text).ToList();
+Check("pergunta não é traduzida na tela", shownTexts.Contains("Reiniciar para usar Português?") && shownTexts.Contains("Reiniciar agora"));
+langDialog?.Complete(false); Pump();
+Check("botão mostra PT e status em português", langButton.Content as string == "🌐 PT" && vm.Status.Contains("vale na próxima vez"));
+// Voltar ao idioma da tela nao pergunta nada.
+vm.LanguageOptions.Single(l => l.Code == Loc.English).SelectCommand.Execute(null); Pump();
+Check("voltar ao idioma atual sem pergunta", vm.Dialog is null && vm.Settings.UiLanguage == Loc.English);
 Console.WriteLine(fails == 0 ? "TUDO OK" : $"{fails} FALHAS"); return fails == 0 ? 0 : 1;

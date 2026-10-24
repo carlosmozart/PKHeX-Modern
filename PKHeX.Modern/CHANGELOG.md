@@ -8,6 +8,10 @@ Formato: "## versão — data", "### seção", "- item".
 
 ## Próxima versão
 
+### 🌐 Idioma
+- **Idioma do sistema na primeira abertura:** quem instala o app agora começa no idioma do computador ou do celular (português em qualquer país; nos outros idiomas, inglês), em vez de sempre em português. Quem já usa o app continua no idioma que tinha.
+- **Botão 🌐 no rodapé da barra lateral:** ao lado de Ajuda, mostra o idioma atual (PT, EN) e abre a lista com cada idioma escrito nele mesmo, para achar sem ler a tela. A pergunta de reiniciar aparece no idioma escolhido.
+
 ### 🎨 Interface
 - **Bola com sprite e atalho:** a lista de bolas do editor mostra o sprite de cada bola, e clicar na bola da ficha do Pokémon leva direto para a aba Encontro, com a lista em foco.
 
