@@ -9,8 +9,10 @@ Formato: "## versão — data", "### seção", "- item".
 ## Próxima versão
 
 ### 🌐 Idioma
-- **Idioma do sistema na primeira abertura:** quem instala o app agora começa no idioma do computador ou do celular (português em qualquer país; nos outros idiomas, inglês), em vez de sempre em português. Quem já usa o app continua no idioma que tinha.
-- **Botão 🌐 no rodapé da barra lateral:** ao lado de Ajuda, mostra o idioma atual (PT, EN) e abre a lista com cada idioma escrito nele mesmo, para achar sem ler a tela. A pergunta de reiniciar aparece no idioma escolhido.
+- **Interface em espanhol:** o app inteiro agora também está em espanhol, com os termos oficiais dos jogos em espanhol (Caja, Equipo, Bolsa, Guardería Pokémon, Hall de la Fama, Teratipo...); nomes de espécies, golpes e itens continuam em inglês. Escolha “Español” no botão 🌐 ou no ⚙.
+- **Idioma do sistema na primeira abertura:** quem instala o app agora começa no idioma do computador ou do celular (português em qualquer país, espanhol nos sistemas em espanhol e inglês nos outros), em vez de sempre em português. Quem já usa o app continua no idioma que tinha.
+- **Textos que faltavam em inglês:** as siglas dos atributos (Atk, SpA, SpD, Spe, HP), “Missing” na Living Dex, “Ready” na barra de status e títulos da Ajuda apareciam em português na interface em inglês.
+- **Botão 🌐 no rodapé da barra lateral:** ao lado de Ajuda, mostra o idioma atual (PT, EN, ES) e abre a lista com cada idioma escrito nele mesmo, para achar sem ler a tela. A pergunta de reiniciar aparece no idioma escolhido.
 
 ### 🎨 Interface
 - **AllGenWiki no domínio próprio:** o botão “🌐 Abrir o AllGenWiki” (Ajuda › Sobre) agora leva a allgenwiki.com.

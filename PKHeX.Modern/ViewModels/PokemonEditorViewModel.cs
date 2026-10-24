@@ -609,7 +609,8 @@ public sealed partial class PokemonEditorViewModel : ViewModelBase
     /// <summary>Aba selecionada (mantida pelo MainViewModel ao trocar de slot).</summary>
     public int SelectedTab { get => _selectedTab; set => Set(ref _selectedTab, value); }
     private int _selectedTab;
-    public IReadOnlyList<string> StatLabels { get; } = ["PS", "Atq", "Def", "AtE", "DeE", "Vel"];
+    /// <summary>Nomes do hexágono, já no idioma da interface (o StatRadar desenha o texto, sem passar pelo Loc).</summary>
+    public IReadOnlyList<string> StatLabels { get; } = [.. StatLabelsShort.Select(Loc.T)];
     public IReadOnlyList<double> RadarValues { get; private set; } = [0, 0, 0, 0, 0, 0];
     /// <summary>Atributos finais escritos junto dos nomes do hexágono.</summary>
     public IReadOnlyList<string>? RadarTexts { get; private set; }

@@ -14,7 +14,14 @@ using PKHeX.Modern.Services;
 using PKHeX.Modern.ViewModels;
 using PKHeX.Modern.Views;
 
-// Interface em ingles: cada pagina e renderizada e os textos visiveis que ficaram em portugues sao listados.
+// Interface em ingles (ou em espanhol, no projeto LanguageEs): cada pagina e renderizada e os textos visiveis que
+// ficaram em portugues sao listados.
+#if LANG_ES
+var lang = Loc.Spanish;
+#else
+var lang = Loc.English;
+#endif
+bool es = lang == Loc.Spanish;
 AppBuilder.Configure<App>().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).WithInterFont().SetupWithoutStarting();
 int fails = 0;
 void Check(string name, bool ok) { Console.WriteLine($"{(ok ? "OK" : "FAIL")} {name}"); if (!ok) fails++; }
@@ -22,12 +29,28 @@ var work = args.Length > 0 ? args[0] : Path.Combine(Path.GetTempPath(), "pkhex-l
 BankStorage.Root = Path.Combine(work, "bank"); SaveBackup.Folder = Path.Combine(work, "backups");
 
 // Unidade: exato, modelo, frases juntadas, prefixo de icone e texto sem traducao.
-Check("carrega en", Loc.Load(Loc.English) && Loc.IsTranslating);
-Check("exato", Loc.T("Caixas") == "Boxes");
-Check("modelo", Loc.T("Pikachu gravado em caixa 1, slot 2. Lembre-se de salvar.") == "Pikachu written to box 1, slot 2. Remember to save.");
+Check("carrega " + lang, Loc.Load(lang) && Loc.IsTranslating);
+Check("exato", Loc.T("Caixas") == (es ? "Cajas" : "Boxes"));
+Check("modelo", Loc.T("Pikachu gravado em caixa 1, slot 2. Lembre-se de salvar.") == (es ? "Pikachu grabado en caja 1, casilla 2. Recuerda guardar." : "Pikachu written to box 1, slot 2. Remember to save."));
 Check("modelo aninhado", Loc.T("Pikachu ({0})".Replace("{0}", "x")) == "Pikachu (x)");
 Check("nome do jogo intacto", Loc.T("Pikachu") == "Pikachu" && Loc.T("Thunderbolt") == "Thunderbolt");
-Check("frases juntadas", Loc.T("Nada para desfazer (Ctrl+Z). Nada para refazer (Ctrl+Y).") is var j && !j.Contains("Nada"));
+Check("frases juntadas", Loc.T("Nada para desfazer (Ctrl+Z). Nada para refazer (Ctrl+Y).") is var j && !j.Contains("desfazer") && !j.Contains("refazer"));
+if (es)
+{
+    // O dicionario espanhol tem as mesmas chaves do ingles, com os mesmos marcadores e quebras de linha.
+    static Dictionary<string, string> Dict(string code)
+    {
+        using var stream = typeof(Loc).Assembly.GetManifestResourceStream($"lang.{code}.json")!;
+        return System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(stream)!;
+    }
+    var enDict = Dict(Loc.English); var esDict = Dict(Loc.Spanish);
+    var marks = new Regex(@"\{\d+(:[^}]*)?\}");
+    string Marks(string t) => string.Join(",", marks.Matches(t).Select(m => m.Value).Order());
+    Check($"es.json com as {enDict.Count} chaves do en.json", enDict.Keys.All(esDict.ContainsKey) && esDict.Count == enDict.Count);
+    var badMarks = esDict.Where(e => e.Value.Length == 0 || Marks(e.Key) != Marks(e.Value) || e.Key.Count(c => c == '\n') != e.Value.Count(c => c == '\n')).Select(e => e.Key).ToList();
+    foreach (var b in badMarks.Take(20)) Console.WriteLine("  marcadores/quebras: " + b);
+    Check("es.json com os mesmos marcadores e quebras", badMarks.Count == 0);
+}
 Loc.Hook();
 
 PKM Make(SaveFile sav, ushort species)
@@ -42,13 +65,25 @@ foreach (ushort sp in new ushort[] { 495, 498, 501, 25, 570, 349 }) { var pk = M
 var lib = Path.Combine(work, "saves"); Directory.CreateDirectory(lib);
 var path = Path.Combine(lib, "Black.sav"); File.WriteAllBytes(path, sav.Write().ToArray());
 
-var vm = new MainViewModel(new AppSettings { SavesFolder = lib, UiLanguage = Loc.English });
+var vm = new MainViewModel(new AppSettings { SavesFolder = lib, UiLanguage = lang });
 var win = new MainWindow { DataContext = vm, Width = 1440, Height = 900 }; win.Show();
 void Pump(int n = 10) { for (int i = 0; i < n; i++) { Dispatcher.UIThread.RunJobs(); AvaloniaHeadlessPlatform.ForceRenderTimerTick(); } }
-var pt = new Regex(@"[ãõçâêôáíóúàé]|\b(de|da|não|para|com|uma|os|em|ou|que|caixa|equipe|golpes?|treinador|mochila|salvar|abrir|clique|todos|todas|nenhum|selecione|escolha|arquivo|pasta|novo|nova|voltar|excluir|ordenar|buscar|ajuda|atualizar|vista|capturada)\b", RegexOptions.IgnoreCase);
+// No espanhol, acentos e palavras como "de", "para", "que", "abrir" e "dos" existem nos dois idiomas: conta so o que e exclusivo do portugues.
+var pt = es
+    ? new Regex(@"[ãõçâêô]|ção\b|ções\b|ões\b|\b(não|uma|em|ou|os|das|caixas?|equipe|golpes?|treinador|salvar|clique|nenhuma?|selecione|escolha|arquivo|pasta|nova|voltar|excluir|ajuda|atualizar|você)\b", RegexOptions.IgnoreCase)
+    : new Regex(@"[ãõçâêôáíóúàé]|\b(de|da|não|para|com|uma|os|em|ou|que|caixa|equipe|golpes?|treinador|mochila|salvar|abrir|clique|todos|todas|nenhum|selecione|escolha|arquivo|pasta|novo|nova|voltar|excluir|ordenar|buscar|ajuda|atualizar|vista|capturada)\b", RegexOptions.IgnoreCase);
 var gameWords = new Regex(@"Pok[ée]\w*|Poké", RegexOptions.IgnoreCase);
 bool IsPortuguese(string t) => pt.IsMatch(gameWords.Replace(t, ""));
 var missing = new SortedDictionary<string, string>();
+// Espanhol: textos curtos que nao passaram pelo dicionario (iguais em portugues e ingles, como "Saves", nao entram no
+// en.json). So para conferir a mao em untranslated.txt; nomes do jogo tambem aparecem.
+var esValues = es ? new HashSet<string>(Loc.Languages.Count > 0 ? EsValues() : []) : [];
+static IEnumerable<string> EsValues()
+{
+    using var stream = typeof(Loc).Assembly.GetManifestResourceStream("lang.es.json")!;
+    return System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(stream)!.Values;
+}
+var untranslated = new SortedDictionary<string, string>();
 void Scan(string page, Control? popup = null)
 {
     Pump(20); win.UpdateLayout(); Pump(5);
@@ -60,7 +95,10 @@ void Scan(string page, Control? popup = null)
         if (v is TextBox box) texts.Add(box.Watermark);
         if (v is ComboBox cb) texts.Add(cb.PlaceholderText);
         foreach (var t in texts)
-            if (!string.IsNullOrWhiteSpace(t) && IsPortuguese(t) && !missing.ContainsKey(t) && !t.Contains("Português") && !t.StartsWith("¡")) missing[t] = page;
+        {
+            if (!string.IsNullOrWhiteSpace(t) && IsPortuguese(t) && !missing.ContainsKey(t) && !t.Contains("Português") && !t.StartsWith("¡") && !t.StartsWith("http")) missing[t] = page;
+            if (es && t is { Length: > 1 and <= 40 } && t.Any(char.IsLetter) && !esValues.Contains(t)) untranslated.TryAdd(t, page);
+        }
     }
 }
 Pump(); Scan("Save Manager");
@@ -73,7 +111,7 @@ foreach (var page in vm.Pages)
         vm.SelectSlotAsync(vm.Boxes.Slots[5]).GetAwaiter().GetResult();
         for (int t = 0; t < 7; t++) { vm.Editor!.SelectedTab = t; Scan("Editor " + t); }
         vm.Editor!.SelectedTab = 0;
-        win.CaptureRenderedFrame()?.Save(Path.Combine(work, "boxes_en.png"));
+        win.CaptureRenderedFrame()?.Save(Path.Combine(work, $"boxes_{lang}.png"));
     }
 }
 vm.CurrentPage = vm.Pokedex; vm.Pokedex.RefreshAsync().GetAwaiter().GetResult(); Scan("Pokédex");
@@ -96,7 +134,7 @@ Scan("Living Dex");
 vm.Pokedex.ShowLivingDex = false;
 // Novidades (aba 1) e o changelog: fica em portugues, com um aviso; so a aba Funcoes e Sobre sao conferidas.
 vm.OpenHelp(); foreach (var t in new[] { 0, 2 }) { vm.Help.SelectedTab = t; Scan("Help " + t); }
-win.CaptureRenderedFrame()?.Save(Path.Combine(work, "help_en.png"));
+win.CaptureRenderedFrame()?.Save(Path.Combine(work, $"help_{lang}.png"));
 // Campo editavel nunca e traduzido: um apelido em portugues continua igual.
 vm.CloseHelpCommand.Execute(null); vm.CurrentPage = vm.Boxes; vm.SelectSlotAsync(vm.Boxes.Slots[0]).GetAwaiter().GetResult(); Pump();
 var nick = win.GetVisualDescendants().OfType<TextBox>().First(b => b.Text == "Snivy" && b.IsEffectivelyVisible);
@@ -135,6 +173,7 @@ var prefs=win.GetVisualDescendants().OfType<Button>().Single(b=>b.Name=="PrefsBu
 App.ShowShortcuts=false;vm.IsTouchUI=true;vm.CurrentPage=vm.Boxes;vm.TouchSelectionMode=true;Scan("Touch selection");
 prefs.Flyout.ShowAt(prefs);Scan("Touch preferences",(prefs.Flyout as Flyout)?.Content as Control);prefs.Flyout.Hide();
 
+if (es) File.WriteAllLines(Path.Combine(work, "untranslated.txt"), untranslated.Select(m => $"{m.Value}\t{m.Key.Replace("\n", " ")}"));
 File.WriteAllLines(Path.Combine(work, "missing.txt"), missing.Select(m => $"{m.Value}\t{m.Key.Replace("\n", "\n")}"));
 Console.WriteLine($"Textos em português na tela: {missing.Count} (lista em {Path.Combine(work, "missing.txt")})");
 foreach (var m in missing.Take(400)) Console.WriteLine($"  [{m.Value}] {m.Key.Replace("\n", "\n")}");
@@ -149,21 +188,21 @@ Check("sistema en-US/ja-JP/fr-FR → inglês", Detect("en-US") == Loc.English &&
 Check("sistema es-MX → " + (hasEs ? "espanhol" : "inglês (sem es.json)"), Detect("es-MX") == (hasEs ? Loc.Spanish : Loc.English));
 // Botao 🌐 sempre visivel no rodape, com os nomes de cada idioma nele mesmo.
 var langButton = win.GetVisualDescendants().OfType<Button>().Single(b => b.Name == "LanguageButton");
-Check("botão 🌐 visível", langButton.IsEffectivelyVisible && langButton.Content as string == "🌐 EN");
+Check("botão 🌐 visível", langButton.IsEffectivelyVisible && langButton.Content as string == (es ? "🌐 ES" : "🌐 EN"));
 Check("dica do 🌐 em todos os idiomas", ToolTip.GetTip(langButton) is string langTip && langTip.Contains("Idioma") && langTip.Contains("Language"));
 langButton.Flyout!.ShowAt(langButton); Pump();
 var langNames = ((langButton.Flyout as Flyout)!.Content as Control)!.GetVisualDescendants().OfType<TextBlock>().Select(t => t.Text ?? "").ToList();
-Check("menu com Português (Brasil) sem traduzir", langNames.Any(t => t.Contains("Português (Brasil)")) && langNames.Any(t => t.Contains("✓") && t.Contains("English")));
+Check("menu com Português (Brasil) sem traduzir", langNames.Any(t => t.Contains("Português (Brasil)")) && langNames.Any(t => t.Contains("✓") && t.Contains(es ? "Español" : "English")));
 langButton.Flyout.Hide();
 // Trocar para portugues numa tela em ingles: a pergunta vem em portugues (o idioma escolhido), com uma linha em ingles.
 vm.LanguageOptions.Single(l => l.Code == Loc.Portuguese).SelectCommand.Execute(null); Pump();
 var langDialog = vm.Dialog;
-Check("pergunta no idioma escolhido", langDialog?.Title == "Reiniciar para usar Português?" && langDialog.Message.Contains("The interface language changes"));
+Check("pergunta no idioma escolhido", langDialog?.Title == "Reiniciar para usar Português?" && langDialog.Message.Contains(es ? "El idioma de la interfaz cambia" : "The interface language changes"));
 var shownTexts = win.GetVisualDescendants().OfType<TextBlock>().Where(t => t.IsEffectivelyVisible).Select(t => t.Text).ToList();
 Check("pergunta não é traduzida na tela", shownTexts.Contains("Reiniciar para usar Português?") && shownTexts.Contains("Reiniciar agora"));
 langDialog?.Complete(false); Pump();
 Check("botão mostra PT e status em português", langButton.Content as string == "🌐 PT" && vm.Status.Contains("vale na próxima vez"));
 // Voltar ao idioma da tela nao pergunta nada.
-vm.LanguageOptions.Single(l => l.Code == Loc.English).SelectCommand.Execute(null); Pump();
-Check("voltar ao idioma atual sem pergunta", vm.Dialog is null && vm.Settings.UiLanguage == Loc.English);
+vm.LanguageOptions.Single(l => l.Code == lang).SelectCommand.Execute(null); Pump();
+Check("voltar ao idioma atual sem pergunta", vm.Dialog is null && vm.Settings.UiLanguage == lang);
 Console.WriteLine(fails == 0 ? "TUDO OK" : $"{fails} FALHAS"); return fails == 0 ? 0 : 1;
