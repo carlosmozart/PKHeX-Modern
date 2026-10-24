@@ -228,7 +228,7 @@ o download no navegador.
 - Atalhos: Q/E trocam de página, Ctrl+1–9 vão direto, Esc volta, Ctrl+O abre.
 
 ### Conheça também: AllGenWiki
-[AllGenWiki](https://allgenwiki.carlosmozartbna.workers.dev/) é meu outro projeto: uma enciclopédia Pokémon em português das nove gerações, com Pokédex por jogo, movesets, TMs, treinadores, mapas, encontros, roteiros e guias, montador de equipes e compatibilidade do Pokémon HOME. Funciona offline. As descrições dos itens da mochila vêm de lá.
+[AllGenWiki](https://allgenwiki.com/) é meu outro projeto: uma enciclopédia Pokémon em português das nove gerações, com Pokédex por jogo, movesets, TMs, treinadores, mapas, encontros, roteiros e guias, montador de equipes e compatibilidade do Pokémon HOME. Funciona offline. As descrições dos itens da mochila vêm de lá.
 
 As preferências ficam em `settings.json` na pasta de dados do app: `%APPDATA%\PKHeX.Modern` no Windows e `~/.config/PKHeX.Modern` no Linux e no macOS (backups e bank ficam na mesma pasta). Se algo der errado, os detalhes ficam em `crash.log`, também nela.
 

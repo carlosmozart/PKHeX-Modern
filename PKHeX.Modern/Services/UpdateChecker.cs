@@ -91,7 +91,7 @@ public static class UpdateChecker
 /// <summary>Abre links no navegador padrao.</summary>
 public static class Links
 {
-    public const string AllGenWiki = "https://allgenwiki.carlosmozartbna.workers.dev/";
+    public const string AllGenWiki = "https://allgenwiki.com/";
 
     /// <summary>Abre o link pelo sistema quando nao ha Process.Start (Android: Launcher do Avalonia).</summary>
     public static Func<string, bool>? Opener { get; set; }

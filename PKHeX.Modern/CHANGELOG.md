@@ -13,6 +13,7 @@ Formato: "## versão — data", "### seção", "- item".
 - **Botão 🌐 no rodapé da barra lateral:** ao lado de Ajuda, mostra o idioma atual (PT, EN) e abre a lista com cada idioma escrito nele mesmo, para achar sem ler a tela. A pergunta de reiniciar aparece no idioma escolhido.
 
 ### 🎨 Interface
+- **AllGenWiki no domínio próprio:** o botão “🌐 Abrir o AllGenWiki” (Ajuda › Sobre) agora leva a allgenwiki.com.
 - **Bola com sprite e atalho:** a lista de bolas do editor mostra o sprite de cada bola, e clicar na bola da ficha do Pokémon leva direto para a aba Encontro, com a lista em foco.
 
 ## 0.5.0 — 2026-10-23

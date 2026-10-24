@@ -81,5 +81,5 @@ Mais capturas, a lista completa de funções, como compilar e a arquitetura est�
 ## Créditos
 
 - **[PKHeX](https://github.com/kwsch/PKHeX)**, de Kaphotics e colaboradores: o `PKHeX.Core`, os sprites e toda a base de regras. O README original do PKHeX está [na raiz do repositório](/README.md).
-- [AllGenWiki](https://allgenwiki.carlosmozartbna.workers.dev/): descrições e locais de itens.
+- [AllGenWiki](https://allgenwiki.com/): descrições e locais de itens.
 - Licença: [GPLv3](/LICENSE), a mesma do PKHeX.
