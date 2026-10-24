@@ -196,6 +196,18 @@
   .notes p { margin: 10px 0; }
   .warn { margin-top: 16px; padding: 12px 16px; border-left: 3px solid var(--red); background: var(--card); border-radius: 8px; }
 
+  /* Convite para o All Gen Wiki (outro projeto do autor), com o verde da wiki */
+  .friend { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 36px; align-items: center; padding: 34px; border-radius: 26px;
+    background: radial-gradient(520px 260px at 0% 0%, rgba(63,208,138,.14), transparent 70%), var(--panel); border: 1.5px solid rgba(63,208,138,.35); }
+  .friend .kicker { font: 700 12px Inter, sans-serif; text-transform: uppercase; letter-spacing: .08em; color: #3fd08a; display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .friend .kicker img { width: 34px; height: 34px; border-radius: 9px; }
+  .friend p.sub { margin-bottom: 18px; }
+  .friend .tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 24px; }
+  .friend .tags span { font: 600 13px Inter, sans-serif; padding: 5px 12px; border-radius: 999px; background: var(--card); border: 1.5px solid var(--border); }
+  .btn.wiki { background: #3fd08a; border-color: #23955f; color: #10131a; box-shadow: 0 4px 0 #23955f; }
+  .btn.wiki:hover { background: #5adb9c; }
+  .friend .shot { border-radius: 14px; overflow: hidden; border: 1.5px solid rgba(63,208,138,.35); box-shadow: 0 24px 60px rgba(0,0,0,.5); }
+
   footer { padding: 34px 0 50px; color: var(--muted); font-size: 13px; text-align: center; }
   footer p { margin: 6px 0; }
 
@@ -206,6 +218,7 @@
     .lid .wrap { gap: 10px; }
     .lens { width: 38px; height: 38px; } .lens i { width: 28px; height: 28px; }
     .device { border-radius: 18px 18px 18px 40px; padding: 12px 12px 38px; }
+    .friend { grid-template-columns: 1fr; padding: 24px 20px; gap: 24px; }
   }
 </style>
 </head>
@@ -358,6 +371,22 @@
       </div>
     </div>
   </section>
+
+  <div class="divider"><span></span></div>
+
+  <!-- Convite para o All Gen Wiki: o link e a captura seguem o idioma da pagina (a wiki tem PT e EN) -->
+  <section aria-labelledby="allgenwiki">
+    <div class="friend">
+      <div>
+        <div class="kicker"><img src="https://allgenwiki.com/sobre/img/icon-192.png" alt="" width="34" height="34"><span data-i18n="agw.kicker">Do mesmo autor</span></div>
+        <h2 id="allgenwiki" data-i18n="agw.title">Conheça o All Gen Wiki</h2>
+        <p class="sub" data-i18n="agw.sub">A wiki Pokémon que sabe qual jogo você está jogando: escolha o seu e veja a Pokédex, os mapas, os treinadores, os TMs e o roteiro daquele jogo, de Red/Blue a Legends: Z-A. As descrições em português de golpes, habilidades e itens do PKHeX Modern vêm de lá.</p>
+        <div class="tags" data-i18n="agw.tags"><span>Grátis</span><span>Português e inglês</span><span>Funciona offline</span><span>App para Android</span></div>
+        <a class="btn wiki" data-agw href="https://allgenwiki.com/sobre/?lang=pt"><span data-i18n="agw.btn">Conhecer o All Gen Wiki</span> →</a>
+      </div>
+      <a class="shot" data-agw href="https://allgenwiki.com/sobre/?lang=pt"><img data-agw-img loading="lazy" src="https://allgenwiki.com/sobre/img/pokedex.png" width="1600" height="950" alt="Pokédex do All Gen Wiki"></a>
+    </div>
+  </section>
 </div>
 
 <footer>
@@ -480,6 +509,9 @@
     "dl.guide": "How to install on each system: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/PKHeX.Modern/README.md#download\">install guide</a> · What's new in each version: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/releases\">Releases</a>",
     "dl.macnote": "<b>macOS:</b> the first time you open it, macOS blocks the app (it is free and does not have Apple's paid signature). Open <b>System Settings › Privacy &amp; Security</b> and click <b>Open Anyway</b>. If it says the app “is damaged”, run in Terminal: <code>xattr -dr com.apple.quarantine \"/Applications/PKHeX Modern.app\"</code>",
     "dl.backup": "<b>Back up your saves before editing.</b> The app already keeps a copy before overwriting, but a backup of your own never hurts.",
+    "agw.kicker": "From the same author", "agw.title": "Meet All Gen Wiki",
+    "agw.sub": "The Pokémon wiki that knows which game you are playing: pick yours and see that game's Pokédex, maps, trainers, TMs and walkthrough, from Red/Blue to Legends: Z-A. PKHeX Modern's move, ability and item descriptions in Portuguese come from it.",
+    "agw.tags": "<span>Free</span><span>Portuguese and English</span><span>Works offline</span><span>Android app</span>", "agw.btn": "Discover All Gen Wiki",
     "foot.1": "PKHeX Modern, by <a href=\"https://github.com/carlosmozart\">Carlos Mozart</a> · <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/LICENSE\">GPLv3</a> license",
     "foot.2": "Built on <a href=\"https://github.com/kwsch/PKHeX\">PKHeX</a>, by Kaphotics and contributors. Pokémon and related names, images and trademarks belong to Nintendo, Game Freak and The Pokémon Company. A non-profit fan project with no affiliation with them.",
   };
@@ -522,6 +554,9 @@
     "dl.guide": "Cómo instalar en cada sistema: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/PKHeX.Modern/README.md#download\">guía de instalación</a> (en inglés y portugués) · Novedades de cada versión: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/releases\">Releases</a>",
     "dl.macnote": "<b>macOS:</b> la primera vez que la abres, macOS bloquea la app (es gratuita y no tiene la firma de pago de Apple). Abre <b>Ajustes del Sistema › Privacidad y seguridad</b> y haz clic en <b>Abrir igualmente</b>. Si dice que la app “está dañada”, ejecuta en la Terminal: <code>xattr -dr com.apple.quarantine \"/Applications/PKHeX Modern.app\"</code>",
     "dl.backup": "<b>Haz una copia de seguridad de tus partidas antes de editar.</b> La app ya guarda una copia antes de sobrescribir, pero una copia tuya nunca está de más.",
+    "agw.kicker": "Del mismo autor", "agw.title": "Conoce All Gen Wiki",
+    "agw.sub": "La wiki Pokémon que sabe a qué juego estás jugando: elige el tuyo y consulta la Pokédex, los mapas, los entrenadores, las MT y la guía de ese juego, de Red/Blue a Legends: Z-A.",
+    "agw.tags": "<span>Gratis</span><span>En portugués e inglés</span><span>Funciona sin conexión</span><span>App para Android</span>", "agw.btn": "Conocer All Gen Wiki",
     "foot.1": "PKHeX Modern, de <a href=\"https://github.com/carlosmozart\">Carlos Mozart</a> · Licencia <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/LICENSE\">GPLv3</a>",
     "foot.2": "Basado en <a href=\"https://github.com/kwsch/PKHeX\">PKHeX</a>, de Kaphotics y colaboradores. Pokémon y los nombres, imágenes y marcas relacionados pertenecen a Nintendo, Game Freak y The Pokémon Company. Proyecto de fans, sin ánimo de lucro y sin vínculo con ellas.",
   };
@@ -534,6 +569,10 @@
     const dict = l === "en" ? EN : l === "es" ? ES : PT;
     document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; el.innerHTML = dict[k] ?? PT[k]; });
     document.querySelectorAll("[data-pt]").forEach(el => el.textContent = el.dataset[l]);
+    // All Gen Wiki: a pagina Sobre e as capturas existem em portugues e ingles (espanhol vai para o ingles)
+    const agw = l === "pt" ? "pt" : "en";
+    document.querySelectorAll("[data-agw]").forEach(a => a.href = "https://allgenwiki.com/sobre/?lang=" + agw);
+    document.querySelectorAll("[data-agw-img]").forEach(img => img.src = "https://allgenwiki.com/sobre/img/" + (agw === "en" ? "en/" : "") + "pokedex.png");
     document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === l)));
     showVersion();
     if (remember) try { localStorage.setItem("lang", l); } catch {}
