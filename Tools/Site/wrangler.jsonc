@@ -1,0 +1,14 @@
+{
+  // Página de divulgação do PKHeX Modern no domínio da All Gen Wiki: https://allgenwiki.com/pkhex/.
+  // A fonte continua sendo docs/ (a mesma pasta do GitHub Pages); este Worker só a serve no domínio.
+  // A wiki é o Worker "allgenwiki" na raiz de allgenwiki.com; a rota allgenwiki.com/pkhex* roda antes dele.
+  // Publicar: npx wrangler deploy (nesta pasta, com a conta Cloudflare logada no wrangler).
+  "name": "allgenwiki-pkhex",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-01",
+  "workers_dev": false,
+  "routes": [
+    { "pattern": "allgenwiki.com/pkhex*", "zone_name": "allgenwiki.com" }
+  ],
+  "assets": { "directory": "../../docs", "binding": "ASSETS", "run_worker_first": true }
+}

@@ -232,3 +232,6 @@ pingme.txt
 #################
 
 *.userprefs
+
+# Wrangler (Tools/Site)
+.wrangler/

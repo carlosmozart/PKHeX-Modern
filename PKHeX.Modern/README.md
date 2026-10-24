@@ -13,7 +13,7 @@ Ela é construída **por cima** do `PKHeX.Core`, sem alterar os projetos origina
 | macOS 14+ com Intel | `PKHeX.Modern-osx-x64.zip` |
 | Android 6+ | `PKHeX.Modern-Android.apk` |
 
-Todos estão na [versão mais recente](https://github.com/carlosmozart/PKHeX-Modern/releases/latest); veja como instalar em [Download](#download). Site do projeto: [carlosmozart.github.io/PKHeX-Modern](https://carlosmozart.github.io/PKHeX-Modern/).
+Todos estão na [versão mais recente](https://github.com/carlosmozart/PKHeX-Modern/releases/latest); veja como instalar em [Download](#download). Site do projeto: [allgenwiki.com/pkhex](https://allgenwiki.com/pkhex/).
 
 ![Início](docs/home.png)
 
