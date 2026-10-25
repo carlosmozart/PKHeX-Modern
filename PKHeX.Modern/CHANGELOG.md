@@ -6,10 +6,10 @@ Ao adicionar uma função, anote em "Próxima versão"; na release, troque o tí
 Formato: "## versão — data", "### seção", "- item".
 -->
 
-## Próxima versão
+## 0.5.1 — 2026-10-25
 
 ### 🌐 Idioma
-- **Interface em espanhol:** o app inteiro agora também está em espanhol, com os termos oficiais dos jogos em espanhol (Caja, Equipo, Bolsa, Guardería Pokémon, Hall de la Fama, Teratipo...).. Escolha “Español” no botão 🌐 ou no ⚙.
+- **Interface em espanhol:** o app inteiro agora também está em espanhol, com os termos oficiais dos jogos em espanhol (Caja, Equipo, Bolsa, Guardería Pokémon, Hall de la Fama, Teratipo...). Escolha “Español” no botão 🌐 ou no ⚙.
 - **Nomes do jogo no idioma da interface:** em espanhol, espécies, golpes, habilidades, itens, naturezas e mensagens de legalidade também aparecem em espanhol, com os nomes oficiais dos jogos, como no PKHeX original. “Nomes do jogo em inglês”, no 🌐 e no ⚙, mantém o inglês. Em português e inglês nada muda (o PKHeX não tem os nomes em português). Copiar para o Showdown continua em inglês, e colar um set aceita qualquer idioma.
 - **Idioma do sistema na primeira abertura:** quem instala o app agora começa no idioma do computador ou do celular (português em qualquer país, espanhol nos sistemas em espanhol e inglês nos outros), em vez de sempre em português. Quem já usa o app continua no idioma que tinha.
 - **Textos que faltavam em inglês:** as siglas dos atributos (Atk, SpA, SpD, Spe, HP), “Missing” na Living Dex, “Ready” na barra de status e títulos da Ajuda apareciam em português na interface em inglês.
@@ -18,6 +18,12 @@ Formato: "## versão — data", "### seção", "- item".
 ### 🎨 Interface
 - **AllGenWiki no domínio próprio:** o botão “🌐 Abrir o AllGenWiki” (Ajuda › Sobre) agora leva a allgenwiki.com.
 - **Bola com sprite e atalho:** a lista de bolas do editor mostra o sprite de cada bola, e clicar na bola da ficha do Pokémon leva direto para a aba Encontro, com a lista em foco.
+
+### 🔧 Correções
+- **Hall da Fama sem apelido:** ao trocar um membro sem digitar apelido, o app grava o nome da espécie no idioma do save, como o jogo faz. Antes gravava sempre o nome em inglês, mesmo em saves de outros idiomas.
+
+### 🔄 PKHeX atualizado
+- **PKHeX de 25/10/2026:** Pokémon do Pokéwalker (HeartGold/SoulSilver) com o bug de PP do aparelho passam a ser reconhecidos como legais. A checagem de shiny dos ovos de eventos da Gen 3 (Mystery Gift) foi revista, e o gerador de encontros cria esses ovos já para o treinador do save.
 
 ## 0.5.0 — 2026-10-23
 
