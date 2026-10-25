@@ -15,12 +15,14 @@
 <link rel="canonical" href="https://allgenwiki.com/pkhex/">
 <link rel="alternate" hreflang="pt-BR" href="https://allgenwiki.com/pkhex/">
 <link rel="alternate" hreflang="en" href="https://allgenwiki.com/pkhex/?lang=en">
+<link rel="alternate" hreflang="es" href="https://allgenwiki.com/pkhex/?lang=es">
 <link rel="alternate" hreflang="x-default" href="https://allgenwiki.com/pkhex/">
 <link rel="icon" href="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern.Android/Resources/drawable/app_icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="PKHeX Modern">
 <meta property="og:locale" content="pt_BR">
 <meta property="og:locale:alternate" content="en_US">
+<meta property="og:locale:alternate" content="es_ES">
 <meta property="og:url" content="https://allgenwiki.com/pkhex/">
 <meta property="og:title" content="PKHeX Modern: editor de saves de Pokémon">
 <meta property="og:description" content="Interface moderna e gratuita para o PKHeX, com modo legal, bank, Pokédex centralizada e temas. Windows, Linux, macOS, Steam Deck e Android.">
@@ -460,7 +462,7 @@
     ["theme_pixel", "Pixel (menus do Game Boy Advance)", "Pixel (Game Boy Advance menus)", "Pixel (menús de Game Boy Advance)"],
     ["theme_pss", "PSS (Player Search System de X/Y)", "PSS (X/Y Player Search System)", "PSS (Player Search System de X/Y)"],
     ["theme_za", "Z-A (Lumiose de Legends: Z-A)", "Z-A (Lumiose from Legends: Z-A)", "Z-A (Lumiose de Legends: Z-A)"],
-    ["english", "Interface em português ou inglês", "Interface in Portuguese or English", "Interfaz en portugués o inglés (español en camino)"],
+    ["english", "Interface em português, inglês ou espanhol", "Interface in Portuguese, English or Spanish", "Interfaz en portugués, inglés o español"],
   ];
   const fill = (id, list) => document.getElementById(id).innerHTML = list.map(([f, pt, en, es], i) =>
     `<figure><a href="${RAW}${f}.png"><img loading="lazy" src="${RAW}${f}.png" alt="${pt}"></a><figcaption><b>#${String(i + 1).padStart(3, "0")}</b><span data-pt="${pt}" data-en="${en}" data-es="${es}">${pt}</span></figcaption></figure>`).join("");
@@ -549,7 +551,7 @@
     "phone.2": "<b>Abre y guarda</b> partidas y carpetas con el selector del sistema, de vuelta en el archivo original.",
     "phone.3": "<b>Toca y desliza:</b> mantén pulsado para marcar y arrastrar Pokémon, desliza para cambiar de caja y tira de la lista de partidas para recargarla.",
     "phone.4": "<b>Se actualiza sola</b> cuando sale una versión nueva.",
-    "dl.title": "Elige a tu inicial", "dl.sub": "Gratis y de código abierto. No hace falta instalar .NET; la app avisa cuando sale una versión nueva y se actualiza sola. Por ahora la interfaz está en inglés y en portugués; la traducción al español está en camino.",
+    "dl.title": "Elige a tu inicial", "dl.sub": "Gratis y de código abierto. No hace falta instalar .NET; la app avisa cuando sale una versión nueva y se actualiza sola.",
     "dl.mine": "Tu sistema", "dl.win": "10 y 11, 64 bits", "dl.linux": "x64, también Steam Deck", "dl.mac": "chip Apple (M1, M2…)", "dl.macintel": "Macs con Intel", "dl.android": "6 o más reciente (APK)",
     "dl.guide": "Cómo instalar en cada sistema: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/blob/modern-ui/PKHeX.Modern/README.md#download\">guía de instalación</a> (en inglés y portugués) · Novedades de cada versión: <a href=\"https://github.com/carlosmozart/PKHeX-Modern/releases\">Releases</a>",
     "dl.macnote": "<b>macOS:</b> la primera vez que la abres, macOS bloquea la app (es gratuita y no tiene la firma de pago de Apple). Abre <b>Ajustes del Sistema › Privacidad y seguridad</b> y haz clic en <b>Abrir igualmente</b>. Si dice que la app “está dañada”, ejecuta en la Terminal: <code>xattr -dr com.apple.quarantine \"/Applications/PKHeX Modern.app\"</code>",
@@ -584,9 +586,9 @@
   let saved = null;
   try { saved = localStorage.getItem("lang"); } catch {}
   // ?lang=pt, ?lang=en ou ?lang=es no endereco (para divulgar o link ja no idioma certo), depois a escolha salva, depois o navegador
-  // Espanhol pronto, mas desligado ate o app ter o es.json: so abre com ?lang=es (previa), sem botao, sem detectar
-  // pelo navegador e sem ficar salvo. Para ligar: ES_READY = true e, no <head>, og:locale:alternate es_ES e o hreflang "es".
-  const ES_READY = false;
+  // Espanhol: ligado desde a 0.5.1 (o app tem o es.json). Com false, so abre com ?lang=es (previa), sem botao, sem
+  // detectar pelo navegador e sem ficar salvo; ao desligar, tire tambem o og:locale:alternate es_ES e o hreflang "es".
+  const ES_READY = true;
   const LANGS = ES_READY ? ["pt", "en", "es"] : ["pt", "en"];
   if (ES_READY) document.querySelector('.lang button[data-lang="es"]').hidden = false;
   const asked = new URLSearchParams(location.search).get("lang");
