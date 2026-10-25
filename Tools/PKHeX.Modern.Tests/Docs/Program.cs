@@ -13,8 +13,18 @@ using PKHeX.Modern.ViewModels;
 using PKHeX.Modern.Views;
 
 // Public documentation captures use generated saves only; no personal save or desktop capture.
+// Uso: -- <pasta> [idioma]. Com o idioma (ex.: es), as mesmas capturas saem na interface desse idioma em <pasta>/<idioma>/,
+// para a pagina de divulgacao naquele idioma (menos a captura "english").
 AppBuilder.Configure<App>().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).WithInterFont().SetupWithoutStarting();
-var output = Path.GetFullPath(args[0]); Directory.CreateDirectory(output);
+var lang = args.Length > 1 ? args[1] : null;
+var output = Path.GetFullPath(lang is null ? args[0] : Path.Combine(args[0], lang)); Directory.CreateDirectory(output);
+if (lang is not null && (!Loc.Load(lang) || !Loc.IsTranslating))
+    throw new ArgumentException("Idioma sem dicionário: " + lang);
+Loc.Hook();
+// Nomes gravados nos saves de exemplo (caixa, banco, cemiterio do Nuzlocke) e idioma dos saves: o das capturas.
+var collection = lang switch { Loc.Spanish => "Colección", Loc.English => "Collection", _ => "Coleção" };
+var graveyard = lang switch { Loc.Spanish => "Cementerio", Loc.English => "Graveyard", _ => "Cemitério" };
+var saveLanguage = lang == Loc.Spanish ? (int)LanguageID.Spanish : (int)LanguageID.English;
 var work = Path.Combine(Path.GetTempPath(), "pkhex-docs-" + Guid.NewGuid()); Directory.CreateDirectory(work);
 var library = Path.Combine(work, "saves"); Directory.CreateDirectory(library);
 BankStorage.Root = Path.Combine(work, "bank"); SaveBackup.Folder = Path.Combine(work, "backups"); ShinyHuntStore.Folder = Path.Combine(work, "data");
@@ -25,7 +35,7 @@ PKM Make(SaveFile sav, ushort species)
         if (EncounterDatabase.ToEntity(sav, enc, out _) is { IsEgg: false } pk && new LegalityAnalysis(pk).Valid) return pk;
     throw new Exception("Sem encontro legal: " + species);
 }
-var sav = BlankSaveFile.Get(GameVersion.B); sav.OT = "Demo"; sav.Language = 2;
+var sav = BlankSaveFile.Get(GameVersion.B); sav.OT = "Demo"; sav.Language = saveLanguage;
 sav.SecondsToStart = (uint)(new DateTime(2012, 5, 14) - new DateTime(2000, 1, 1)).TotalSeconds;
 CoreAdapter.Activate(sav);
 ushort[] species = [133, 25, 175, 447, 42, 113, 1, 4, 7, 129, 147, 143, 172, 54, 37];
@@ -34,7 +44,7 @@ for (int i = 0; i < species.Length; i++)
     var pk = Make(sav, species[i]); sav.SetBoxSlotAtIndex(pk, 0, i);
     if (i < 6) sav.SetPartySlotAtIndex(pk.Clone(), i);
 }
-((IBoxDetailName)sav).SetBoxName(0, "Coleção");
+((IBoxDetailName)sav).SetBoxName(0, collection);
 ((IBoxDetailWallpaper)sav).SetBoxWallpaper(0, 0);
 var black = Path.Combine(library, "Black.sav"); File.WriteAllBytes(black, sav.Write().ToArray());
 foreach (var version in new[] { GameVersion.BD, GameVersion.SP })
@@ -44,11 +54,11 @@ foreach (var version in new[] { GameVersion.BD, GameVersion.SP })
 }
 using (var zip = ZipFile.Open(Path.Combine(library, "Black-backup.zip"), ZipArchiveMode.Create))
     zip.CreateEntryFromFile(black, "main.sav");
-var bank = "Coleção"; BankStorage.CreateBank(bank);
+var bank = collection; BankStorage.CreateBank(bank);
 var bankBox = BankStorage.GetBoxes(bank).First();
 for (int i = 0; i < species.Length; i++) BankStorage.WriteSlot(bankBox, i, sav.GetBoxSlotAtIndex(0, i));
 // Sem animacoes: a Pokebola de abertura aparecia no meio da captura do Inicio
-var vm = new MainViewModel(new AppSettings { SavesFolder = library, CheckForUpdates = false, Animations = false });
+var vm = new MainViewModel(new AppSettings { SavesFolder = library, CheckForUpdates = false, Animations = false, UiLanguage = lang ?? Loc.Portuguese });
 // Caminho neutro na pagina Saves: a pasta temporaria tem o nome do usuario do Windows.
 vm.SaveManager.DescribeFolder = () => "Documentos/PKHeX/saves";
 var win = new MainWindow { DataContext = vm, Width = 1500, Height = 1100 }; win.Show();
@@ -82,9 +92,11 @@ vm.UndoCommand.Execute(null); Pump();
 // Modo Hardcore: editor so leitura e o cartao no lugar do modo legal
 vm.Hardcore = true; vm.CurrentPage = vm.Boxes; Wait(vm.SelectSlotAsync(vm.Boxes.Slots[0])); Shot("hardcore"); vm.Hardcore = false;
 // Relatorio de Nuzlocke: um save so com capturas do proprio treinador, em rotas diferentes e com datas
-var nz = BlankSaveFile.Get(GameVersion.B); nz.OT = "Demo"; nz.Language = 2; CoreAdapter.Activate(nz);
+var nz = BlankSaveFile.Get(GameVersion.B); nz.OT = "Demo"; nz.Language = saveLanguage; CoreAdapter.Activate(nz);
 var probe = Make(nz, 504);
-ushort Route(string name) => (ushort)CoreAdapter.GetMetLocations(probe).First(x => x.Text == name).Value;
+// Rotas pelo nome em ingles, qualquer que seja o idioma dos nomes do jogo na tela
+var englishNames = GameInfo.GetStrings("en");
+ushort Route(string name) => (ushort)CoreAdapter.GetMetLocations(probe).First(x => englishNames.GetLocationName(false, (ushort)x.Value, 5, 5, GameVersion.B) == name).Value;
 PKM Caught(ushort species, string route, int day, int level)
 {
     var pk = Make(nz, species); pk.Version = nz.Version; pk.MetLocation = Route(route); pk.MetDate = new DateOnly(2012, 5, day);
@@ -101,7 +113,7 @@ foreach (var (sp, route, day, level) in run)
     else if (sp is 527 or 557) nz.SetBoxSlotAtIndex(pk, 1, sp == 527 ? 0 : 1); // morreram
     else nz.SetBoxSlotAtIndex(pk, 0, boxN++);
 }
-((IBoxDetailName)nz).SetBoxName(1, "Cemitério");
+((IBoxDetailName)nz).SetBoxName(1, graveyard);
 var nzPath = Path.Combine(library, "Nuzlocke.sav"); File.WriteAllBytes(nzPath, nz.Write().ToArray());
 vm.Open(nzPath); vm.CurrentPage = vm.Pokedex; vm.Pokedex.ShowNuzlockeCommand.Execute(null); Shot("nuzlocke");
 vm.Pokedex.ShowCollectionCommand.Execute(null);
@@ -150,6 +162,11 @@ var phone = new Avalonia.Controls.Window { Width = 1536, Height = 650, Content =
 vm.CurrentPage = vm.Party; Wait(vm.SelectSlotAsync(vm.Party.Slots[1]));
 Pump(); phone.UpdateLayout(); Pump(); phone.CaptureRenderedFrame()!.Save(Path.Combine(output, "android.png")); Console.WriteLine("android");
 phone.Content = null; phone.Close();
+if (lang is not null)
+{
+    Console.WriteLine("Capturas sintéticas concluídas: " + output);
+    return;
+}
 // Interface em ingles: a traducao so e instalada na partida, entao vai por ultimo, numa janela nova.
 Loc.Load(Loc.English); Loc.Hook();
 var vmEn = new MainViewModel(new AppSettings { SavesFolder = library, CheckForUpdates = false, Animations = false, UiLanguage = Loc.English });

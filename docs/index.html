@@ -572,6 +572,14 @@
     document.querySelectorAll("[data-i18n]").forEach(el => { const k = el.dataset.i18n; el.innerHTML = dict[k] ?? PT[k]; });
     document.querySelectorAll("[data-pt]").forEach(el => el.textContent = el.dataset[l]);
     // All Gen Wiki: a pagina Sobre e as capturas existem em portugues e ingles (espanhol vai para o ingles)
+    // Capturas no idioma da pagina: PKHeX.Modern/docs/en/ e docs/es/ tem as mesmas capturas, com a interface em ingles
+    // e em espanhol (Tools/PKHeX.Modern.Tests/Docs -- PKHeX.Modern/docs en|es); a "english" so existe na raiz.
+    const shots = l === "pt" ? "" : l + "/";
+    document.querySelectorAll(`img[src^="${RAW}"], a[href^="${RAW}"]`).forEach(el => {
+      const attr = el.tagName === "IMG" ? "src" : "href";
+      const name = (el.dataset.shot ??= el.getAttribute(attr).slice(RAW.length).replace(/^(en|es)\//, ""));
+      el.setAttribute(attr, RAW + (name === "english.png" || name === "social.png" ? "" : shots) + name);
+    });
     const agw = l === "pt" ? "pt" : "en";
     document.querySelectorAll("[data-agw]").forEach(a => a.href = "https://allgenwiki.com/sobre/?lang=" + agw);
     document.querySelectorAll("[data-agw-img]").forEach(img => img.src = "https://allgenwiki.com/sobre/img/" + (agw === "en" ? "en/" : "") + "pokedex.png");
