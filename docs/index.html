@@ -462,7 +462,7 @@
     ["theme_pixel", "Pixel (menus do Game Boy Advance)", "Pixel (Game Boy Advance menus)", "Pixel (menús de Game Boy Advance)"],
     ["theme_pss", "PSS (Player Search System de X/Y)", "PSS (X/Y Player Search System)", "PSS (Player Search System de X/Y)"],
     ["theme_za", "Z-A (Lumiose de Legends: Z-A)", "Z-A (Lumiose from Legends: Z-A)", "Z-A (Lumiose de Legends: Z-A)"],
-    ["english", "Interface em português, inglês ou espanhol", "Interface in Portuguese, English or Spanish", "Interfaz en portugués, inglés o español"],
+    ["english", "Interface em português, inglês, espanhol ou chinês simplificado", "Interface in Portuguese, English, Spanish or Simplified Chinese", "Interfaz en portugués, inglés, español o chino simplificado"],
   ];
   const fill = (id, list) => document.getElementById(id).innerHTML = list.map(([f, pt, en, es], i) =>
     `<figure><a href="${RAW}${f}.png"><img loading="lazy" src="${RAW}${f}.png" alt="${pt}"></a><figcaption><b>#${String(i + 1).padStart(3, "0")}</b><span data-pt="${pt}" data-en="${en}" data-es="${es}">${pt}</span></figcaption></figure>`).join("");
