@@ -6,7 +6,7 @@ Ao adicionar uma função, anote em "Próxima versão"; na release, troque o tí
 Formato: "## versão — data", "### seção", "- item".
 -->
 
-## Próxima versão
+## 0.5.2 — 2026-10-26
 
 ### 🌐 Idioma
 - **Interface em chinês simplificado:** o app inteiro agora também está em chinês simplificado (简体中文), com os termos oficiais dos jogos em chinês (盒子, 同行, 包包, 训练家, 招式, 名人堂, 太晶属性...). Espécies, golpes, habilidades, itens e mensagens de legalidade também aparecem em chinês, como no PKHeX original; “Nomes do jogo em inglês” mantém o inglês. Sistemas em chinês (simplificado ou tradicional) abrem nele na primeira vez. A fonte Noto Sans SC vai junto com o app, então o chinês aparece igual no Windows, no Linux, no macOS e no Android.
