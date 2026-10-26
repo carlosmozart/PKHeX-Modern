@@ -230,10 +230,12 @@ public sealed class EncounterDbViewModel : EncounterListPageViewModel
 
     protected override void OnFiltered(int shown, int total)
     {
+        // As duas frases sao traduzidas em separado: juntas, o modelo "{0} encontro(s) de {1}." engolia a segunda como
+        // nome da especie e ela ficava em portugues.
         Summary = total == 0
             ? $"Nenhum encontro de {_speciesName}" + (_onlyGame ? " neste jogo. Desmarque “Só deste jogo” para ver outros jogos." : ".")
-            : (shown == total ? $"{total} encontro(s) de {_speciesName}." : $"{shown} de {total} encontro(s) de {_speciesName} com os filtros.")
-              + " Clique num cartão para ver os detalhes; Usar leva ao editor.";
+            : Loc.T(shown == total ? $"{total} encontro(s) de {_speciesName}." : $"{shown} de {total} encontro(s) de {_speciesName} com os filtros.")
+              + Loc.T(" Clique num cartão para ver os detalhes; Usar leva ao editor.");
     }
 
     private string? _species;

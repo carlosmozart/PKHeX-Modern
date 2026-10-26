@@ -13,17 +13,20 @@ using PKHeX.Modern.ViewModels;
 using PKHeX.Modern.Views;
 
 // Public documentation captures use generated saves only; no personal save or desktop capture.
-// Uso: -- <pasta> [idioma]. Com o idioma (ex.: es), as mesmas capturas saem na interface desse idioma em <pasta>/<idioma>/,
+// Uso: -- <pasta> [idioma]. Com o idioma (en, es ou zh-Hans), as mesmas capturas saem na interface desse idioma em <pasta>/<idioma>/,
 // para a pagina de divulgacao naquele idioma (menos a captura "english").
-AppBuilder.Configure<App>().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).WithInterFont().SetupWithoutStarting();
+AppBuilder.Configure<App>().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).WithInterFont().With(PKHeX.Modern.Theme.FontFallbacks.Options(android: false)).SetupWithoutStarting();
 var lang = args.Length > 1 ? args[1] : null;
 var output = Path.GetFullPath(lang is null ? args[0] : Path.Combine(args[0], lang)); Directory.CreateDirectory(output);
 if (lang is not null && (!Loc.Load(lang) || !Loc.IsTranslating))
     throw new ArgumentException("Idioma sem dicionário: " + lang);
 Loc.Hook();
+// Numeros e datas no formato de quem usa o app nesse idioma (o PC das capturas esta em pt-BR: "14,0%" em vez de "14.0%").
+if (lang is not null) System.Globalization.CultureInfo.CurrentCulture = new(lang switch { Loc.English => "en-US", Loc.Spanish => "es-ES", Loc.ChineseSimplified => "zh-CN", _ => lang });
 // Nomes gravados nos saves de exemplo (caixa, banco, cemiterio do Nuzlocke) e idioma dos saves: o das capturas.
-var collection = lang switch { Loc.Spanish => "Colección", Loc.English => "Collection", _ => "Coleção" };
-var graveyard = lang switch { Loc.Spanish => "Cementerio", Loc.English => "Graveyard", _ => "Cemitério" };
+var collection = lang switch { Loc.Spanish => "Colección", Loc.English => "Collection", Loc.ChineseSimplified => "收藏", _ => "Coleção" };
+var graveyard = lang switch { Loc.Spanish => "Cementerio", Loc.English => "Graveyard", Loc.ChineseSimplified => "墓地", _ => "Cemitério" };
+// Black (Gen 5) nao tem save em chines: as capturas em chines usam um save em ingles.
 var saveLanguage = lang == Loc.Spanish ? (int)LanguageID.Spanish : (int)LanguageID.English;
 var work = Path.Combine(Path.GetTempPath(), "pkhex-docs-" + Guid.NewGuid()); Directory.CreateDirectory(work);
 var library = Path.Combine(work, "saves"); Directory.CreateDirectory(library);
@@ -62,6 +65,8 @@ var vm = new MainViewModel(new AppSettings { SavesFolder = library, CheckForUpda
 // Caminho neutro na pagina Saves: a pasta temporaria tem o nome do usuario do Windows.
 vm.SaveManager.DescribeFolder = () => "Documentos/PKHeX/saves";
 var win = new MainWindow { DataContext = vm, Width = 1500, Height = 1100 }; win.Show();
+// Nomes das especies no idioma dos nomes do jogo na tela (em chines, Eevee e 伊布).
+string Name(ushort species) => CoreAdapter.SpeciesNames[species];
 void Pump() { for (int i = 0; i < 4; i++) { Dispatcher.UIThread.RunJobs(); AvaloniaHeadlessPlatform.ForceRenderTimerTick(); } }
 void Wait(Task task) { for (int i = 0; i < 6000 && !task.IsCompleted; i++) { Pump(); System.Threading.Thread.Sleep(5); } if (!task.IsCompleted) throw new TimeoutException(); task.GetAwaiter().GetResult(); Pump(); }
 void Shot(string name) { Pump(); win.CaptureRenderedFrame()!.Save(Path.Combine(output, name + ".png")); Console.WriteLine(name); }
@@ -70,13 +75,13 @@ vm.Editor!.SelectedTab = 2; Shot("moves");
 vm.Editor.SelectedTab = 6; Shot("ribbons");
 vm.Editor.SelectedTab = 3; Shot("legalmode");
 vm.Editor.SelectedTab = 0;
-vm.SearchText = "Eevee"; vm.RunSearch(); Shot("search"); vm.SearchText = ""; vm.RunSearch();
+vm.SearchText = Name(133); vm.RunSearch(); Shot("search"); vm.SearchText = ""; vm.RunSearch();
 vm.CurrentPage = vm.Party; Wait(vm.SelectSlotAsync(vm.Party.Slots[0])); Shot("party");
 vm.CurrentPage = vm.Bank; vm.Bank.SelectedBank = bank; vm.Bank.Reload(); Shot("bank");
 vm.CurrentPage = vm.Pokedex; Wait(vm.Pokedex.RefreshAsync()); Shot("pokedex");
 var trainer = (TrainerPageViewModel)vm.Pages.First(p => p is TrainerPageViewModel); vm.CurrentPage = trainer;
 foreach (var b in trainer.BadgeGroups[0].Badges.Take(5)) b.Has = true; trainer.BP = 248; trainer.GenderIndex = 1; Shot("trainer");
-vm.CurrentPage = vm.Encounters; vm.Encounters.Species = "Eevee"; Wait(vm.Encounters.SearchAsync()); Shot("encounters");
+vm.CurrentPage = vm.Encounters; vm.Encounters.Species = Name(133); Wait(vm.Encounters.SearchAsync()); Shot("encounters");
 vm.Encounters.Selected = vm.Encounters.Results.First(); Shot("encounter_detail"); vm.Encounters.CloseDetailCommand.Execute(null);
 vm.CurrentPage = vm.SaveManager; Wait(vm.SaveManager.RefreshAsync()); Shot("savemanager");
 vm.IsHelpOpen = true; Shot("help"); vm.IsHelpOpen = false;
@@ -144,7 +149,7 @@ vm.CurrentPage = vm.SaveManager; Wait(vm.SaveManager.RefreshAsync()); Shot("emul
 vm.Settings.EmulatorScan = false; EmulatorSaves.StorageRoot = null; EmulatorSaves.HasAccess = null; vm.SaveManager.Folder = library; vm.SaveManager.DescribeFolder = () => "Documentos/PKHeX/saves"; vm.SaveManager.RaiseFolder();
 // Temas completos: o Inicio em cada tema (e o Pixel tambem no claro), depois volta ao Padrao.
 // Caçada shiny: Patrat no Black, com encontros contados e a ficha do alvo carregada
-Wait(vm.OpenAsync(black)); vm.CurrentPage = vm.ShinyHunt; vm.ShinyHunt.TargetName = "Patrat";
+Wait(vm.OpenAsync(black)); vm.CurrentPage = vm.ShinyHunt; vm.ShinyHunt.TargetName = Name(504);
 vm.ShinyHunt.Step = 1234; vm.ShinyHunt.AddStepCommand.Execute(null);
 for (int i = 0; i < 400 && vm.ShinyHunt.IsLoadingLocations; i++) { Pump(); System.Threading.Thread.Sleep(10); }
 Shot("shinyhunt"); vm.ShinyHunt.NewHuntCommand.Execute(null);

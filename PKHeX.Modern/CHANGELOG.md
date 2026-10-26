@@ -6,6 +6,11 @@ Ao adicionar uma função, anote em "Próxima versão"; na release, troque o tí
 Formato: "## versão — data", "### seção", "- item".
 -->
 
+## Próxima versão
+
+### 🔧 Correções
+- **Resumo dos Encontros em chinês:** a frase acima dos cartões (“伊布 有 53 个遭遇”) mostrava um trecho em português no meio.
+
 ## 0.5.2 — 2026-10-26
 
 ### 🌐 Idioma
