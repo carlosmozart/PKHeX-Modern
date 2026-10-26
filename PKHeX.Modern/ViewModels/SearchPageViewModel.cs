@@ -219,9 +219,9 @@ public sealed partial class SearchPageViewModel : PageViewModel
 
     private static bool Matches(DbEntry e, string word)
     {
-        if (word.Equals("shiny", StringComparison.OrdinalIgnoreCase))
+        if (EntitySearch.IsShinyWord(word))
             return e.Pkm.IsShiny;
-        if (word.Equals("ovo", StringComparison.OrdinalIgnoreCase) || word.Equals("egg", StringComparison.OrdinalIgnoreCase))
+        if (EntitySearch.IsEggWord(word))
             return e.Pkm.IsEgg;
         if (word.StartsWith('#') && int.TryParse(word[1..], out var dex))
             return e.Pkm.Species == dex;

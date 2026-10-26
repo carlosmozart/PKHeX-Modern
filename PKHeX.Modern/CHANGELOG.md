@@ -6,6 +6,16 @@ Ao adicionar uma função, anote em "Próxima versão"; na release, troque o tí
 Formato: "## versão — data", "### seção", "- item".
 -->
 
+## Próxima versão
+
+### 🌐 Idioma
+- **Interface em chinês simplificado:** o app inteiro agora também está em chinês simplificado (简体中文), com os termos oficiais dos jogos em chinês (盒子, 同行, 包包, 训练家, 招式, 名人堂, 太晶属性...). Espécies, golpes, habilidades, itens e mensagens de legalidade também aparecem em chinês, como no PKHeX original; “Nomes do jogo em inglês” mantém o inglês. Sistemas em chinês (simplificado ou tradicional) abrem nele na primeira vez. A fonte Noto Sans SC vai junto com o app, então o chinês aparece igual no Windows, no Linux, no macOS e no Android.
+
+### 🔧 Correções
+- **Busca por shiny e ovo em outros idiomas:** a busca aceita “huevo” (espanhol) e “发光”/“蛋” (chinês), além de “shiny”, “ovo” e “egg”, como a Ajuda de cada idioma diz.
+- **Textos que faltavam em inglês:** “Filters”, “Types”, “Variants” e “Sync” apareciam em português na interface em inglês.
+- **Caixa do cemitério do Nuzlocke em chinês:** o relatório também reconhece caixas com nomes como “墓地” ou “死亡”.
+
 ## 0.5.1 — 2026-10-25
 
 ### 🌐 Idioma

@@ -21,6 +21,8 @@ public static class Loc
     public const string English = "en";
 
     public const string Spanish = "es";
+    /// <summary>Chines simplificado: mesmo codigo do PKHeX.Core; sistemas zh-CN, zh-TW e zh-HK caem nele (Detect).</summary>
+    public const string ChineseSimplified = "zh-Hans";
 
     /// <summary>
     /// Idiomas conhecidos, com os textos da troca ja no proprio idioma (a pergunta de reiniciar aparece no idioma
@@ -50,6 +52,13 @@ public static class Loc
             "Reiniciar ahora", "Más tarde",
             "Cierra y vuelve a abrir la app para usar Español.",
             "Idioma configurado en Español: se aplicará la próxima vez que abras la app.", GameCode: "es"),
+        new(ChineseSimplified, "简体中文", "中", "语言",
+            "重新启动以使用简体中文？",
+            "界面语言会在重新启动应用后更改。游戏名称（物种、招式、道具）也会显示为中文；可在 ⚙ › 语言 中保持英文。",
+            "界面语言会在重新启动应用后更改。",
+            "立即重新启动", "稍后",
+            "请关闭并重新打开应用以使用简体中文。",
+            "语言已设为简体中文：下次打开应用时生效。", GameCode: ChineseSimplified),
     ];
 
     /// <summary>Idiomas oferecidos no seletor: o portugues e os que tem dicionario embutido.</summary>

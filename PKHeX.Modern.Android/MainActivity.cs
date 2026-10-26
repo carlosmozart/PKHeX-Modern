@@ -129,12 +129,5 @@ public sealed class MainActivity : AvaloniaMainActivity<App>
     }
 
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder) => base.CustomizeAppBuilder(builder).WithInterFont()
-        .With(new FontManagerOptions
-        {
-            FontFallbacks =
-            [
-                new FontFallback { FontFamily = new FontFamily("avares://PKHeX.Modern.UI/Assets/Fonts#Noto Sans Symbols 2") },
-                new FontFallback { FontFamily = new FontFamily("avares://PKHeX.Modern.UI/Assets/Fonts#Noto Emoji") },
-            ],
-        });
+        .With(PKHeX.Modern.Theme.FontFallbacks.Options(android: true));
 }

@@ -45,5 +45,7 @@
   <ItemGroup>
     <!-- Fonte do tema Pixel (Pixelify Sans, OFL: Assets/Fonts/OFL.txt) e simbolos/emoji do Android (Noto Sans Symbols 2 e Noto Emoji, OFL: Assets/Fonts/OFL-Noto.txt) -->
     <AvaloniaResource Include="Assets\Fonts\*.ttf" />
+    <!-- Chines simplificado: Noto Sans SC cortada para os caracteres do app (Tools/build_cjk_font.py, OFL: Assets/Fonts/OFL-NotoSansSC.txt) -->
+    <AvaloniaResource Include="Assets\Fonts\*.otf" />
   </ItemGroup>
 </Project>

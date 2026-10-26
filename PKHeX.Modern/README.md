@@ -224,7 +224,7 @@ o download no navegador.
 - **Mochila com o ícone de cada item** (e "Todos os TMs"); ao passar o mouse, a descrição em português e onde conseguir o item (dados do AllGenWiki).
 - **Início** (⌂, Ctrl+0): ao abrir um save, cartão do jogo, a equipe no topo, atalhos grandes para cada página e os saves recentes.
 - **Temas completos** (⚙ na barra lateral): Padrão, PSS (X/Y), Pixel (GBA), Z-A (Lumiose), ORAS (Pokédex) e Kanto (Pokédex clássica), cada um em claro e escuro, mudando fundo, painéis, cantos, bordas e fonte na hora; mais a **cor de destaque** configurável e o **tamanho dos sprites** (Pequeno, Normal, Grande ou Enorme). No ⚙ dá para escolher a fonte (a do tema, Inter, Pixelify Sans ou Pokémon GB/GBC) em qualquer tema. O tema Pixel usa a fonte [Pixelify Sans](https://github.com/eifetx/Pixelify-Sans) (SIL Open Font License 1.1, em `Assets/Fonts/OFL.txt`); a opção Pokémon GB/GBC usa a [Pokemon Classic](https://fontstruct.com/fontstructions/show/1351066/pokemon-classic), recriação feita por fãs da fonte dos jogos de Game Boy, de TheLouster115 (CC BY-SA 3.0, em `Assets/Fonts/PokemonClassic-LICENSE.txt`). Os títulos grandes usam a [Fredoka](https://github.com/hafontia/Fredoka-One) (SIL Open Font License 1.1, em `Assets/Fonts/OFL-Fredoka.txt`).
-- **Idioma da interface** (⚙ na barra lateral, em Idioma): Português (Brasil), o padrão, ou English. Vale ao reiniciar; o app oferece reiniciar na hora.
+- **Idioma da interface** (botão 🌐 no rodapé da barra lateral, ou ⚙ › Idioma): Português (Brasil), English, Español ou 简体中文. Na primeira abertura, o app segue o idioma do sistema. Vale ao reiniciar; o app oferece reiniciar na hora. O chinês usa a fonte [Noto Sans SC](https://github.com/notofonts/noto-cjk) (SIL Open Font License 1.1, em `Assets/Fonts/OFL-NotoSansSC.txt`), recortada para os caracteres que o app mostra.
 - Atalhos: Q/E trocam de página, Ctrl+1–9 vão direto, Esc volta, Ctrl+O abre.
 
 ### Conheça também: AllGenWiki
@@ -232,7 +232,7 @@ o download no navegador.
 
 As preferências ficam em `settings.json` na pasta de dados do app: `%APPDATA%\PKHeX.Modern` no Windows e `~/.config/PKHeX.Modern` no Linux e no macOS (backups e bank ficam na mesma pasta). Se algo der errado, os detalhes ficam em `crash.log`, também nela.
 
-Os nomes do jogo (espécies, golpes, itens) e os textos de legalidade ficam em inglês, como no PKHeX, nos dois idiomas. As notas de versão e as descrições do AllGenWiki existem só em português (em inglês, as descrições ficam ocultas).
+Os nomes do jogo (espécies, golpes, itens) e os textos de legalidade ficam em inglês em português e inglês (o PKHeX não tem os nomes em português); em espanhol e chinês, aparecem nesse idioma, como no PKHeX, com a opção “Nomes do jogo em inglês”. As notas de versão e as descrições do AllGenWiki existem só em português (em inglês, as descrições ficam ocultas).
 
 ## Rodar a partir do código
 

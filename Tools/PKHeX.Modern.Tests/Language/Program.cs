@@ -14,15 +14,21 @@ using PKHeX.Modern.Services;
 using PKHeX.Modern.ViewModels;
 using PKHeX.Modern.Views;
 
-// Interface em ingles (ou em espanhol, no projeto LanguageEs): cada pagina e renderizada e os textos visiveis que
-// ficaram em portugues sao listados.
+// Interface em ingles (ou em espanhol, no projeto LanguageEs, e em chines simplificado, no LanguageZh): cada pagina e
+// renderizada e os textos visiveis que ficaram em portugues sao listados.
 #if LANG_ES
 var lang = Loc.Spanish;
+#elif LANG_ZH
+var lang = Loc.ChineseSimplified;
 #else
 var lang = Loc.English;
 #endif
 bool es = lang == Loc.Spanish;
-AppBuilder.Configure<App>().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).WithInterFont().SetupWithoutStarting();
+bool zh = lang == Loc.ChineseSimplified;
+// Idiomas com dicionario proprio conferido contra o en.json e com nomes do jogo do PKHeX.Core no mesmo idioma.
+bool foreign = es || zh;
+string Pick(string en, string esText, string zhText) => zh ? zhText : es ? esText : en;
+AppBuilder.Configure<App>().UseSkia().UseHeadless(new AvaloniaHeadlessPlatformOptions { UseHeadlessDrawing = false }).WithInterFont().With(PKHeX.Modern.Theme.FontFallbacks.Options(android: false)).SetupWithoutStarting();
 int fails = 0;
 void Check(string name, bool ok) { Console.WriteLine($"{(ok ? "OK" : "FAIL")} {name}"); if (!ok) fails++; }
 var work = args.Length > 0 ? args[0] : Path.Combine(Path.GetTempPath(), "pkhex-lang-" + Guid.NewGuid()); Directory.CreateDirectory(work);
@@ -30,26 +36,28 @@ BankStorage.Root = Path.Combine(work, "bank"); SaveBackup.Folder = Path.Combine(
 
 // Unidade: exato, modelo, frases juntadas, prefixo de icone e texto sem traducao.
 Check("carrega " + lang, Loc.Load(lang) && Loc.IsTranslating);
-Check("exato", Loc.T("Caixas") == (es ? "Cajas" : "Boxes"));
-Check("modelo", Loc.T("Pikachu gravado em caixa 1, slot 2. Lembre-se de salvar.") == (es ? "Pikachu grabado en caja 1, casilla 2. Recuerda guardar." : "Pikachu written to box 1, slot 2. Remember to save."));
+Check("exato", Loc.T("Caixas") == Pick("Boxes", "Cajas", "盒子"));
+Check("modelo", Loc.T("Pikachu gravado em caixa 1, slot 2. Lembre-se de salvar.") == Pick("Pikachu written to box 1, slot 2. Remember to save.",
+    "Pikachu grabado en caja 1, casilla 2. Recuerda guardar.", "Pikachu 已写入 盒子 1，格子 2。别忘了保存。"));
 Check("modelo aninhado", Loc.T("Pikachu ({0})".Replace("{0}", "x")) == "Pikachu (x)");
 Check("nome do jogo intacto", Loc.T("Pikachu") == "Pikachu" && Loc.T("Thunderbolt") == "Thunderbolt");
 Check("frases juntadas", Loc.T("Nada para desfazer (Ctrl+Z). Nada para refazer (Ctrl+Y).") is var j && !j.Contains("desfazer") && !j.Contains("refazer"));
-if (es)
+if (foreign)
 {
-    // O dicionario espanhol tem as mesmas chaves do ingles, com os mesmos marcadores e quebras de linha.
+    // O dicionario tem as mesmas chaves do ingles, com os mesmos marcadores e quebras de linha (o formato de um
+    // marcador pode mudar, como a data em chines: {0:yyyy/MM/dd}).
     static Dictionary<string, string> Dict(string code)
     {
         using var stream = typeof(Loc).Assembly.GetManifestResourceStream($"lang.{code}.json")!;
         return System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(stream)!;
     }
-    var enDict = Dict(Loc.English); var esDict = Dict(Loc.Spanish);
-    var marks = new Regex(@"\{\d+(:[^}]*)?\}");
-    string Marks(string t) => string.Join(",", marks.Matches(t).Select(m => m.Value).Order());
-    Check($"es.json com as {enDict.Count} chaves do en.json", enDict.Keys.All(esDict.ContainsKey) && esDict.Count == enDict.Count);
-    var badMarks = esDict.Where(e => e.Value.Length == 0 || Marks(e.Key) != Marks(e.Value) || e.Key.Count(c => c == '\n') != e.Value.Count(c => c == '\n')).Select(e => e.Key).ToList();
+    var enDict = Dict(Loc.English); var langDict = Dict(lang);
+    var marks = new Regex(@"\{(\d+)(:[^}]*)?\}");
+    string Marks(string t) => string.Join(",", marks.Matches(t).Select(m => m.Groups[1].Value).Order());
+    Check($"{lang}.json com as {enDict.Count} chaves do en.json", enDict.Keys.All(langDict.ContainsKey) && langDict.Count == enDict.Count);
+    var badMarks = langDict.Where(e => e.Value.Length == 0 || Marks(e.Key) != Marks(e.Value) || e.Key.Count(c => c == '\n') != e.Value.Count(c => c == '\n')).Select(e => e.Key).ToList();
     foreach (var b in badMarks.Take(20)) Console.WriteLine("  marcadores/quebras: " + b);
-    Check("es.json com os mesmos marcadores e quebras", badMarks.Count == 0);
+    Check($"{lang}.json com os mesmos marcadores e quebras", badMarks.Count == 0);
 }
 Loc.Hook();
 
@@ -67,8 +75,8 @@ var path = Path.Combine(lib, "Black.sav"); File.WriteAllBytes(path, sav.Write().
 
 var vm = new MainViewModel(new AppSettings { SavesFolder = lib, UiLanguage = lang });
 // Nomes do jogo: em espanhol, os do PKHeX.Core em espanhol (como no PKHeX original); em ingles, os de sempre.
-Check("nomes do jogo no idioma da interface", GameInfo.CurrentLanguage == (es ? "es" : "en") && CoreAdapter.MoveNames[85] == (es ? "Rayo" : "Thunderbolt"));
-Check("opção dos nomes " + (es ? "visível" : "escondida"), vm.HasGameNamesOption == es);
+Check("nomes do jogo no idioma da interface", GameInfo.CurrentLanguage == Pick("en", "es", "zh-Hans") && CoreAdapter.MoveNames[85] == Pick("Thunderbolt", "Rayo", "十万伏特"));
+Check("opção dos nomes " + (foreign ? "visível" : "escondida"), vm.HasGameNamesOption == foreign);
 var win = new MainWindow { DataContext = vm, Width = 1440, Height = 900 }; win.Show();
 void Pump(int n = 10) { for (int i = 0; i < n; i++) { Dispatcher.UIThread.RunJobs(); AvaloniaHeadlessPlatform.ForceRenderTimerTick(); } }
 // No espanhol, acentos e palavras como "de", "para", "que", "abrir" e "dos" existem nos dois idiomas: conta so o que e exclusivo do portugues.
@@ -78,12 +86,12 @@ var pt = es
 var gameWords = new Regex(@"Pok[ée]\w*|Poké", RegexOptions.IgnoreCase);
 bool IsPortuguese(string t) => pt.IsMatch(gameWords.Replace(t, ""));
 var missing = new SortedDictionary<string, string>();
-// Espanhol: textos curtos que nao passaram pelo dicionario (iguais em portugues e ingles, como "Saves", nao entram no
-// en.json). So para conferir a mao em untranslated.txt; nomes do jogo tambem aparecem.
-var esValues = es ? new HashSet<string>(Loc.Languages.Count > 0 ? EsValues() : []) : [];
-static IEnumerable<string> EsValues()
+// Espanhol e chines: textos curtos que nao passaram pelo dicionario (iguais em portugues e ingles, como "Saves", nao
+// entram no en.json). So para conferir a mao em untranslated.txt; nomes do jogo tambem aparecem.
+var esValues = foreign ? new HashSet<string>(LangValues(lang)) : [];
+static IEnumerable<string> LangValues(string code)
 {
-    using var stream = typeof(Loc).Assembly.GetManifestResourceStream("lang.es.json")!;
+    using var stream = typeof(Loc).Assembly.GetManifestResourceStream($"lang.{code}.json")!;
     return System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(stream)!.Values;
 }
 var untranslated = new SortedDictionary<string, string>();
@@ -100,7 +108,7 @@ void Scan(string page, Control? popup = null)
         foreach (var t in texts)
         {
             if (!string.IsNullOrWhiteSpace(t) && IsPortuguese(t) && !missing.ContainsKey(t) && !t.Contains("Português") && !t.StartsWith("¡") && !t.StartsWith("http")) missing[t] = page;
-            if (es && t is { Length: > 1 and <= 40 } && t.Any(char.IsLetter) && !esValues.Contains(t)) untranslated.TryAdd(t, page);
+            if (foreign && t is { Length: > 1 and <= 40 } && t.Any(char.IsLetter) && !esValues.Contains(t)) untranslated.TryAdd(t, page);
         }
     }
 }
@@ -176,7 +184,7 @@ var prefs=win.GetVisualDescendants().OfType<Button>().Single(b=>b.Name=="PrefsBu
 App.ShowShortcuts=false;vm.IsTouchUI=true;vm.CurrentPage=vm.Boxes;vm.TouchSelectionMode=true;Scan("Touch selection");
 prefs.Flyout.ShowAt(prefs);Scan("Touch preferences",(prefs.Flyout as Flyout)?.Content as Control);prefs.Flyout.Hide();
 
-if (es) File.WriteAllLines(Path.Combine(work, "untranslated.txt"), untranslated.Select(m => $"{m.Value}\t{m.Key.Replace("\n", " ")}"));
+if (foreign) File.WriteAllLines(Path.Combine(work, "untranslated.txt"), untranslated.Select(m => $"{m.Value}\t{m.Key.Replace("\n", " ")}"));
 File.WriteAllLines(Path.Combine(work, "missing.txt"), missing.Select(m => $"{m.Value}\t{m.Key.Replace("\n", "\n")}"));
 Console.WriteLine($"Textos em português na tela: {missing.Count} (lista em {Path.Combine(work, "missing.txt")})");
 foreach (var m in missing.Take(400)) Console.WriteLine($"  [{m.Value}] {m.Key.Replace("\n", "\n")}");
@@ -189,18 +197,21 @@ bool hasEs = Loc.Languages.Any(l => l.Code == Loc.Spanish);
 Check("sistema pt-BR/pt-PT → português", Detect("pt-BR") == Loc.Portuguese && Detect("pt-PT") == Loc.Portuguese);
 Check("sistema en-US/ja-JP/fr-FR → inglês", Detect("en-US") == Loc.English && Detect("ja-JP") == Loc.English && Detect("fr-FR") == Loc.English);
 Check("sistema es-MX → " + (hasEs ? "espanhol" : "inglês (sem es.json)"), Detect("es-MX") == (hasEs ? Loc.Spanish : Loc.English));
+bool hasZh = Loc.Languages.Any(l => l.Code == Loc.ChineseSimplified);
+Check("sistema zh-CN/zh-TW → " + (hasZh ? "chinês simplificado" : "inglês (sem zh-Hans.json)"),
+    Detect("zh-CN") == (hasZh ? Loc.ChineseSimplified : Loc.English) && Detect("zh-TW") == Detect("zh-CN"));
 // Botao 🌐 sempre visivel no rodape, com os nomes de cada idioma nele mesmo.
 var langButton = win.GetVisualDescendants().OfType<Button>().Single(b => b.Name == "LanguageButton");
-Check("botão 🌐 visível", langButton.IsEffectivelyVisible && langButton.Content as string == (es ? "🌐 ES" : "🌐 EN"));
+Check("botão 🌐 visível", langButton.IsEffectivelyVisible && langButton.Content as string == Pick("🌐 EN", "🌐 ES", "🌐 中"));
 Check("dica do 🌐 em todos os idiomas", ToolTip.GetTip(langButton) is string langTip && langTip.Contains("Idioma") && langTip.Contains("Language"));
 langButton.Flyout!.ShowAt(langButton); Pump();
 var langNames = ((langButton.Flyout as Flyout)!.Content as Control)!.GetVisualDescendants().OfType<TextBlock>().Select(t => t.Text ?? "").ToList();
-Check("menu com Português (Brasil) sem traduzir", langNames.Any(t => t.Contains("Português (Brasil)")) && langNames.Any(t => t.Contains("✓") && t.Contains(es ? "Español" : "English")));
+Check("menu com Português (Brasil) sem traduzir", langNames.Any(t => t.Contains("Português (Brasil)")) && langNames.Any(t => t.Contains("✓") && t.Contains(Pick("English", "Español", "简体中文"))));
 langButton.Flyout.Hide();
 // Trocar para portugues numa tela em ingles: a pergunta vem em portugues (o idioma escolhido), com uma linha em ingles.
 vm.LanguageOptions.Single(l => l.Code == Loc.Portuguese).SelectCommand.Execute(null); Pump();
 var langDialog = vm.Dialog;
-Check("pergunta no idioma escolhido", langDialog?.Title == "Reiniciar para usar Português?" && langDialog.Message.Contains(es ? "El idioma de la interfaz cambia" : "The interface language changes"));
+Check("pergunta no idioma escolhido", langDialog?.Title == "Reiniciar para usar Português?" && langDialog.Message.Contains(Pick("The interface language changes", "El idioma de la interfaz cambia", "界面语言会在重新启动应用后更改")));
 var shownTexts = win.GetVisualDescendants().OfType<TextBlock>().Where(t => t.IsEffectivelyVisible).Select(t => t.Text).ToList();
 Check("pergunta não é traduzida na tela", shownTexts.Contains("Reiniciar para usar Português?") && shownTexts.Contains("Reiniciar agora"));
 langDialog?.Complete(false); Pump();
@@ -208,8 +219,8 @@ Check("botão mostra PT e status em português", langButton.Content as string ==
 // Voltar ao idioma da tela nao pergunta nada.
 vm.LanguageOptions.Single(l => l.Code == lang).SelectCommand.Execute(null); Pump();
 Check("voltar ao idioma atual sem pergunta", vm.Dialog is null && vm.Settings.UiLanguage == lang);
-// "Nomes do jogo em ingles": no espanhol, pergunta se pode reiniciar; a troca vale na partida seguinte.
-if (es)
+// "Nomes do jogo em ingles": no espanhol e no chines, pergunta se pode reiniciar; a troca vale na partida seguinte.
+if (foreign)
 {
     vm.GameNamesInEnglish = true; Pump();
     Check("pergunta de reiniciar ao trocar os nomes", vm.Dialog?.Title == "Reiniciar para trocar os nomes do jogo?" && vm.Settings.GameNamesInEnglish);

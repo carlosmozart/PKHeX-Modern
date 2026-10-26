@@ -38,7 +38,7 @@ public sealed record NuzlockeResult(IReadOnlyList<NuzlockeRoute> Routes, IReadOn
 public static class NuzlockeReport
 {
     /// <summary>Palavras que indicam a caixa do cemitério pelo nome (sugestão inicial).</summary>
-    private static readonly string[] GraveyardNames = ["cemit", "cement", "grave", "dead", "morto", "morte", "muert", "box of death", "tumba"];
+    private static readonly string[] GraveyardNames = ["cemit", "cement", "grave", "dead", "morto", "morte", "muert", "box of death", "tumba", "墓", "死亡"];
 
     /// <summary>Caixa cujo nome parece de cemitério, ou -1.</summary>
     public static int GuessGraveyard(SaveFile sav)

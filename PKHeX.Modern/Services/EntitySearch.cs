@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PKHeX.Core;
 
 namespace PKHeX.Modern.Services;
@@ -35,15 +36,21 @@ public static class EntitySearch
         return list;
     }
 
+    // Palavras que filtram shiny e ovo, nos idiomas da interface (a Ajuda de cada idioma cita a sua).
+    private static readonly string[] ShinyWords = ["shiny", "variocolor", "发光", "异色"];
+    private static readonly string[] EggWords = ["ovo", "egg", "huevo", "蛋"];
+    public static bool IsShinyWord(string word) => ShinyWords.Any(w => word.Equals(w, StringComparison.OrdinalIgnoreCase));
+    public static bool IsEggWord(string word) => EggWords.Any(w => word.Equals(w, StringComparison.OrdinalIgnoreCase));
+
     /// <summary>Motivo do resultado (ex.: "golpe Thunderbolt"), ou null se o Pokemon nao combina com a busca.</summary>
     public static string? Match(PKM pk, string query)
     {
         query = query.Trim();
         if (query.Length == 0)
             return null;
-        if (Is(query, "shiny"))
+        if (IsShinyWord(query))
             return pk.IsShiny ? "shiny" : null;
-        if (Is(query, "ovo") || Is(query, "egg"))
+        if (IsEggWord(query))
             return pk.IsEgg ? "ovo" : null;
 
         if (Contains(Name(CoreAdapter.SpeciesNames, pk.Species), query))
