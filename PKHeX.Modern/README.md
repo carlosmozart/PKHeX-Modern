@@ -232,7 +232,7 @@ o download no navegador.
 
 As preferências ficam em `settings.json` na pasta de dados do app: `%APPDATA%\PKHeX.Modern` no Windows e `~/.config/PKHeX.Modern` no Linux e no macOS (backups e bank ficam na mesma pasta). Se algo der errado, os detalhes ficam em `crash.log`, também nela.
 
-Os nomes do jogo (espécies, golpes, itens) e os textos de legalidade ficam em inglês em português e inglês (o PKHeX não tem os nomes em português); em espanhol e chinês, aparecem nesse idioma, como no PKHeX, com a opção “Nomes do jogo em inglês”. As notas de versão e as descrições do AllGenWiki existem só em português (em inglês, as descrições ficam ocultas).
+Os nomes do jogo (espécies, golpes, itens) e os textos de legalidade ficam em inglês em português e inglês (o PKHeX não tem os nomes em português); em espanhol e chinês, aparecem nesse idioma, como no PKHeX, com a opção “Nomes do jogo em inglês”. As notas de versão existem nos quatro idiomas; as descrições do AllGenWiki, só em português (nos outros idiomas, ficam ocultas).
 
 ## Rodar a partir do código
 

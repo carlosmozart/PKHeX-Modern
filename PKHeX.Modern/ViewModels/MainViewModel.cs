@@ -110,9 +110,8 @@ public sealed partial class MainViewModel : ViewModelBase
             Help.CanSelfUpdate ? $"Você está na {UpdateChecker.CurrentText}. Confira as novidades antes de baixar e instalar. A versão nova vale ao reiniciar."
                 : $"Você está na {UpdateChecker.CurrentText}. Confira as novidades antes de abrir a página de download.",
             Help.CanSelfUpdate ? "Atualizar agora" : "Abrir download", "Depois",
-            details: string.IsNullOrWhiteSpace(release.Notes)
-                ? ["Esta versão não tem notas publicadas. Consulte a página da release para mais detalhes."]
-                : [.. release.Notes.Replace("\r", "").Split('\n').Select(line => line.Trim().TrimStart('#').Trim().Replace("**", "")).Where(line => line.Length > 0)],
+            details: UpdateChecker.NotesFor(release.Notes, Loc.Current) is { Count: > 0 } notes ? [.. notes]
+                : ["Esta versão não tem notas publicadas. Consulte a página da release para mais detalhes."],
             icon: "⬆");
         OpenHelpCommand = new RelayCommand(OpenHelp);
         CloseHelpCommand = new RelayCommand(() => IsHelpOpen = false);

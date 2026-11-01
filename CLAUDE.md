@@ -19,9 +19,9 @@ Este arquivo reúne o que o Claude sabia do projeto e do usuário (antes guardad
 - **Commit, push, tag e release só quando o usuário pedir.**
 - **Toda função nova entra em três lugares:**
   - `PKHeX.Modern/Services/HelpContent.cs`, na seção do assunto;
-  - `PKHeX.Modern/CHANGELOG.md`, em `## Próxima versão` (subseções com emoji, itens com o nome da função em negrito);
+  - `PKHeX.Modern/CHANGELOG.md`, em `## Próxima versão` (subseções com emoji, itens com o nome da função em negrito), e o mesmo item traduzido em `CHANGELOG-en.md`, `CHANGELOG-es.md` e `CHANGELOG-zh-Hans.md` (as suítes de idioma conferem se as versões, seções e itens são iguais nos quatro);
   - `PKHeX.Modern/Assets/lang/en.json`, `es.json` e `zh-Hans.json`, com a tradução de todo texto novo em inglês, espanhol e chinês simplificado (termos do `es-glossary.md` e do `zh-Hans-glossary.md`).
-- **Tradução no `en.json`, no `es.json` e no `zh-Hans.json`:** **acrescente as chaves no fim, sem reformatar o arquivo.** A indentação do `en.json` é mista, e um serializador gera um diff enorme. Os três têm as mesmas chaves na mesma ordem; textos com valores usam `{0}`, `{1}`. Um texto igual em português e inglês (ex.: “Saves”) também entra no `en.json`, com o valor igual, para ter a versão em espanhol. As suítes `Language`, `LanguageEs` e `LanguageZh` precisam terminar sem textos em português na interface em inglês, espanhol e chinês. Texto chinês novo com caracteres raros: rode `python Tools/build_cjk_font.py <pasta da Noto Sans SC original>` para recortar a fonte de novo.
+- **Tradução no `en.json`, no `es.json` e no `zh-Hans.json`:** **acrescente as chaves no fim, sem reformatar o arquivo.** A indentação do `en.json` é mista, e um serializador gera um diff enorme. Os três têm as mesmas chaves na mesma ordem; textos com valores usam `{0}`, `{1}`. Um texto igual em português e inglês (ex.: “Saves”) também entra no `en.json`, com o valor igual, para ter a versão em espanhol. As suítes `Language`, `LanguageEs` e `LanguageZh` precisam terminar sem textos em português na interface em inglês, espanhol e chinês. Texto chinês novo (nos dicionários ou no `CHANGELOG-zh-Hans.md`) com caracteres raros: rode `python Tools/build_cjk_font.py <pasta da Noto Sans SC original>` para recortar a fonte de novo.
 - **Saves de teste:** os saves reais em `saves/` (fora do Git) são **somente leitura**. Copie antes de usar e **nunca** os mostre em capturas públicas.
 - **Nunca capture a tela do computador** para conferir a interface. Uma vez a captura pegou o navegador do usuário. Para ver a interface, renderize sem janela com `Tools/PKHeX.Modern.Render` ou com um programa no mesmo estilo (Avalonia.Headless + Skia + `CaptureRenderedFrame`).
 - **Testes:** suítes headless em `Tools/PKHeX.Modern.Tests/`, registradas no `run-tests.ps1`. Nelas, `SaveBackup.Folder` e `BankStorage.Root` apontam para uma pasta temporária. Antes de uma release, rode todas e compile o Android.
@@ -34,12 +34,14 @@ Este arquivo reúne o que o Claude sabia do projeto e do usuário (antes guardad
 1. Suba a versão em dois lugares:
    - `PKHeX.Modern.Version.props` (`<Version>X.Y.Z</Version>`);
    - `PKHeX.Modern.Android/PKHeX.Modern.Android.csproj` (`<ApplicationVersion>`, ex.: 0.4.18 → `41801`).
-2. No `CHANGELOG.md`, troque `## Próxima versão` por `## X.Y.Z — AAAA-MM-DD`. No `CONTINUAR.md`, atualize a linha "Última release".
+2. Nos quatro CHANGELOG (`CHANGELOG.md` e `CHANGELOG-en.md`, `-es.md`, `-zh-Hans.md`), troque o título da próxima versão por `## X.Y.Z — AAAA-MM-DD`. No `CONTINUAR.md`, atualize a linha "Última release".
 3. Faça o commit, crie a tag `modern-vX.Y.Z` e faça o push do branch e da tag. O workflow `modern-build.yml` gera os 4 zips de desktop na release.
-4. Com o build pronto, publique as notas **em português e em inglês**, no formato da 0.4.29 e da 0.4.30 (veja com `gh release view modern-v0.4.30 -R carlosmozart/PKHeX-Modern`):
-   - no topo, `🇧🇷 **Português** · 🇺🇸 [English below](#english)`;
+4. Com o build pronto, publique as notas **em português, inglês, espanhol e chinês simplificado**, no formato da 0.5.4 (veja com `gh release view modern-v0.5.4 -R carlosmozart/PKHeX-Modern`). A janela de atualização do app (`UpdateChecker.NotesFor`) mostra só o trecho do idioma, até o título de instalação; por isso os marcadores e os títulos precisam ser exatos:
+   - no topo, `🇧🇷 **Português** · 🇺🇸 [English](#english) · 🇪🇸 [Español](#espanol) · 🇨🇳 [简体中文](#chinese)`;
    - em português: `## Novidades` (as subseções da versão no CHANGELOG), `## Como instalar` (a tabela com o arquivo de cada sistema e a frase de que o app se atualiza sozinho) e `### 🍎 macOS` (extrair e arrastar para Aplicativos, abrir uma vez, “Abrir Mesmo Assim” em Ajustes do Sistema › Privacidade e Segurança, e o `xattr -dr com.apple.quarantine "/Applications/PKHeX Modern.app"` para o aviso de “danificado”), mais o lembrete de backup;
    - depois de um `---` e de `<a id="english"></a>`, o mesmo em inglês (`## What's new`, `## How to install`, `### 🍎 macOS`);
+   - depois de um `---` e de `<a id="espanol"></a>`, em espanhol (`## Novedades`, `## Cómo instalar`, `### 🍎 macOS`);
+   - depois de um `---` e de `<a id="chinese"></a>`, em chinês (`## 新内容`, `## 如何安装`, `### 🍎 macOS`);
    - no fim, o link "Full Changelog" (`compare/modern-vANTERIOR...modern-vX.Y.Z`).
 
    A parte de instalação muda pouco: copie da release anterior e só ajuste se algo mudou (sistemas, nomes dos arquivos, passos do Mac).
@@ -66,7 +68,7 @@ O usuário delega levas de funções ao Codex com enunciados `TAREFA-CODEX-FUNCO
 
 ## Pendências em aberto (25/10/2026)
 
-Última release: **0.5.3** (26/10/2026). Nenhuma tarefa pedida ficou pela metade; o que segue são ideias e conferências ainda não feitas.
+Última release: **0.5.4** (01/11/2026). Nenhuma tarefa pedida ficou pela metade; o que segue são ideias e conferências ainda não feitas.
 
 - **No celular (testar no aparelho do usuário, tema ORAS + fonte Pokémon GB):** as telas da 0.4.26 e 0.4.27 (Início com status, barra lateral em grupos com ícones, resumo e fábrica de ovos da Pokédex, aba Nuzlocke, cartão e editor do modo Hardcore); também a tela cheia (0.4.18), o toque longo nos botões e o segurar-e-arrastar de slot (0.4.16); e os gestos da 0.5.0 (deslizar entre caixas sem atrapalhar o segurar-e-arrastar nem a rolagem, e puxar a lista de Saves para reler). Para conferir sem o aparelho, renderize o `MobileShell` em 892×412 (como o `Tools/PKHeX.Modern.Tests/Docs` faz com a captura `android.png`).
 - **Ideias vindas do PKForge** (github.com/sofianeelhor/PKForge, concorrente no Android, analisado em 16/10/2026), em ordem de interesse:

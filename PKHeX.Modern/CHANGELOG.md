@@ -3,8 +3,20 @@
 <!--
 Este arquivo vai embutido no executável (Ajuda › Novidades).
 Ao adicionar uma função, anote em "Próxima versão"; na release, troque o título pela versão e a data.
+As traduções ficam em CHANGELOG-en.md, CHANGELOG-es.md e CHANGELOG-zh-Hans.md: mesmas versões, seções e itens, na mesma ordem (as suítes de idioma conferem).
 Formato: "## versão — data", "### seção", "- item".
 -->
+
+## 0.5.4 — 2026-11-01
+
+### 🌐 Idioma
+- **Novidades no seu idioma:** a aba Novidades da Ajuda agora está em inglês, espanhol e chinês simplificado, com todas as versões, e a janela de atualização mostra as notas no idioma do app, sem a parte de instalação.
+
+### 🔄 PKHeX atualizado
+- **PKHeX de 31/10/2026:** o presente de Spewpa do Legends: Z-A passa a ser reconhecido, com as datas de distribuição, e as regras de forma de Scatterbug, Spewpa e Vivillon foram revistas. Pokémon do GO vindos pelo HOME podem ter qualquer idioma do HOME, sem o limite dos idiomas da Gen 8. A Master Rank Ribbon deixa de valer para Pokémon do FireRed/LeafGreen do Virtual Console que só a teriam pelo Scarlet/Violet.
+
+### 🔧 Correções
+- **Aviso ao mover Pokémon:** nos outros idiomas, a mensagem depois de mover, copiar ou anexar Pokémon agora aparece traduzida. Em chinês, nomes em inglês com a palavra Pokémon, como “Pokémon League”, deixam de ser alterados, e o Bank aparece com o mesmo nome em toda a interface.
 
 ## 0.5.3 — 2026-10-26
 

@@ -1,6 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -33,6 +37,33 @@ public static class UpdateChecker
     public static string Format(Version v) => $"{v.Major}.{v.Minor}.{Math.Max(0, v.Build)}";
 
     private static Version Normalize(Version v) => new(v.Major, v.Minor, Math.Max(0, v.Build));
+
+    /// <summary>Marcador de cada idioma nas notas da release; o portugues vem antes do primeiro marcador.</summary>
+    private static readonly Regex NotesAnchor = new("""<a id="(\w+)"></a>""", RegexOptions.Compiled);
+    private static readonly string[] InstallHeadings = ["## Como instalar", "## How to install", "## Cómo instalar", "## 如何安装"];
+
+    /// <summary>
+    /// Linhas das novidades de uma release no idioma pedido, sem a parte de instalacao. Uma release sem esse idioma
+    /// (as anteriores a 0.5.4 so tem portugues e ingles) cai no ingles e, sem marcadores, mostra o texto inteiro.
+    /// </summary>
+    public static IReadOnlyList<string> NotesFor(string? notes, string language)
+    {
+        if (string.IsNullOrWhiteSpace(notes))
+            return [];
+        var sections = new Dictionary<string, string>();
+        var parts = NotesAnchor.Split(notes.Replace("\r", ""));
+        sections[Loc.Portuguese] = parts[0];
+        for (int i = 1; i + 1 < parts.Length; i += 2)
+            sections[parts[i]] = parts[i + 1];
+        var anchor = language switch { Loc.Portuguese => Loc.Portuguese, Loc.Spanish => "espanol", Loc.ChineseSimplified => "chinese", _ => "english" };
+        var section = sections.GetValueOrDefault(anchor) ?? sections.GetValueOrDefault("english") ?? parts[0];
+        var lines = section.Split('\n').Select(line => line.Trim()).TakeWhile(line => !InstallHeadings.Contains(line));
+        return [.. lines.Where(line => line.Length > 0 && line != "---" && !IsLanguageLine(line) && !line.StartsWith("**Full Changelog**", StringComparison.Ordinal))
+            .Select(line => line.TrimStart('#').Trim().Replace("**", ""))];
+    }
+
+    /// <summary>Linha que so aponta o idioma, comecando pela bandeira ("🇺🇸 **English**").</summary>
+    private static bool IsLanguageLine(string line) => Rune.TryGetRuneAt(line, 0, out var rune) && rune.Value is >= 0x1F1E6 and <= 0x1F1FF;
 
     /// <summary>Release mais recente do PKHeX Modern (ignora rascunhos e pre-releases). Null se nao houver.</summary>
     public static async Task<ReleaseInfo?> GetLatestAsync(CancellationToken ct = default)

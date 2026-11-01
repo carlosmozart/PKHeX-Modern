@@ -2653,8 +2653,6 @@
         </TabItem>
         <TabItem Header="Novidades">
           <DockPanel>
-            <TextBlock DockPanel.Dock="Top" Classes="muted" Margin="0,12,0,0" FontSize="12" TextWrapping="Wrap"
-                       IsVisible="{Binding ShowChangelogLanguageNote}" Text="As notas de versão são escritas em português." />
             <ScrollViewer Margin="0,12,0,0">
               <ItemsControl ItemsSource="{Binding Changelog}" MaxWidth="920" HorizontalAlignment="Left">
                 <ItemsControl.ItemTemplate>

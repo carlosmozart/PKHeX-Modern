@@ -200,6 +200,19 @@ Check("sistema es-MX → " + (hasEs ? "espanhol" : "inglês (sem es.json)"), Det
 bool hasZh = Loc.Languages.Any(l => l.Code == Loc.ChineseSimplified);
 Check("sistema zh-CN/zh-TW → " + (hasZh ? "chinês simplificado" : "inglês (sem zh-Hans.json)"),
     Detect("zh-CN") == (hasZh ? Loc.ChineseSimplified : Loc.English) && Detect("zh-TW") == Detect("zh-CN"));
+// Novidades: o CHANGELOG do idioma tem as mesmas versoes, secoes e quantidade de itens do portugues.
+var changelogPt = Changelog.Load(Loc.Portuguese); var changelogLang = Changelog.Load(lang);
+Check("Novidades no idioma da interface", Changelog.Versions.Count == changelogLang.Count
+    && Changelog.Versions[^1].Intro == changelogLang[^1].Intro && changelogLang[^1].Intro != changelogPt[^1].Intro);
+var changelogGaps = changelogPt.Zip(changelogLang).Where(p => (char.IsDigit(p.First.Title[0]) ? p.First.Title != p.Second.Title : char.IsDigit(p.Second.Title[0]))
+    || p.First.Date != p.Second.Date || p.First.Sections.Count != p.Second.Sections.Count
+    || p.First.Sections.Zip(p.Second.Sections).Any(s => s.First.Items.Count != s.Second.Items.Count)).Select(p => p.First.Title).ToList();
+if (changelogGaps.Count > 0) Console.WriteLine("Versões diferentes do português: " + string.Join(", ", changelogGaps));
+Check($"CHANGELOG-{lang}.md igual ao português em estrutura ({changelogPt.Count} versões)", changelogLang.Count == changelogPt.Count && changelogGaps.Count == 0);
+Check("nome com a palavra Pokémon fica intacto", Loc.T("Hoenn Pokémon League") == "Hoenn Pokémon League");
+Check("aviso de mover Pokémon traduzido", new[] { "movidos", "copiados", "anexados (cópias)" }.All(verb =>
+    Loc.T($"3 Pokémon {verb} para Box 1.") is var moved && !moved.Contains(" para ") && moved.Contains("Box 1")));
+Check("traducao da tela nao altera as Novidades", Changelog.Versions.SelectMany(Changelog.Texts).All(t => Loc.T(t) == t));
 // Botao 🌐 sempre visivel no rodape, com os nomes de cada idioma nele mesmo.
 var langButton = win.GetVisualDescendants().OfType<Button>().Single(b => b.Name == "LanguageButton");
 Check("botão 🌐 visível", langButton.IsEffectivelyVisible && langButton.Content as string == Pick("🌐 EN", "🌐 ES", "🌐 中"));

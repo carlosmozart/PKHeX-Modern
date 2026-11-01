@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace PKHeX.Modern.Services;
@@ -10,18 +11,35 @@ public sealed record ChangelogSection(string Title, IReadOnlyList<string> Items)
 public sealed record ChangelogVersion(string Title, string Date, string Intro, IReadOnlyList<ChangelogSection> Sections);
 
 /// <summary>
-/// Le o CHANGELOG.md embutido no executavel (pagina Ajuda › Novidades).
+/// Le o CHANGELOG embutido no executavel, no idioma da interface (pagina Ajuda › Novidades).
 /// Formato: "## versao — data", "### secao", "- item" e paragrafos soltos (introducao da versao).
 /// </summary>
 public static partial class Changelog
 {
     private static IReadOnlyList<ChangelogVersion>? _versions;
 
-    public static IReadOnlyList<ChangelogVersion> Versions => _versions ??= Load();
+    public static IReadOnlyList<ChangelogVersion> Versions => _versions ??= Keep(Load(Loc.Current));
 
-    private static IReadOnlyList<ChangelogVersion> Load()
+    /// <summary>
+    /// Os textos ja estao no idioma: a traducao da tela nao mexe neles. Sem isso, um modelo como "{0} Pokémon {1}" pegava
+    /// frases em chines com "Pokémon Tower" e punha "只宝可梦" no meio.
+    /// </summary>
+    private static IReadOnlyList<ChangelogVersion> Keep(IReadOnlyList<ChangelogVersion> versions)
     {
-        using var stream = typeof(Changelog).Assembly.GetManifestResourceStream("CHANGELOG.md");
+        foreach (var text in versions.SelectMany(Texts))
+            Loc.Keep(text);
+        return versions;
+    }
+
+    /// <summary>Todos os textos mostrados de uma versao.</summary>
+    public static IEnumerable<string> Texts(ChangelogVersion version) =>
+        new[] { version.Title, version.Date, version.Intro }.Concat(version.Sections.SelectMany(s => s.Items.Append(s.Title)));
+
+    /// <summary>Versoes no idioma pedido: CHANGELOG-en.md e afins; CHANGELOG.md em portugues e em idioma sem arquivo.</summary>
+    public static IReadOnlyList<ChangelogVersion> Load(string language)
+    {
+        var assembly = typeof(Changelog).Assembly;
+        using var stream = assembly.GetManifestResourceStream($"CHANGELOG-{language}.md") ?? assembly.GetManifestResourceStream("CHANGELOG.md");
         if (stream is null)
             return [];
         using var reader = new StreamReader(stream);

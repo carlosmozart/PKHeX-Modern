@@ -44,6 +44,70 @@ vm.Dialog.Complete(false); other.GetAwaiter().GetResult();
 vm.Help.SetLatest(release with { Version = UpdateChecker.Current });
 await vm.Help.InstallUpdateAsync();
 Check("versão atual não abre janela", vm.Dialog is null);
+// Notas da release: so a parte do idioma, sem a instalacao, a bandeira, o separador e o link do Full Changelog.
+const string fourLanguages = """
+    🇧🇷 **Português** · 🇺🇸 [English](#english) · 🇪🇸 [Español](#espanol) · 🇨🇳 [简体中文](#chinese)
+
+    Intro PT.
+
+    ## Novidades
+
+    ### 🔧 Correções
+    - **Item PT:** texto.
+
+    ## Como instalar
+
+    | Sistema | Arquivo |
+
+    ---
+
+    <a id="english"></a>
+    🇺🇸 **English**
+
+    ## What's new
+
+    - **Item EN:** text.
+
+    ## How to install
+
+    | System | File |
+
+    ---
+
+    <a id="espanol"></a>
+    🇪🇸 **Español**
+
+    ## Novedades
+
+    - **Item ES:** texto.
+
+    ## Cómo instalar
+
+    | Sistema | Archivo |
+
+    ---
+
+    <a id="chinese"></a>
+    🇨🇳 **简体中文**
+
+    ## 新内容
+
+    - **Item ZH:** 文字。
+
+    ## 如何安装
+
+    | 系统 | 文件 |
+
+    **Full Changelog**: https://github.com/carlosmozart/PKHeX-Modern/compare/a...b
+    """;
+Check("notas em português", string.Join("|", UpdateChecker.NotesFor(fourLanguages, Loc.Portuguese)) == "Intro PT.|Novidades|🔧 Correções|- Item PT: texto.");
+Check("notas em inglês", string.Join("|", UpdateChecker.NotesFor(fourLanguages, Loc.English)) == "What's new|- Item EN: text.");
+Check("notas em espanhol", string.Join("|", UpdateChecker.NotesFor(fourLanguages, Loc.Spanish)) == "Novedades|- Item ES: texto.");
+Check("notas em chinês", string.Join("|", UpdateChecker.NotesFor(fourLanguages, Loc.ChineseSimplified)) == "新内容|- Item ZH: 文字。");
+const string twoLanguages = "🇧🇷 **Português**\n\n## Novidades\n- PT\n\n## Como instalar\nx\n\n---\n\n<a id=\"english\"></a>\n🇺🇸 **English**\n\n## What's new\n- EN\n\n## How to install\ny\n\n**Full Changelog**: z";
+Check("release antiga sem o idioma cai no inglês", string.Join("|", UpdateChecker.NotesFor(twoLanguages, Loc.ChineseSimplified)) == "What's new|- EN");
+Check("release sem marcadores mostra tudo", string.Join("|", UpdateChecker.NotesFor("## Caixas\n- Item\n## Bank\n- Outro", Loc.Spanish)) == "Caixas|- Item|Bank|- Outro");
+Check("release vazia sem linhas", UpdateChecker.NotesFor("  ", Loc.English).Count == 0 && UpdateChecker.NotesFor(null, Loc.English).Count == 0);
 // Pacotes simulados: nenhuma rede e nenhum executavel da instalacao real e alterado.
 Check("asset Windows preservado", AutoUpdater.GetAssetName(OSPlatform.Windows, Architecture.X64) == "PKHeX.Modern-win-x64.zip");
 Check("asset Linux", AutoUpdater.GetAssetName(OSPlatform.Linux, Architecture.X64) == "PKHeX.Modern-linux-x64.zip");

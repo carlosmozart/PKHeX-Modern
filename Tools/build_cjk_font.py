@@ -6,10 +6,10 @@ A fonte original (github.com/notofonts/noto-cjk, Sans/SubsetOTF/SC, licenca OFL)
 O corte fica com:
 - todos os caracteres do GB2312 (os 6.763 hanzi comuns, pontuacao e kana);
 - os caracteres dos textos zh-Hans do PKHeX.Core (especies, golpes, itens, lugares, legalidade);
-- os do dicionario da interface (PKHeX.Modern/Assets/lang/zh-Hans.json).
+- os do dicionario da interface (PKHeX.Modern/Assets/lang/zh-Hans.json) e das novidades (PKHeX.Modern/CHANGELOG-zh-Hans.md).
 So entram blocos CJK (sem letras latinas nem simbolos): a fonte e usada como reserva (FontFallback) e nao
 muda a aparencia dos outros idiomas. Caracteres fora do corte (raros, em apelidos) caem na fonte do sistema.
-Rode de novo quando o zh-Hans.json ganhar textos com caracteres novos. Requer: pip install fonttools.
+Rode de novo quando esses arquivos ganharem textos com caracteres novos. Requer: pip install fonttools.
 """
 import json
 import pathlib
@@ -50,6 +50,7 @@ def texts() -> set[int]:
     ui = ROOT / "PKHeX.Modern" / "Assets" / "lang" / "zh-Hans.json"
     for value in json.loads(ui.read_text(encoding="utf-8")).values():
         chars.update(map(ord, value))
+    chars.update(map(ord, (ROOT / "PKHeX.Modern" / "CHANGELOG-zh-Hans.md").read_text(encoding="utf-8")))
     # Textos ja escritos em chines no codigo (nome do idioma e pergunta de reiniciar em Services/Loc.cs).
     chars.update(map(ord, (ROOT / "PKHeX.Modern" / "Services" / "Loc.cs").read_text(encoding="utf-8")))
     return chars

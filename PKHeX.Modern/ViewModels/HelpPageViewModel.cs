@@ -68,8 +68,6 @@ public sealed class HelpPageViewModel : PageViewModel
 
     // Novidades
     public IReadOnlyList<ChangelogVersion> Changelog => Services.Changelog.Versions;
-    /// <summary>Em outro idioma, avisa que o changelog continua em portugues (ele nao e traduzido).</summary>
-    public bool ShowChangelogLanguageNote => Loc.IsTranslating;
 
     // Sobre
     public string VersionText => $"Versão {UpdateChecker.CurrentText}";
