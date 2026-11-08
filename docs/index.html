@@ -657,6 +657,22 @@
     .then(r => r.ok ? r.json() : null)
     .then(r => { if (r && r.tag_name) { version = r.tag_name.replace("modern-v", ""); showVersion(); } })
     .catch(() => {});
+  // Contagem de visitas sem cookies nem IP: um aviso para o Worker da All Gen Wiki
+  // (repositório allgenwiki-site, src/contagem.js), que só soma totais por dia.
+  // O localStorage guarda só o último dia contado (primeira visita do dia / de todas).
+  (function () {
+    try {
+      var h = location.hostname;
+      var o = h === "allgenwiki.com" ? "site" : /\.github\.io$/.test(h) ? "ghpages" : /\.workers\.dev$/.test(h) ? "workersdev" : null;
+      if (!o || navigator.webdriver || !navigator.sendBeacon) return;
+      var chave = "allgenwiki-visita-pkhex", hoje = new Date(Date.now() - 108e5).toISOString().slice(0, 10), antes = null;
+      try { antes = localStorage.getItem(chave); localStorage.setItem(chave, hoje); } catch (e) {}
+      var aviso = { s: "pkhex", o: o, d: antes === hoje ? 0 : 1, p: antes ? 0 : 1 }, r = "";
+      try { r = new URL(document.referrer).hostname.replace(/^www\./, ""); } catch (e) {}
+      if (r && r !== h) aviso.r = r;
+      navigator.sendBeacon("https://allgenwiki.com/api/contar", new Blob([JSON.stringify(aviso)], { type: "text/plain" }));
+    } catch (e) {}
+  })();
 </script>
 </body>
 </html>
