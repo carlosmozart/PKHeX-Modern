@@ -5,7 +5,7 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
-## Next version
+## 0.5.5 — 2026-11-08
 
 ### 🌿 Encounters
 - **See every encounter in the game:** on the Encounters page, “See all” lists everything that appears in the save's game, for every species (wild, static, gifts, trades, eggs and raids of the game itself; events stay on the Events page), without searching species by species. Each species becomes one card per location, with the level range, and the details panel shows the variations. The new “Location” and “Filter by name” filters find, for example, everything that appears on a route.

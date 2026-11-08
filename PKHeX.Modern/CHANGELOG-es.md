@@ -5,7 +5,7 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
-## Próxima versión
+## 0.5.5 — 2026-11-08
 
 ### 🌿 Encuentros
 - **Ver todos los encuentros del juego:** en la página Encuentros, “Ver todos” lista todo lo que aparece en el juego de la partida, de todas las especies (salvajes, estáticos, regalos, intercambios, huevos e incursiones del propio juego; los eventos siguen en la página Eventos), sin buscar especie por especie. Cada especie se convierte en una tarjeta por lugar, con el rango de niveles, y el panel de detalles muestra las variaciones. Los nuevos filtros “Lugar” y “Filtrar por nombre” encuentran, por ejemplo, todo lo que aparece en una ruta.

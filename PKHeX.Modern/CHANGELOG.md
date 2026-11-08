@@ -7,7 +7,7 @@ As traduções ficam em CHANGELOG-en.md, CHANGELOG-es.md e CHANGELOG-zh-Hans.md:
 Formato: "## versão — data", "### seção", "- item".
 -->
 
-## Próxima versão
+## 0.5.5 — 2026-11-08
 
 ### 🌿 Encontros
 - **Ver todos os encontros do jogo:** na página Encontros, “Ver todos” lista tudo o que aparece no jogo do save, de todas as espécies (selvagens, estáticos, presentes, trocas, ovos e raids do próprio jogo; os eventos continuam na página Eventos), sem precisar procurar espécie por espécie. Cada espécie vira um cartão por local, com a faixa de níveis, e o painel de detalhes mostra as variações. Os filtros novos “Local” e “Filtrar por nome” acham, por exemplo, tudo o que aparece numa rota.
