@@ -74,6 +74,34 @@ public static partial class EncounterDatabase
     /// pelo gerador de encontros filtrado so por "Mystery", como faz o banco de encontros do PKHeX.
     /// Eventos da propria geracao do save vem primeiro.
     /// </remarks>
+    /// <summary>
+    /// Todos os encontros do proprio jogo do save, de todas as especies (como o "Any" do PKHeX). So os nativos da versao
+    /// (sem transferencias de outros jogos nem Pokemon GO) e so os da propria especie: a busca por especie tambem devolve
+    /// os encontros das formas anteriores, que repetiriam o Charmander no Charizard. Sem os Mystery Gifts, que tem a pagina
+    /// Eventos: no Black, eram centenas de presentes do mundo todo antes do primeiro Pokemon. Em ordem de Pokedex.
+    /// </summary>
+    public static IReadOnlyList<IEncounterInfo> SearchAllEncounters(SaveFile sav, CancellationToken token = default)
+    {
+        var result = new List<IEncounterInfo>();
+        var seen = new HashSet<IEncounterInfo>(ReferenceEqualityComparer.Instance);
+        for (ushort species = 1; species <= sav.MaxSpeciesID; species++)
+        {
+            token.ThrowIfCancellationRequested();
+            if (!sav.Personal.IsSpeciesInGame(species))
+                continue;
+            foreach (var enc in SearchEncounters(sav, species, true, token))
+            {
+                if (enc is not MysteryGift && enc.Species == species && IsNative(enc.Version, sav.Version) && seen.Add(enc))
+                    result.Add(enc);
+            }
+        }
+        return result;
+    }
+
+    /// <summary>O encontro e da propria versao do save (ou do par dela, como Black/White, ou de "qualquer versao").</summary>
+    private static bool IsNative(GameVersion encounter, GameVersion save) =>
+        encounter == save || encounter.Contains(save) || save.Contains(encounter);
+
     public static IReadOnlyList<IEncounterInfo> LoadGifts(SaveFile sav, bool onlyThisGame, CancellationToken token = default)
     {
         var result = new List<IEncounterInfo>();

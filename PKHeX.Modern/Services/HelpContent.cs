@@ -148,8 +148,9 @@ public static class HelpContent
         new("🌿", "Encontros e eventos",
         [
             new("Banco de encontros", "Procura onde e como uma espécie aparece neste jogo. “Usar” gera o Pokémon legal e abre no editor."),
+            new("Ver todos os encontros", "Na página Encontros, “Ver todos” lista os encontros do próprio jogo do save, de todas as espécies, em ordem de Pokédex: selvagens, estáticos, presentes, trocas, ovos e raids. Cada espécie aparece num cartão por local e tipo, com a faixa de níveis; clique no cartão para ver as variações (níveis e condições) e use “Usar” para gerar o Pokémon. Filtre por local para ver tudo o que aparece num lugar, ou por tipo, versão e nome. Os eventos (Mystery Gift) ficam na página Eventos; transferências de outros jogos e o Pokémon GO, na busca por espécie, com “Só deste jogo” desmarcado."),
             new("Detalhes do encontro", "Clique num cartão para ver, ao lado, o que o encontro garante: shiny ou shiny lock (🔒), IVs, habilidade, natureza, gênero, bola, item, Tera Type, alpha/Gigantamax, treinador do evento e os golpes com que ele vem."),
-            new("Filtros", "Depois da busca, filtre por tipo (selvagem, estático, troca, ovo, raid, evento, GO), por versão do jogo e por golpe (só os que já vêm com ele). Presentes do Pokémon HOME ganham o selo HOME."),
+            new("Filtros", "Depois da busca, filtre por tipo (selvagem, estático, troca, ovo, raid, evento, GO), por versão do jogo, por local e por golpe (só os que já vêm com ele). Presentes do Pokémon HOME ganham o selo HOME."),
             new("Roamers da Gen 3", "Entei, Raikou e Suicune de FireRed/LeafGreen e Latias/Latios de Ruby/Sapphire têm um bug do jogo: só os 8 primeiros bits dos IVs são guardados, então o PS vai de 0 a 31, o Ataque de 0 a 7 e os outros ficam em 0. “Usar” sorteia esses valores como o jogo faz (antes saíam sempre zerados). IVs mais altos deixariam o Pokémon ilegal. Em Emerald não há o bug."),
             new("Eventos (Mystery Gift)", "Lista os presentes de evento que valem para o save, inclusive os da Gen 1 a 3. “Usar” leva ao editor."),
         ]),

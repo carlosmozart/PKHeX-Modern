@@ -7,6 +7,18 @@ As traduções ficam em CHANGELOG-en.md, CHANGELOG-es.md e CHANGELOG-zh-Hans.md:
 Formato: "## versão — data", "### seção", "- item".
 -->
 
+## Próxima versão
+
+### 🌿 Encontros
+- **Ver todos os encontros do jogo:** na página Encontros, “Ver todos” lista tudo o que aparece no jogo do save, de todas as espécies (selvagens, estáticos, presentes, trocas, ovos e raids do próprio jogo; os eventos continuam na página Eventos), sem precisar procurar espécie por espécie. Cada espécie vira um cartão por local, com a faixa de níveis, e o painel de detalhes mostra as variações. Os filtros novos “Local” e “Filtrar por nome” acham, por exemplo, tudo o que aparece numa rota.
+
+### 🔄 PKHeX atualizado
+- **PKHeX de 07/11/2026:** passam a ser reconhecidos os presentes de aniversário do PokéCenter (Fidough e Audino, até fevereiro de 2028) e o Vivillon Poké Ball (de novembro de 2026 a fevereiro de 2027); o Flabébé do PokéCenter ganhou a data final da distribuição. Os golpes do Pokémon GO foram atualizados, o que corrige a legalidade de Pokémon vindos do GO com golpes novos.
+
+### 🔧 Correções
+- **Local dos ovos nos Encontros:** os cartões de ovo de criação mostravam como local o lugar onde o PKHeX faz o ovo chocar (no Black, Skyarrow Bridge), como se o ovo viesse de lá. Agora ficam sem local; os ovos de presente continuam com o local certo.
+- **Tipos de encontro traduzidos:** no filtro de tipo e no painel de detalhes dos Encontros, “Selvagem”, “Troca”, “Evento” e “Raid” apareciam em português nas interfaces em inglês, espanhol e chinês.
+
 ## 0.5.4 — 2026-11-01
 
 ### 🌐 Idioma

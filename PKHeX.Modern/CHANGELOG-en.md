@@ -5,6 +5,18 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
+## Next version
+
+### 🌿 Encounters
+- **See every encounter in the game:** on the Encounters page, “See all” lists everything that appears in the save's game, for every species (wild, static, gifts, trades, eggs and raids of the game itself; events stay on the Events page), without searching species by species. Each species becomes one card per location, with the level range, and the details panel shows the variations. The new “Location” and “Filter by name” filters find, for example, everything that appears on a route.
+
+### 🔄 PKHeX updated
+- **PKHeX of 11/07/2026:** the PokéCenter birthday gifts (Fidough and Audino, until February 2028) and the Poké Ball Vivillon (November 2026 to February 2027) are now recognized; the PokéCenter Flabébé got its distribution end date. Pokémon GO moves were updated, which fixes the legality of GO Pokémon with new moves.
+
+### 🔧 Fixes
+- **Egg location in Encounters:** bred egg cards showed as their location the place where PKHeX hatches the egg (Skyarrow Bridge in Black), as if the egg came from there. They now have no location; gift eggs keep their correct location.
+- **Encounter types translated:** in the Encounters type filter and details panel, “Wild”, “Trade”, “Event” and “Raid” showed in Portuguese in the English, Spanish and Chinese interfaces.
+
 ## 0.5.4 — 2026-11-01
 
 ### 🌐 Language

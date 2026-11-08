@@ -71,12 +71,24 @@
               <TextBlock Text="ENCONTRO" Classes="section" Margin="0" />
               <Grid ColumnDefinitions="96,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="4">
                 <TextBlock Text="Local" Classes="muted" />
-                <TextBlock Grid.Column="1" Text="{Binding Card.Location}" TextWrapping="Wrap" />
+                <TextBlock Grid.Column="1" Text="{Binding Card.DisplayLocation}" TextWrapping="Wrap" />
                 <TextBlock Grid.Row="1" Text="Nível" Classes="muted" />
                 <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Card.Level}" />
                 <TextBlock Grid.Row="2" Text="Tipo" Classes="muted" />
                 <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Card.Category}" />
               </Grid>
+            </StackPanel>
+            <!-- "Ver todos": o cartao junta as variacoes da mesma especie no mesmo local -->
+            <StackPanel Spacing="4" IsVisible="{Binding HasVariants}">
+              <TextBlock Text="VARIAÇÕES" Classes="section" Margin="0" />
+              <TextBlock Text="{Binding VariantsHint}" Classes="muted" FontSize="12" TextWrapping="Wrap" />
+              <ItemsControl ItemsSource="{Binding Variants}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate x:DataType="x:String">
+                    <TextBlock Text="{Binding}" FontSize="12" TextWrapping="Wrap" Margin="0,1" />
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
             </StackPanel>
             <StackPanel Spacing="4">
               <TextBlock Text="O QUE ELE GARANTE" Classes="section" Margin="0" />
@@ -2150,16 +2162,22 @@
         <TextBlock Text="Encontros" Classes="title" />
         <TextBlock Text="Todos os jeitos de obter uma espécie: selvagem, estático, troca, ovo e eventos." Classes="muted" FontSize="12" />
       </StackPanel>
-      <Grid Grid.Row="1" ColumnDefinitions="320,Auto,*" ColumnSpacing="12">
+      <Grid Grid.Row="1" ColumnDefinitions="320,Auto,Auto,*" ColumnSpacing="12">
         <AutoCompleteBox ItemsSource="{Binding SpeciesNames}" Text="{Binding Species}" FilterMode="ContainsOrdinal"
                          Watermark="Espécie (ex.: Pikachu)" MinimumPrefixLength="1" />
-        <CheckBox Grid.Column="1" Content="Só deste jogo" IsChecked="{Binding OnlyThisGame}"
+        <Button Grid.Column="1" Content="Ver todos" Command="{Binding ShowAllCommand}" IsEnabled="{Binding !IsBusy}"
+                ToolTip.Tip="Lista todos os encontros do jogo deste save, de todas as espécies: um cartão por espécie e local. Use os filtros de local e tipo para achar o que tem em cada lugar." />
+        <CheckBox Grid.Column="2" Content="Só deste jogo" IsChecked="{Binding OnlyThisGame}" IsVisible="{Binding !IsShowingAll}"
                   ToolTip.Tip="Só encontros possíveis nas versões compatíveis com este save" />
-        <TextBlock Grid.Column="2" Text="{Binding Summary}" Classes="muted" FontSize="12" VerticalAlignment="Center" TextWrapping="Wrap" />
+        <TextBlock Grid.Column="3" Text="{Binding Summary}" Classes="muted" FontSize="12" VerticalAlignment="Center" TextWrapping="Wrap" />
       </Grid>
       <WrapPanel Grid.Row="2" ItemSpacing="8" LineSpacing="6" IsVisible="{Binding HasFilters}">
         <ComboBox ItemsSource="{Binding KindOptions}" SelectedItem="{Binding KindFilter}" MinWidth="170" ToolTip.Tip="Tipo do encontro" />
         <ComboBox ItemsSource="{Binding VersionOptions}" SelectedItem="{Binding VersionFilter}" MinWidth="170" ToolTip.Tip="Versão do jogo" />
+        <ComboBox ItemsSource="{Binding LocationOptions}" SelectedItem="{Binding LocationFilter}" MinWidth="200" MaxDropDownHeight="420"
+                  IsVisible="{Binding HasLocationOptions}" ToolTip.Tip="Local do encontro: mostra tudo o que aparece nele" />
+        <TextBox Text="{Binding NameFilter}" Width="180" Watermark="Filtrar por nome..." IsVisible="{Binding IsShowingAll}"
+                 ToolTip.Tip="Mostra só os cartões com este nome de espécie" />
         <AutoCompleteBox ItemsSource="{Binding MoveNames}" Text="{Binding MoveFilter}" FilterMode="ContainsOrdinal" MinimumPrefixLength="1"
                          Width="220" Watermark="Vem com o golpe..." ToolTip.Tip="Só encontros que já vêm sabendo este golpe" />
         <Button Classes="ghost small" Content="✕ Limpar filtros" Command="{Binding ClearFiltersCommand}" IsVisible="{Binding IsFiltered}" />

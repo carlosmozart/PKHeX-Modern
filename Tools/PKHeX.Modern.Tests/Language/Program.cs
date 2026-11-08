@@ -143,6 +143,17 @@ Check("Living Dex terminou", living.Plan is not null);
 living.Selected = living.Rows.FirstOrDefault(r => r.CanOpen);
 Scan("Living Dex");
 vm.Pokedex.ShowLivingDex = false;
+// Encontros › "Ver todos": resumo, filtros de local e nome e o painel com as variacoes de um cartao agrupado
+vm.CurrentPage = vm.Encounters; Pump(); Scan("Encontros (início)");
+var showAll = vm.Encounters.ShowAllAsync();
+for (int i = 0; i < 6000 && !showAll.IsCompleted; i++) { Pump(1); System.Threading.Thread.Sleep(5); }
+Pump();
+vm.Encounters.SelectCommand.Execute(vm.Encounters.Results.First(c => c.HasVariants)); Scan("Encontros (Ver todos)");
+vm.Encounters.NameFilter = "zzz"; Scan("Encontros (filtrados)"); vm.Encounters.ClearFiltersCommand.Execute(null);
+// Tipos de encontro (filtro e painel): o detector nao pega "Selvagem" nem "Troca", entao a conferencia e direta.
+// Iguais por natureza: "Evento" em espanhol, "Raid" em ingles e "Pokémon GO" em todos.
+Check("tipos de encontro traduzidos", new[] { "Selvagem", "Troca", "Evento", "Raid", "Ovo", "Estático / presente" }
+    .All(k => Loc.T(k) != k || (k == "Evento" && es) || (k == "Raid" && lang == Loc.English)));
 // Novidades (aba 1) e o changelog: fica em portugues, com um aviso; so a aba Funcoes e Sobre sao conferidas.
 vm.OpenHelp(); foreach (var t in new[] { 0, 2 }) { vm.Help.SelectedTab = t; Scan("Help " + t); }
 win.CaptureRenderedFrame()?.Save(Path.Combine(work, $"help_{lang}.png"));
