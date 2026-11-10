@@ -27,6 +27,9 @@ public static class UpdateChecker
     public const string OldRepo = "carlosmozart/PKHeX";
     public const string RepoUrl = "https://github.com/" + Repo + "/tree/modern-ui/PKHeX.Modern";
     public const string ReleasesUrl = "https://github.com/" + Repo + "/releases";
+    /// <summary>Escolha do modelo de issue (erro ou correcao de traducao), em .github/ISSUE_TEMPLATE.</summary>
+    public const string IssuesUrl = "https://github.com/" + Repo + "/issues/new/choose";
+    public const string DiscussionsUrl = "https://github.com/" + Repo + "/discussions";
     private const string TagPrefix = "modern-v";
 
     /// <summary>Versao deste executavel (do &lt;Version&gt; do csproj).</summary>

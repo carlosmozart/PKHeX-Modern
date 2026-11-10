@@ -1,0 +1,9 @@
+# Modelos do PKHeX Modern (1-*.yml e 2-*.yml). Os .md desta pasta vieram do PKHeX original e ficam intocados para os merges.
+blank_issues_enabled: true
+contact_links:
+  - name: "💬 Dúvidas e ideias · Questions and ideas"
+    url: https://github.com/carlosmozart/PKHeX-Modern/discussions
+    about: "Perguntas, sugestões e o que você fez com o app. · Questions, suggestions and things you made with the app."
+  - name: "⚖️ Mesmo resultado de legalidade no PKHeX original · Same legality result in the original PKHeX"
+    url: https://github.com/kwsch/PKHeX/issues
+    about: "Se o PKHeX original (Windows) dá o mesmo resultado, a regra vem do PKHeX.Core: relate lá, em inglês. · If the original PKHeX gives the same result, the rule comes from PKHeX.Core: report it there, in English."

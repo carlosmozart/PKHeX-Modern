@@ -2653,5 +2653,12 @@
   "Troca": "Trade",
   "Evento": "Event",
   "Raid": "Raid",
-  "Pokémon GO": "Pokémon GO"
+  "Pokémon GO": "Pokémon GO",
+  "Encontrou um erro ou tem uma ideia? Conte no GitHub, em português, inglês, espanhol ou chinês.": "Found a bug or have an idea? Tell us on GitHub, in Portuguese, English, Spanish or Chinese.",
+  "🐞  Relatar um problema": "🐞  Report a problem",
+  "Abre as Issues do GitHub, com modelos para erros e correções de tradução. Anexe o diagnóstico (📋) para ajudar a achar a causa.": "Opens GitHub Issues, with templates for bugs and translation fixes. Attach the diagnostics (📋) to help find the cause.",
+  "💬  Dúvidas e ideias": "💬  Questions and ideas",
+  "Abre as Discussions do GitHub, para perguntas, sugestões e para mostrar o que você fez": "Opens GitHub Discussions, for questions, suggestions and showing what you made",
+  "Relatar problemas e ideias": "Report problems and ideas",
+  "Em Ajuda › Sobre, “🐞 Relatar um problema” abre as Issues do GitHub, com modelos para erros e para correções de tradução; anexe o diagnóstico (📋, no mesmo cartão) para ajudar a achar a causa. “💬 Dúvidas e ideias” abre as Discussions, para perguntas, sugestões e para mostrar o que você fez. Dá para escrever em português, inglês, espanhol ou chinês.": "In Help › About, “🐞 Report a problem” opens GitHub Issues, with templates for bugs and for translation fixes; attach the diagnostics (📋, on the same card) to help find the cause. “💬 Questions and ideas” opens Discussions, for questions, suggestions and showing what you made. You can write in Portuguese, English, Spanish or Chinese."
 }

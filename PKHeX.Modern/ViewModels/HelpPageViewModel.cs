@@ -24,6 +24,8 @@ public sealed class HelpPageViewModel : PageViewModel
         RestartCommand = new RelayCommand(() => RestartRequested?.Invoke());
         OpenReleasesCommand = new RelayCommand(() => Links.Open(UpdateChecker.ReleasesUrl));
         OpenRepoCommand = new RelayCommand(() => Links.Open(UpdateChecker.RepoUrl));
+        OpenIssuesCommand = new RelayCommand(() => Links.Open(UpdateChecker.IssuesUrl));
+        OpenDiscussionsCommand = new RelayCommand(() => Links.Open(UpdateChecker.DiscussionsUrl));
         OpenWikiCommand = new RelayCommand(() => Links.Open(Links.AllGenWiki));
         HideOverlayCommand = new RelayCommand(() => { OverlayHidden = true; _demoCts?.Cancel(); });
         DemoAnimationCommand = new RelayCommand(() => _ = DemoAsync(), () => !IsDownloading && !IsDemo);
@@ -96,6 +98,8 @@ public sealed class HelpPageViewModel : PageViewModel
     }
     public RelayCommand OpenReleasesCommand { get; }
     public RelayCommand OpenRepoCommand { get; }
+    public RelayCommand OpenIssuesCommand { get; }
+    public RelayCommand OpenDiscussionsCommand { get; }
     public RelayCommand OpenWikiCommand { get; }
     public string WikiUrl => Links.AllGenWiki;
 

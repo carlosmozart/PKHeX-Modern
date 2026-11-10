@@ -5,6 +5,11 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
+## Next version
+
+### 💬 Community
+- **Report problems and ideas:** in Help › About, “Report a problem” opens GitHub Issues, with templates for bugs and for translation fixes, and “Questions and ideas” opens Discussions. You can write in Portuguese, English, Spanish or Chinese.
+
 ## 0.5.5 — 2026-11-08
 
 ### 🌿 Encounters

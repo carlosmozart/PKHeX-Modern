@@ -1,0 +1,69 @@
+name: "🐞 Erro no PKHeX Modern · Bug in PKHeX Modern"
+description: "Algo travou, sumiu ou não funciona como deveria. · Something crashed, disappeared or does not work as it should."
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Obrigado por avisar! Pode escrever em português, inglês, espanhol ou chinês.
+        Thanks for reporting! You can write in Portuguese, English, Spanish or Chinese.
+  - type: textarea
+    id: what
+    attributes:
+      label: "O que aconteceu? · What happened?"
+      description: "E o que você esperava que acontecesse. · And what you expected to happen."
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Como reproduzir · Steps to reproduce"
+      placeholder: |
+        1. Abrir o save de Emerald / Open the Emerald save
+        2. Ir em Caixas / Go to Boxes
+        3. ...
+  - type: input
+    id: version
+    attributes:
+      label: "Versão do app · App version"
+      description: "Ajuda › Sobre · Help › About"
+      placeholder: "0.5.5"
+    validations:
+      required: true
+  - type: dropdown
+    id: system
+    attributes:
+      label: "Sistema · System"
+      options:
+        - Windows
+        - Linux
+        - macOS (Apple silicon)
+        - macOS (Intel)
+        - Android
+    validations:
+      required: true
+  - type: dropdown
+    id: language
+    attributes:
+      label: "Idioma da interface · Interface language"
+      options:
+        - Português
+        - English
+        - Español
+        - 简体中文
+  - type: input
+    id: game
+    attributes:
+      label: "Jogo do save · Save's game"
+      placeholder: "Emerald, HeartGold, Scarlet..."
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: "Diagnóstico · Diagnostics"
+      description: "Ajuda › Sobre › 📋 Copiar diagnóstico (no Android, Compartilhar). Traz versão, sistema, idioma e o registro de erros, sem dados pessoais. · Help › About › 📋 Copy diagnostics (Share on Android). It has the version, system, language and error log, without personal data."
+      render: text
+  - type: textarea
+    id: files
+    attributes:
+      label: "Capturas ou arquivos · Screenshots or files"
+      description: "Arraste para cá. Um save ou .pk* anexado fica público. · Drag them here. An attached save or .pk* file becomes public."

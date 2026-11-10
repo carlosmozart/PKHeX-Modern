@@ -1,0 +1,47 @@
+name: "🌐 Correção de tradução · Translation fix"
+description: "Um texto da interface está errado, estranho ou sem tradução. · An interface text is wrong, odd or untranslated."
+labels: ["translation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        As traduções em espanhol e chinês ainda não foram revisadas por falantes nativos: cada correção ajuda muito.
+        The Spanish and Chinese translations have not been reviewed by native speakers yet: every fix helps a lot.
+  - type: dropdown
+    id: language
+    attributes:
+      label: "Idioma · Language"
+      options:
+        - English
+        - Español
+        - 简体中文
+        - Português
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: "Onde aparece · Where it appears"
+      placeholder: "Caixas › editor do Pokémon / Boxes › Pokémon editor"
+  - type: textarea
+    id: current
+    attributes:
+      label: "Texto atual · Current text"
+    validations:
+      required: true
+  - type: textarea
+    id: suggested
+    attributes:
+      label: "Texto sugerido · Suggested text"
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: "Por quê? (opcional) · Why? (optional)"
+      description: "Ex.: o termo oficial dos jogos nesse idioma. · E.g. the official term used by the games in that language."
+  - type: input
+    id: version
+    attributes:
+      label: "Versão do app · App version"
+      placeholder: "0.5.5"

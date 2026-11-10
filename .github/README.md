@@ -4,7 +4,7 @@
 
 **Uma interface moderna para o [PKHeX](https://github.com/kwsch/PKHeX), o editor de saves de Pokémon, para Windows, Linux, macOS e Android.**
 
-Feita em Avalonia, com tema escuro e claro, temas inspirados nos jogos e interface em português ou inglês. Por baixo continua o `PKHeX.Core` original, sem alterações: as regras de save, legalidade e encontros são as mesmas do PKHeX, e as atualizações do PKHeX oficial entram por merge.
+Feita em Avalonia, com tema escuro e claro, temas inspirados nos jogos e interface em português, inglês, espanhol ou chinês simplificado. Por baixo continua o `PKHeX.Core` original, sem alterações: as regras de save, legalidade e encontros são as mesmas do PKHeX, e as atualizações do PKHeX oficial entram por merge.
 
 [![Última versão](https://img.shields.io/github/v/release/carlosmozart/PKHeX-Modern?label=vers%C3%A3o&sort=semver)](https://github.com/carlosmozart/PKHeX-Modern/releases/latest)
 [![Downloads](https://img.shields.io/github/downloads/carlosmozart/PKHeX-Modern/total?label=downloads)](https://github.com/carlosmozart/PKHeX-Modern/releases)
@@ -35,7 +35,7 @@ O PKHeX original é só para Windows. O PKHeX Modern roda nos quatro sistemas, s
 - **Bank local** em bancos e caixas, pastas de `.pk*` como banco e um segundo save aberto para trocar Pokémon entre jogos, com conversão de geração.
 - **Pokédex centralizada** juntando todos os saves e o bank, com living dex, shiny dex, formas e gêneros, um **planejador de Living Dex** que organiza as caixas do save com prévia e um único desfazer, e **completar a Pokédex do save** (vistas, capturadas, formas, gêneros e idiomas) em um clique.
 - **Pesquisa em todos os saves e no bank**, com **auditoria de duplicados** (cópias idênticas, backups e anexados) e **Edição em lote** (inclusive legalizar vários de uma vez).
-- **Banco de encontros e eventos** para gerar Pokémon legais a partir de encontros reais e Mystery Gifts.
+- **Banco de encontros e eventos** para gerar Pokémon legais a partir de encontros reais e Mystery Gifts, com **Ver todos** para listar tudo o que aparece no jogo do save, filtrado por local.
 - **Página Jogo**: flags e valores de evento com nome, recordes, atalhos de eventos (lendários de novo, itens, títulos), Hall da Fama editável, Battle Frontier, Pokétch e Pokéwalker, medalhas do Pokéathlon, base secreta e atalhos de **liberar tudo** (O-Powers, Super Training, Zygarde Cells, Underground).
 - **Treinador completo**: nome, TID/SID, dinheiro e tempo de jogo, mais insígnias de cada região, gênero, moedas do Game Corner, BP e datas da aventura.
 - **Caçada shiny**: contador com as chances reais de cada método do jogo (Masuda, Poké Radar, pesca em corrente, SOS, surtos e sanduíche...), encontros para 50/90/99%, onde o alvo aparece com aviso de shiny lock e dos golpes que estragam a caçada, e o "Achei!" lido do save.
@@ -72,9 +72,17 @@ Mais capturas, a lista completa de funções, como compilar e a arquitetura est�
 
 > **Faça backup dos seus saves antes de editar.** O app já guarda uma cópia antes de salvar por cima, mas um backup seu nunca é demais.
 
+## Problemas, dúvidas e ideias
+
+- **Encontrou um erro ou uma tradução errada?** [Abra uma issue](https://github.com/carlosmozart/PKHeX-Modern/issues/new/choose). Há modelos para erros e para correções de tradução. Anexe o diagnóstico do app (Ajuda › Sobre › 📋), que traz a versão, o sistema e o idioma sem dados pessoais.
+- **Dúvidas, sugestões ou algo para mostrar?** Use as [Discussions](https://github.com/carlosmozart/PKHeX-Modern/discussions).
+- Pode escrever em português, inglês, espanhol ou chinês. O app também tem os dois botões em Ajuda › Sobre.
+
 ## English
 
-**PKHeX Modern** is a modern UI for the [PKHeX](https://github.com/kwsch/PKHeX) Pokémon save editor, running on **Windows, Linux, macOS and Android** (the original PKHeX is Windows-only). It is built on top of the unmodified `PKHeX.Core`, so save handling and legality checks are the same as PKHeX. Features include a legal mode, drag and drop between boxes and party, a save manager, a local bank, a combined Pokédex, encounter and event databases, event flag editors, an editable Hall of Fame, Battle Frontier, Pokéathlon and secret base editors, trainer badges, one-click Pokédex completion, a Nuzlocke report, a Hardcore mode (move only, for challenges and RetroAchievements), an egg factory, a shiny hunt counter with real odds per method, game-inspired themes, legal Pokémon from pasted Showdown sets, automatic emulator save detection on Android and automatic updates. The interface is available in Portuguese and English (⚙ › Language). [Download the latest release](https://github.com/carlosmozart/PKHeX-Modern/releases/latest) or visit the [project site](https://allgenwiki.com/pkhex/).
+**PKHeX Modern** is a modern UI for the [PKHeX](https://github.com/kwsch/PKHeX) Pokémon save editor, running on **Windows, Linux, macOS and Android** (the original PKHeX is Windows-only). It is built on top of the unmodified `PKHeX.Core`, so save handling and legality checks are the same as PKHeX. Features include a legal mode, drag and drop between boxes and party, a save manager, a local bank, a combined Pokédex, encounter and event databases (with every encounter of the save's game, filtered by location), event flag editors, an editable Hall of Fame, Battle Frontier, Pokéathlon and secret base editors, trainer badges, one-click Pokédex completion, a Nuzlocke report, a Hardcore mode (move only, for challenges and RetroAchievements), an egg factory, a shiny hunt counter with real odds per method, game-inspired themes, legal Pokémon from pasted Showdown sets, automatic emulator save detection on Android and automatic updates. The interface is available in Portuguese, English, Spanish and Simplified Chinese (🌐 at the bottom of the sidebar). [Download the latest release](https://github.com/carlosmozart/PKHeX-Modern/releases/latest) or visit the [project site](https://allgenwiki.com/pkhex/).
+
+**Bugs, translation fixes and ideas:** [open an issue](https://github.com/carlosmozart/PKHeX-Modern/issues/new/choose) (attach the app's diagnostics from Help › About › 📋) or start a [discussion](https://github.com/carlosmozart/PKHeX-Modern/discussions). Portuguese, English, Spanish or Chinese are all fine.
 
 **macOS:** the app is free and not notarized by Apple. The first time, open it once, then go to **System Settings › Privacy & Security** and click **Open Anyway**. If macOS says the app “is damaged and can't be opened”, run `xattr -dr com.apple.quarantine "/Applications/PKHeX Modern.app"` in Terminal and open it again.
 

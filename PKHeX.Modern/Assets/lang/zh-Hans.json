@@ -2651,5 +2651,12 @@
   "Troca": "交换",
   "Evento": "活动",
   "Raid": "团体战",
-  "Pokémon GO": "Pokémon GO"
+  "Pokémon GO": "Pokémon GO",
+  "Encontrou um erro ou tem uma ideia? Conte no GitHub, em português, inglês, espanhol ou chinês.": "发现错误或有想法？请在 GitHub 上告诉我们，可以使用葡萄牙语、英语、西班牙语或中文。",
+  "🐞  Relatar um problema": "🐞  报告问题",
+  "Abre as Issues do GitHub, com modelos para erros e correções de tradução. Anexe o diagnóstico (📋) para ajudar a achar a causa.": "打开 GitHub Issues，有错误报告和翻译修正的模板。附上诊断信息（📋）有助于找到原因。",
+  "💬  Dúvidas e ideias": "💬  疑问与想法",
+  "Abre as Discussions do GitHub, para perguntas, sugestões e para mostrar o que você fez": "打开 GitHub Discussions，可以提问、提建议和展示你的成果",
+  "Relatar problemas e ideias": "报告问题和想法",
+  "Em Ajuda › Sobre, “🐞 Relatar um problema” abre as Issues do GitHub, com modelos para erros e para correções de tradução; anexe o diagnóstico (📋, no mesmo cartão) para ajudar a achar a causa. “💬 Dúvidas e ideias” abre as Discussions, para perguntas, sugestões e para mostrar o que você fez. Dá para escrever em português, inglês, espanhol ou chinês.": "在“帮助 › 关于”中，“🐞 报告问题”会打开 GitHub Issues，有错误报告和翻译修正的模板；附上诊断信息（📋，在同一张卡片上）有助于找到原因。“💬 疑问与想法”会打开 Discussions，可以提问、提建议和展示你的成果。可以使用葡萄牙语、英语、西班牙语或中文。"
 }

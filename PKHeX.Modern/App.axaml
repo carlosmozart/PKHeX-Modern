@@ -2722,6 +2722,13 @@
                     <Button Classes="small" Content="🔗  Código no GitHub" Command="{Binding OpenRepoCommand}" />
                     <Button Classes="small" Content="📦  Todas as versões" Command="{Binding OpenReleasesCommand}" />
                   </WrapPanel>
+                  <TextBlock TextWrapping="Wrap" Classes="muted" Text="Encontrou um erro ou tem uma ideia? Conte no GitHub, em português, inglês, espanhol ou chinês." />
+                  <WrapPanel ItemSpacing="6" LineSpacing="6">
+                    <Button Classes="small" Content="🐞  Relatar um problema" Command="{Binding OpenIssuesCommand}"
+                            ToolTip.Tip="Abre as Issues do GitHub, com modelos para erros e correções de tradução. Anexe o diagnóstico (📋) para ajudar a achar a causa." />
+                    <Button Classes="small" Content="💬  Dúvidas e ideias" Command="{Binding OpenDiscussionsCommand}"
+                            ToolTip.Tip="Abre as Discussions do GitHub, para perguntas, sugestões e para mostrar o que você fez" />
+                  </WrapPanel>
                 </StackPanel>
               </Border>
               <Border Classes="card">
