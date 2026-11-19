@@ -92,21 +92,28 @@ foreach ($name in $suites.Keys) {
     }
     $work = Join-Path ([IO.Path]::GetTempPath()) ("pkhex-modern-tests\" + $name + '-' + [guid]::NewGuid())
     New-Item -ItemType Directory -Force $work | Out-Null
-    $missing = $false
-    foreach ($kv in $suites[$name].GetEnumerator()) {
-        $src = Join-Path $saves $kv.Value
-        if (-not (Test-Path $src)) { Write-Host "[$name] pulado: falta saves\$($kv.Value)" -ForegroundColor Yellow; $missing = $true; break }
-        Copy-Item $src (Join-Path $work $kv.Key)
+    try {
+        $missing = $false
+        foreach ($kv in $suites[$name].GetEnumerator()) {
+            $src = Join-Path $saves $kv.Value
+            if (-not (Test-Path $src)) { Write-Host "[$name] pulado: falta saves\$($kv.Value)" -ForegroundColor Yellow; $missing = $true; break }
+            Copy-Item $src (Join-Path $work $kv.Key)
+        }
+        if ($missing) { continue }
+        Write-Host "== $name ($work)" -ForegroundColor Cyan
+        $proj = Join-Path $PSScriptRoot "$name\$name.csproj"
+        $testArgs = @($work)
+        if ($name -eq 'SpriteParity') { $testArgs += $saves }
+        $restoreArgs = @()
+        if ($env:PKHEX_TEST_NO_RESTORE -eq '1') { $restoreArgs = @('--no-restore') }
+        dotnet run @restoreArgs -c Release --project $proj -- @testArgs | Where-Object { $_ -notmatch 'warning' }
+        if ($LASTEXITCODE -ne 0) { $failed += $name }
     }
-    if ($missing) { continue }
-    Write-Host "== $name ($work)" -ForegroundColor Cyan
-    $proj = Join-Path $PSScriptRoot "$name\$name.csproj"
-    $testArgs = @($work)
-    if ($name -eq 'SpriteParity') { $testArgs += $saves }
-    $restoreArgs = @()
-    if ($env:PKHEX_TEST_NO_RESTORE -eq '1') { $restoreArgs = @('--no-restore') }
-    dotnet run @restoreArgs -c Release --project $proj -- @testArgs | Where-Object { $_ -notmatch 'warning' }
-    if ($LASTEXITCODE -ne 0) { $failed += $name }
+    finally {
+        # Apaga a pasta temporaria do teste (antes elas se acumulavam em %TEMP%). PKHEX_TEST_KEEP=1 mantem para depurar.
+        if ($env:PKHEX_TEST_KEEP -eq '1') { Write-Host "[$name] pasta mantida: $work" -ForegroundColor DarkGray }
+        else { Remove-Item -LiteralPath $work -Recurse -Force -ErrorAction SilentlyContinue }
+    }
 }
 if ($failed.Count) { Write-Host "FALHARAM: $($failed -join ', ')" -ForegroundColor Red; exit 1 }
 Write-Host 'Todos os testes passaram.' -ForegroundColor Green
