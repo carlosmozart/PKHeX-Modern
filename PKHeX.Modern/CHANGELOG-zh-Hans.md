@@ -5,7 +5,7 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
-## 下一版本
+## 0.5.6 — 2026-11-27
 
 ### 💬 社区
 - **报告问题和想法：** 在“帮助 › 关于”中，“报告问题”会打开 GitHub Issues，有错误报告和翻译修正的模板；“疑问与想法”会打开 Discussions。可以使用葡萄牙语、英语、西班牙语或中文。

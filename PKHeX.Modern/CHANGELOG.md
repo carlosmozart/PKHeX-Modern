@@ -7,7 +7,7 @@ As traduções ficam em CHANGELOG-en.md, CHANGELOG-es.md e CHANGELOG-zh-Hans.md:
 Formato: "## versão — data", "### seção", "- item".
 -->
 
-## Próxima versão
+## 0.5.6 — 2026-11-27
 
 ### 💬 Comunidade
 - **Relatar problemas e ideias:** em Ajuda › Sobre, “Relatar um problema” abre as Issues do GitHub, com modelos para erros e para correções de tradução, e “Dúvidas e ideias” abre as Discussions. Dá para escrever em português, inglês, espanhol ou chinês.
