@@ -25,12 +25,15 @@ var box=BankStorage.GetBoxes(BankStorage.GetBanks()[0])[0];BankStorage.WriteSlot
 var vm=new MainViewModel(new AppSettings{CheckForUpdates=false});var win=new MainWindow{DataContext=vm,Width=1440,Height=950};win.Show();vm.Open(path);vm.CurrentPage=vm.Bank;Pump();
 var files=Directory.EnumerateFiles(BankStorage.Root,"*",SearchOption.AllDirectories).ToDictionary(p=>p,p=>Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(p))));
 var trainer=typeof(ParseSettings).GetProperty("ActiveTrainer",BindingFlags.Static|BindingFlags.NonPublic)!;
-var beforeTrainer=trainer.GetValue(null);var gb=ParseSettings.AllowGBEraEvents;var gba=ParseSettings.AllowGBACrossTransferRSE(pk);var swGba=ParseSettings.AllowGen3EventTicketsAll(pk);
+var beforeTrainer=trainer.GetValue(null);var flags=ParseEraFlags.Capture();
 var select=vm.SelectSlotAsync(vm.Bank.Slots[0]);Wait(()=>select.IsCompleted);var detail=vm.Bank.Details!;
 Check("dados do Bank",detail.Species==25&&detail.Level==42&&detail.Types=="Electric"&&detail.Nickname=="Sparky");
 Check("local correto",detail.Location.Contains(box.Name)&&detail.Location.Contains("1")&&detail.Folder==box.Folder);
 Check("IVs EVs golpes",detail.IVs.StartsWith("31 /")&&detail.EVs.Contains("4")&&detail.Moves.Contains("Thunderbolt"));
-Check("contexto ativo preservado",ReferenceEquals(beforeTrainer,trainer.GetValue(null))&&gb==ParseSettings.AllowGBEraEvents&&gba==ParseSettings.AllowGBACrossTransferRSE(pk)&&swGba==ParseSettings.AllowGen3EventTicketsAll(pk));
+Check("contexto ativo preservado",ReferenceEquals(beforeTrainer,trainer.GetValue(null))&&flags==ParseEraFlags.Capture());
+// Cada combinacao das opcoes de era volta igual depois de conferir um Pokemon do Bank (antes, GBA de cartucho ligava o GBA do Switch).
+foreach(var combo in new[]{new ParseEraFlags(false,true,false),new ParseEraFlags(false,false,true),new ParseEraFlags(true,true,true),new ParseEraFlags(false,false,false)}){combo.Restore();BankInspection.Analyze(pk,null);Check($"opções de era preservadas {combo}",ParseEraFlags.Capture()==combo);}
+flags.Restore();
 string? copied=null;vm.Bank.CopyDetails=text=>{copied=text;return System.Threading.Tasks.Task.CompletedTask;};detail.CopyCommand.Execute(null);Check("Showdown do original",copied==CoreAdapter.ToShowdown(pk));
 var exportPath=Path.Combine(work,"export.pk5");vm.Bank.ExportDetails=()=>{vm.ExportEntity(exportPath);return System.Threading.Tasks.Task.CompletedTask;};detail.ExportCommand.Execute(null);Check("exportação mantém formato",File.Exists(exportPath)&&File.ReadAllBytes(exportPath).Length==pk.SIZE_PARTY&&CoreAdapter.LoadEntityFile(sav,exportPath)?.Species==25);
 win.UpdateLayout();for(int i=0;i<12;i++)Pump();win.CaptureRenderedFrame()?.Save(Path.Combine(work,"bank-details.png"));

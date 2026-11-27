@@ -12,6 +12,12 @@ Formato: "## versão — data", "### seção", "- item".
 ### 💬 Comunidade
 - **Relatar problemas e ideias:** em Ajuda › Sobre, “Relatar um problema” abre as Issues do GitHub, com modelos para erros e para correções de tradução, e “Dúvidas e ideias” abre as Discussions. Dá para escrever em português, inglês, espanhol ou chinês.
 
+### 🔄 PKHeX atualizado
+- **PKHeX de 22/11/2026:** o Xerneas e o Yveltal shiny do Legends: Z-A passam a ser reconhecidos e gerados, com as datas de distribuição, e o Vivillon Poké Ball fica marcado como nunca shiny. Entram as regras do evento GO Wild Area 2026 e a ligação atrasada do jogo demo do Dream World pelo Global Link. O Diggersby estático do Legends: Z-A passa a valer também quando foi encontrado no Vert Sector 9, o Metagross da promoção do Dream World deixa de exigir um gênero (ele não tem) e os iniciais de Sinnoh da promoção do Global Link deixam de valer em jogos de fora do Japão. Os Pokémon shadow do e-Reader (Colosseum) com algum IV diferente de zero passam a ser ilegais, e foram ajustados o peso zerado de Pokémon da Gen 9 vindos do HOME e os Celebis transferidos pelo HOME. As mensagens de legalidade e de encontros do PKHeX foram revistas em vários idiomas, inclusive espanhol e chinês.
+
+### 🔧 Correções
+- **Legalidade depois de conferir o Bank:** conferir um Pokémon do Bank ou montar a Living Dex mudava sem aviso as opções de GBA usadas na legalidade do save aberto (com um save de GBA aberto, por exemplo, passava a valer também o GBA do Switch). Agora elas voltam exatamente como estavam.
+
 ## 0.5.5 — 2026-11-08
 
 ### 🌿 Encontros

@@ -37,9 +37,7 @@ public static class LivingDexPlanner
     /// </summary>
     public static bool AssessLegality(DbEntry entry, SaveFile? activeSave)
     {
-        var gb = ParseSettings.AllowGBEraEvents;
-        var gba = ParseSettings.AllowGBACrossTransferRSE(entry.Pkm);
-        var switchGba = ParseSettings.AllowGen3EventTicketsAll(entry.Pkm);
+        var flags = ParseEraFlags.Capture();
         try
         {
             if (entry.Source.Save is { } sav) ParseSettings.InitFromSaveFileData(sav);
@@ -56,7 +54,7 @@ public static class LivingDexPlanner
         finally
         {
             if (activeSave is not null) ParseSettings.InitFromSaveFileData(activeSave); else ParseSettings.ClearActiveTrainer();
-            ParseSettings.AllowEraCartGB = gb; ParseSettings.AllowEraCartGBA = gba; ParseSettings.AllowEraSwitchGBA = switchGba;
+            flags.Restore();
         }
     }
 

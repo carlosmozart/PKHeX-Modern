@@ -8,9 +8,7 @@ public static class BankInspection
     /// <summary>Synchronous UI callback; original Bank format; restores the active save context.</summary>
     public static (bool Valid, string Report) Analyze(PKM pokemon, SaveFile? activeSave)
     {
-        var gb = ParseSettings.AllowGBEraEvents;
-        var gba = ParseSettings.AllowGBACrossTransferRSE(pokemon);
-        var switchGba = ParseSettings.AllowGen3EventTicketsAll(pokemon);
+        var flags = ParseEraFlags.Capture();
         try
         {
             ParseSettings.ClearActiveTrainer();
@@ -22,7 +20,7 @@ public static class BankInspection
         finally
         {
             if (activeSave is null) ParseSettings.ClearActiveTrainer(); else ParseSettings.InitFromSaveFileData(activeSave);
-            ParseSettings.AllowEraCartGB = gb; ParseSettings.AllowEraCartGBA = gba; ParseSettings.AllowEraSwitchGBA = switchGba;
+            flags.Restore();
         }
     }
 }

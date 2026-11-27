@@ -10,6 +10,12 @@ Formato: "## versao — data", "### secao", "- item".
 ### 💬 社区
 - **报告问题和想法：** 在“帮助 › 关于”中，“报告问题”会打开 GitHub Issues，有错误报告和翻译修正的模板；“疑问与想法”会打开 Discussions。可以使用葡萄牙语、英语、西班牙语或中文。
 
+### 🔄 PKHeX 已更新
+- **2026/11/22 的 PKHeX：** 现在能识别和生成 Legends: Z-A 的发光 Xerneas 和 Yveltal，并包含其发放日期；Poké Ball 图案的 Vivillon 被标记为不会发光。加入了 GO Wild Area 2026 活动的规则，以及通过 Global Link 延迟连接 Dream World 体验版游戏的情况。Legends: Z-A 的固定遭遇 Diggersby 在 Vert Sector 9 遇到时也判定为合法；Dream World 活动的 Metagross 不再要求性别（它没有性别）；Global Link 活动的神奥御三家在日本以外的游戏中不再有效。e-Reader 的暗影宝可梦（Colosseum）只要有任何不为零的 IV 就会被判定为不合法；从 HOME 带来的第 9 世代宝可梦的零体重和通过 HOME 转移的 Celebi 也做了调整。PKHeX 的合法性和遭遇信息在多种语言中做了修订，包括西班牙语和中文。
+
+### 🔧 修复
+- **查看 Bank 后的合法性：** 查看 Bank 中的宝可梦或制作 Living Dex 时，会在没有提示的情况下改变打开的存档在合法性检查中使用的 GBA 选项（例如打开 GBA 存档时，Switch 版 GBA 也会被算进来）。现在这些选项会完全恢复原状。
+
 ## 0.5.5 — 2026-11-08
 
 ### 🌿 遭遇

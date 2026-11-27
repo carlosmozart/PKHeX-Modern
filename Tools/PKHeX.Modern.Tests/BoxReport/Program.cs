@@ -66,7 +66,7 @@ Check("CSV legality matches the active context", written is not null && Encoding
 Check("bank export completed", Run(() => vm.ExportBoxReportAsync(true)));
 Check("bank legality matches inspection", written is not null && Encoding.UTF8.GetString(written).Split("\r\n", StringSplitOptions.RemoveEmptyEntries).Skip(1).Select(l => l.EndsWith(",Legal")).SequenceEqual(BoxReport.ReadBank("Alpha").Select(e => BankInspection.Analyze(e.Pokemon, active).Valid)));
 Check("trainer and active tab unchanged", ReferenceEquals(active, vm.ActiveTab!.Sav) && ReferenceEquals(trainer, property.GetValue(null)));
-Check("all flags preserved", ParseSettings.AllowGBEraEvents && !ParseSettings.AllowGBACrossTransferRSE(pk) && ParseSettings.AllowGen3EventTicketsAll(pk));
+Check("all flags preserved", ParseEraFlags.Capture() == new ParseEraFlags(true, false, true));
 Check("does not mark dirty", !vm.IsDirty);
 Check("original hashes unchanged", original.All(e => Hashes().TryGetValue(e.Key, out var hash) && hash == e.Value) && original.Count == Hashes().Count);
 Loc.Load(Loc.English);
