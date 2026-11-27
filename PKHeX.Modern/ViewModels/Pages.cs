@@ -245,6 +245,8 @@ public sealed partial class PartyPageViewModel(Action<SlotViewModel> select) : S
             s.Load(sav);
             Slots.Add(s);
         }
+        WatchTypeSlots();
+        RefreshTypes();
         SlotsLoaded?.Invoke();
         Raise(nameof(IsAvailable));
         RefreshDaycare();

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Headless;
 using Avalonia.Threading;
+using Avalonia.VisualTree;
 using PKHeX.Core;
 using PKHeX.Modern;
 using PKHeX.Modern.Services;
@@ -154,6 +155,24 @@ vm.ShinyHunt.Step = 1234; vm.ShinyHunt.AddStepCommand.Execute(null);
 for (int i = 0; i < 400 && vm.ShinyHunt.IsLoadingLocations; i++) { Pump(); System.Threading.Thread.Sleep(10); }
 Shot("shinyhunt"); vm.ShinyHunt.NewHuntCommand.Execute(null);
 Pump(); vm.Dialog?.Complete(true); Pump(); // "Apagar caçada": sem responder, a pergunta ficava por cima das capturas seguintes
+// Analise de tipos: uma equipe de sets do Showdown (passados pelo legalizador) num save a parte, com o cartao na tela
+var team = BlankSaveFile.Get(GameVersion.B); team.OT = "Demo"; team.Language = saveLanguage; CoreAdapter.Activate(team);
+string[] teamSets =
+[
+    "Haxorus @ Life Orb\nAbility: Mold Breaker\nJolly Nature\n- Dragon Dance\n- Outrage\n- Earthquake\n- Brick Break",
+    "Chandelure @ Choice Specs\nAbility: Flash Fire\nModest Nature\n- Shadow Ball\n- Flamethrower\n- Energy Ball\n- Calm Mind",
+    "Jellicent @ Leftovers\nAbility: Water Absorb\nBold Nature\n- Scald\n- Recover\n- Will-O-Wisp\n- Night Shade",
+    "Excadrill @ Focus Sash\nAbility: Sand Rush\nAdamant Nature\n- Earthquake\n- Rock Slide\n- X-Scissor\n- Swords Dance",
+    "Zebstrika @ Expert Belt\nAbility: Motor Drive\nTimid Nature\n- Thunderbolt\n- Volt Switch\n- Overheat\n- Grass Knot",
+    "Mandibuzz @ Leftovers\nAbility: Overcoat\nImpish Nature\n- Foul Play\n- Roost\n- Toxic\n- U-turn",
+];
+for (int i = 0; i < teamSets.Length; i++)
+    if (ShowdownBatch.Build(team, teamSets[i], true).Pk is { } member) team.SetPartySlotAtIndex(member, i);
+var teamPath = Path.Combine(library, "Team.sav"); File.WriteAllBytes(teamPath, team.Write().ToArray());
+Wait(vm.OpenAsync(teamPath)); vm.CurrentPage = vm.Party; Pump();
+var typeCard = win.GetVisualDescendants().OfType<Avalonia.Controls.ItemsControl>().First(c => ReferenceEquals(c.ItemsSource, vm.Party.DefenseRows))
+    .GetVisualAncestors().OfType<Avalonia.Controls.Border>().First(b => b.Classes.Contains("card"));
+Pump(); Avalonia.Controls.ControlExtensions.BringIntoView(typeCard); Pump(); Shot("types");
 Wait(vm.OpenAsync(black)); vm.CurrentPage = vm.Home; // a aba do Black (com equipe)
 foreach (var key in new[] { "pss", "pixel", "za", "oras", "kanto" })
 {

@@ -39,12 +39,14 @@
     <EmbeddedResource Include="CHANGELOG*.md" LogicalName="%(Filename)%(Extension)" />
     <!-- Descricoes e locais dos itens, do AllGenWiki (gerado por Tools/build_item_info.py) -->
     <EmbeddedResource Include="Assets\item-info.json" LogicalName="item-info.json" />
+    <!-- Golpes de status para a analise de tipos da equipe (Tools/build_move_info.py, dados do AllGenWiki) -->
+    <EmbeddedResource Include="Assets\move-info.json" LogicalName="move-info.json" />
     <EmbeddedResource Include="Assets\text-info.json" LogicalName="text-info.json" />
     <!-- Traducoes da interface (Services/Loc.cs); o portugues e o texto do proprio codigo -->
     <EmbeddedResource Include="Assets\lang\*.json" LogicalName="lang.%(Filename).json" />
   </ItemGroup>
   <ItemGroup>
-    <!-- Fonte do tema Pixel (Pixelify Sans, OFL: Assets/Fonts/OFL.txt) e simbolos/emoji do Android (Noto Sans Symbols 2 e Noto Emoji, OFL: Assets/Fonts/OFL-Noto.txt) -->
+    <!-- Fonte do tema Pixel (Pixelify Sans, OFL: Assets/Fonts/OFL.txt) e simbolos/emoji do Android (Noto Sans Symbols 2 e Noto Emoji, OFL: Assets/Fonts/OFL-Noto.txt); PKHeX Modern Symbols, desenhada por Tools/build_symbols_font.py (icones que nenhuma outra fonte tem) -->
     <AvaloniaResource Include="Assets\Fonts\*.ttf" />
     <!-- Chines simplificado: Noto Sans SC cortada para os caracteres do app (Tools/build_cjk_font.py, OFL: Assets/Fonts/OFL-NotoSansSC.txt) -->
     <AvaloniaResource Include="Assets\Fonts\*.otf" />

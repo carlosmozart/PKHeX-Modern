@@ -315,6 +315,8 @@
         <p data-i18n="f15.d">Um ovo legal de cada espécie que falta no save, dos ovos de criação do próprio jogo, direto nas caixas e com um único desfazer.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/eggs.png" alt=""></div></article>
       <article class="entry" style="--tint:#9b6bd6"><div class="head"><div class="icon" data-icon="evolve"></div><div><h3 data-i18n="f16.t">Evolução assistida</h3><div class="types"><span class="t-ferramenta" data-i18n="ty.tool">Ferramenta</span></div></div><div class="num">#016</div></div>
         <p data-i18n="f16.d">Todas as evoluções da espécie no jogo, com o requisito e a prévia: o app cumpre nível, item, troca ou felicidade por você.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/beauty.png" alt=""></div></article>
+      <article class="entry" style="--tint:#e07b39"><div class="head"><div class="icon" data-icon="types"></div><div><h3 data-i18n="f17.t">Análise de tipos da equipe</h3><div class="types"><span class="t-ferramenta" data-i18n="ty.tool">Ferramenta</span><span class="t-jogo" data-i18n="ty.game">Jogo</span></div></div><div class="num">#017</div></div>
+        <p data-i18n="f17.d">Fraquezas e resistências de cada Pokémon da equipe numa tabela, os pontos fracos em vermelho e a cobertura dos golpes contra cada tipo, seguindo a geração do jogo.</p><div class="peek"><img loading="lazy" src="https://raw.githubusercontent.com/carlosmozart/PKHeX-Modern/modern-ui/PKHeX.Modern/docs/types.png" alt=""></div></article>
     </div>
   </section>
 
@@ -421,6 +423,7 @@
     lock: ["M6 11H18V20.5H6Z M8.5 11V8A3.5 3.5 0 0 1 15.5 8V11 M12 14.5V17", "M6 11H18V20.5H6Z", "#6c7a89"],
     shiny: ["M11 3L12.8 9.2L19 11L12.8 12.8L11 19L9.2 12.8L3 11L9.2 9.2Z M19 3V7 M17 5H21", "M11 3L12.8 9.2L19 11L12.8 12.8L11 19L9.2 12.8L3 11L9.2 9.2Z", "#f2c230"],
     egg: ["M12 3C8.5 3 5.5 9 5.5 13.5A6.5 6.5 0 0 0 18.5 13.5C18.5 9 15.5 3 12 3Z M6.5 11.5L9.5 13L12 11L14.5 13L17.5 11.5", "M12 3C8.5 3 5.5 9 5.5 13.5A6.5 6.5 0 0 0 18.5 13.5C18.5 9 15.5 3 12 3Z", "#d9b65a"],
+    types: ["M12 3L20 6V11C20 16 16.5 19.5 12 21C7.5 19.5 4 16 4 11V6Z M12 3V21 M4 11H20", "M12 3L4 6V11H12Z M12 11H20C20 16 16.5 19.5 12 21Z", "#e07b39"],
     evolve: ["M4.5 12A7.5 7.5 0 0 1 17.5 7 M18 3V7.5H13.5 M19.5 12A7.5 7.5 0 0 1 6.5 17 M6 21V16.5H10.5 M9.5 12A2.5 2.5 0 1 0 14.5 12A2.5 2.5 0 1 0 9.5 12Z", "M9.5 12A2.5 2.5 0 1 0 14.5 12A2.5 2.5 0 1 0 9.5 12Z", "#9b6bd6"],
   };
   document.querySelectorAll("[data-icon]").forEach(el => {
@@ -448,6 +451,7 @@
     ["showdown", "Set do Showdown colado e legalizado, com o mesmo set", "A Showdown set pasted and legalized, keeping the set", "Set de Showdown pegado y legalizado, con el mismo set", "粘贴并合法化的 Showdown 配置，配置保持不变"],
     ["emulators", "Saves dos emuladores achados sozinhos no Android", "Emulator saves found automatically on Android", "Partidas de los emuladores encontradas solas en Android", "在 Android 上自动找到的模拟器存档"],
     ["home", "Início: o jogo, a equipe, a linha do tempo e atalhos para tudo", "Home: the game, the team, the timeline and shortcuts to everything", "Inicio: el juego, el equipo, la línea de tiempo y accesos a todo", "主页：游戏、队伍、时间线和通往各处的快捷方式"],
+    ["types", "Análise de tipos: fraquezas e cobertura da equipe", "Type analysis: the party's weaknesses and coverage", "Análisis de tipos: debilidades y cobertura del equipo", "属性分析：队伍的弱点和覆盖"],
     ["pokedex", "Pokédex centralizada de todos os saves", "Combined Pokédex across all saves", "Pokédex unificada de todas las partidas", "汇总所有存档的统一图鉴"],
     ["moves", "Golpes com busca: em verde, os que o Pokémon aprende", "Searchable moves: the ones the Pokémon learns in green", "Movimientos con búsqueda: en verde, los que el Pokémon aprende", "可搜索的招式：绿色的是宝可梦能学会的"],
     ["encounters", "Banco de encontros: onde e como cada espécie aparece", "Encounter database: where and how each species appears", "Base de encuentros: dónde y cómo aparece cada especie", "遭遇数据库：每个物种在哪里、如何出现"],
@@ -502,6 +506,7 @@
     "f14.t": "Shiny hunt", "f14.d": "A counter with the real odds of each method in the game, encounters for 50/90/99%, where the target appears, shiny lock and dangerous move warnings, and “Found it!” read from the save.",
     "f15.t": "Egg factory", "f15.d": "One legal egg of each species missing from the save, from the game's own breeding, straight into your boxes with a single undo.",
     "f16.t": "Assisted evolution", "f16.d": "Every evolution of the species in the game, with the requirement and a preview: the app handles level, item, trade or friendship for you.",
+    "f17.t": "Party type analysis", "f17.d": "Weaknesses and resistances of each party Pokémon in one chart, weak spots in red and your moves' coverage against every type, following the game's generation.",
     "shots.title": "Screenshots", "shots.sub": "Made with sample saves. Click to see them full size.",
     "themes.title": "Themes inspired by the games", "themes.sub": "Dark or light, the open game's color or one of the accent colors, adjustable sprite size and full themes that change background, corners, borders and font.",
     "phone.title": "On your phone too", "phone.sub": "The same app on Android, with the same interface as the desktop.",
@@ -548,6 +553,7 @@
     "f14.t": "Caza shiny", "f14.d": "Contador con las probabilidades reales de cada método del juego, encuentros para el 50/90/99 %, dónde aparece el objetivo, avisos de shiny lock y de movimientos peligrosos, y el “¡Lo encontré!” leído de la partida.",
     "f15.t": "Fábrica de huevos", "f15.d": "Un huevo legal de cada especie que falta en la partida, de la crianza del propio juego, directo a tus cajas y con un solo deshacer.",
     "f16.t": "Evolución asistida", "f16.d": "Todas las evoluciones de la especie en el juego, con el requisito y una vista previa: la app cumple nivel, objeto, intercambio o amistad por ti.",
+    "f17.t": "Análisis de tipos del equipo", "f17.d": "Debilidades y resistencias de cada Pokémon del equipo en una tabla, los puntos débiles en rojo y la cobertura de los movimientos contra cada tipo, según la generación del juego.",
     "shots.title": "Capturas", "shots.sub": "Hechas con partidas de ejemplo. Haz clic para verlas a tamaño real.",
     "themes.title": "Temas inspirados en los juegos", "themes.sub": "Oscuro o claro, el color del juego abierto o uno de los colores de acento, tamaño de sprites ajustable y temas completos que cambian fondo, esquinas, bordes y fuente.",
     "phone.title": "También en el móvil", "phone.sub": "La misma app en Android, con la misma interfaz que en el ordenador.",
@@ -594,6 +600,7 @@
     "f14.t": "发光搜寻", "f14.d": "计数器显示游戏中每种方法的真实概率、达到 50/90/99% 所需的遭遇次数、目标出现的地点、发光锁定和危险招式的提醒，并从存档中读取“找到了！”。",
     "f15.t": "蛋工厂", "f15.d": "为存档中缺少的每个物种生成一个合法的蛋，来自游戏本身的培育，直接放进你的盒子，只需一次撤销。",
     "f16.t": "辅助进化", "f16.d": "列出该物种在游戏中的所有进化方式，附带条件和预览：等级、道具、通信交换或亲密度都由应用替你完成。",
+    "f17.t": "同行宝可梦属性分析", "f17.d": "用一张表显示每只同行宝可梦的弱点和抵抗，弱点以红色标出，并显示招式对各属性的覆盖，依据游戏世代。",
     "shots.title": "截图", "shots.sub": "使用示例存档制作。点击查看原尺寸。",
     "themes.title": "受游戏启发的主题", "themes.sub": "深色或浅色、当前游戏的颜色或任选强调色、可调节的精灵大小，以及改变背景、圆角、边框和字体的完整主题。",
     "phone.title": "手机上也能用", "phone.sub": "Android 上是同一个应用，界面与电脑版相同。",

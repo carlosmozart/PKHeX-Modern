@@ -5,6 +5,18 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
+## Next version
+
+### 📦 Boxes and party
+- **Party type analysis:** the Party page gained the “🛡 Type analysis” card. Under Defense, a chart shows how much each move type deals to each Pokémon (4×, 2×, ½, ¼ or 0), how many are weak and how many resist, with the party's weak spots in red. Under Attack, each type shows the best the party's moves do against it and who hits super effectively. The chart follows the save's generation (Gen 1 without Dark, Steel and Fairy, with Ghost not affecting Psychic; Fairy from Gen 6 on), and status and fixed-damage moves don't count as attacks.
+- **Party in folder export:** the ⋯ button on the Boxes page gained “Include the party” (on by default): when exporting boxes to a folder, the party Pokémon go along, in a Party subfolder or in the same folder, without subfolders. It was a request in GitHub Issues.
+
+### 📱 Android
+- **My OldBoy! in emulator saves:** Android's automatic save search now recognizes the My OldBoy! folder (the GB/GBC emulator by the author of My Boy!) and shows its saves under its name. PokeDaisy saves, which live in the folder chosen in its settings, were already found by the search in your folders, as Help now explains.
+
+### 🔧 Fixes
+- **Icons on Mac and Linux:** the undo, redo, menu (⋯), refresh, sort, sync, restore and a few other icons showed up as little boxes on some Macs (reported on an Intel Mac), because the system had no font with those symbols. They now come from the app's own font and look the same on every system; on macOS and Linux, the missing arrows and shapes come from Noto Sans Symbols 2, which already shipped for Android.
+
 ## 0.5.6 — 2026-11-27
 
 ### 💬 Community

@@ -9,7 +9,8 @@ namespace PKHeX.Modern.Services;
 /// <summary>
 /// Acha sozinho os saves dos emuladores na memoria do celular (Android, com "acesso a todos os arquivos"): as pastas
 /// padrao de cada emulador e, para os que gravam o save ao lado da ROM (mGBA, My Boy!, Pizza Boy, melonDS...), as
-/// pastas do usuario, pulando fotos, musica e pastas do sistema. So devolve caminhos; quem confere se e mesmo um
+/// pastas do usuario, pulando fotos, musica e pastas do sistema. Emuladores sem pasta fixa (o PokeDaisy grava na pasta
+/// escolhida na configuracao dele) entram por essa varredura das pastas do usuario. So devolve caminhos; quem confere se e mesmo um
 /// save e o <see cref="SaveLibrary"/> (Core). Sem dependencia do Android: testavel no desktop com uma arvore falsa.
 /// </summary>
 public static class EmulatorSaves
@@ -54,6 +55,8 @@ public static class EmulatorSaves
         new("Sudachi", ["sudachi/nand/user/save"], IsMain),
         new("mGBA", ["mGBA", "mgba"], p => HasExtension(p, CartridgeExtensions)),
         new("My Boy!", ["MyBoy", "My Boy"], p => HasExtension(p, CartridgeExtensions)),
+        // Do mesmo autor do My Boy!, para GB/GBC: grava em MyOldBoy/save.
+        new("My OldBoy!", ["MyOldBoy", "My OldBoy"], p => HasExtension(p, CartridgeExtensions)),
         new("Pizza Boy", ["PizzaBoyGBA", "PizzaBoyGBC", "Pizza Boy"], p => HasExtension(p, CartridgeExtensions)),
     ];
 

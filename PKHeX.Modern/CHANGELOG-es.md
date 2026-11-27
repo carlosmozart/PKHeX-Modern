@@ -5,6 +5,18 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
+## Próxima versión
+
+### 📦 Cajas y equipo
+- **Análisis de tipos del equipo:** la página Equipo ganó la tarjeta “🛡 Análisis de tipos”. En Defensa, una tabla muestra cuánto daño hace cada tipo de movimiento a cada Pokémon (4×, 2×, ½, ¼ o 0), cuántos son débiles y cuántos resisten, con los puntos débiles del equipo en rojo. En Ataque, cada tipo muestra lo mejor que hacen los movimientos del equipo contra él y quién acierta súper eficaz. La tabla sigue la generación de la partida (Gen 1 sin Dark, Steel ni Fairy, con Ghost sin efecto en Psychic; Fairy desde la Gen 6), y los movimientos de estado y de daño fijo no cuentan como ataque.
+- **Equipo en la exportación a carpeta:** el botón ⋯ de la página Cajas ganó “Incluir el equipo” (activado por defecto): al exportar las cajas a una carpeta, los Pokémon del equipo van juntos, en una subcarpeta Equipo o en la misma carpeta, sin subcarpetas. Era un pedido en las Issues de GitHub.
+
+### 📱 Android
+- **My OldBoy! en las partidas de los emuladores:** la búsqueda automática de partidas de Android ahora reconoce la carpeta de My OldBoy! (el emulador de GB/GBC del autor de My Boy!) y muestra sus partidas con su nombre. Las partidas de PokeDaisy, que están en la carpeta elegida en su configuración, ya se encontraban con la búsqueda en tus carpetas, como ahora explica la Ayuda.
+
+### 🔧 Correcciones
+- **Iconos en Mac y Linux:** los iconos de deshacer, rehacer, menú (⋯), actualizar, ordenar, sincronizar, restaurar y algunos otros aparecían como cuadraditos en algunos Mac (reportado en un Mac Intel), porque el sistema no tenía una fuente con esos símbolos. Ahora vienen de una fuente propia de la app y se ven iguales en todos los sistemas; en macOS y Linux, las flechas y formas que faltan vienen de Noto Sans Symbols 2, que ya venía para Android.
+
 ## 0.5.6 — 2026-11-27
 
 ### 💬 Comunidad

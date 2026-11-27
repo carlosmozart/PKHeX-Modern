@@ -28,6 +28,7 @@ Put("fr.sav", "RetroArch/saves/Pokemon - FireRed Version (USA).srm");
 Put("hg.sav", "DraStic/backup/POKEMON HG.dsv");
 Put("moon.sav", "citra-emu/sdmc/Nintendo 3DS/00000000000000000000000000000000/00000000000000000000000000000000/title/00040000/00175e00/data/00000001/main");
 Put("fr.sav", "Roms/GBA/Pokemon Leaf.sav");
+Put("fr.sav", "MyOldBoy/save/Pokemon Crystal.sav");
 Put("fr.sav", "DCIM/Camera/nao-e-save.sav");
 Directory.CreateDirectory(Path.Combine(root, "Roms", "GBA"));
 File.WriteAllBytes(Path.Combine(root, "Roms", "GBA", "pequeno.sav"), new byte[100]);
@@ -37,13 +38,14 @@ string Sources() => string.Join(", ", found.Select(f => f.Source + ":" + Path.Ge
 Check("RetroArch", found.Any(f => f.Source == "RetroArch" && f.Path.EndsWith(".srm")), Sources());
 Check("DraStic", found.Any(f => f.Source == "DraStic"));
 Check("Citra (main)", found.Any(f => f.Source == "Citra"));
+Check("My OldBoy! pelo nome", found.Any(f => f.Source == "My OldBoy!" && f.Path.EndsWith("Pokemon Crystal.sav")), Sources());
 Check("save ao lado da ROM", found.Any(f => f.Source == "Roms" && f.Path.EndsWith("Pokemon Leaf.sav")));
 Check("DCIM pulada", !found.Any(f => f.Path.Contains("DCIM")));
 Check("arquivo pequeno pulado", !found.Any(f => f.Path.EndsWith("pequeno.sav")));
 Check("sem repetidos", found.Select(f => f.Path).Distinct().Count() == found.Count);
 
 var entries = SaveLibrary.ReadFound(found);
-Check("todos reconhecidos pelo Core", entries.Count == 4, string.Join(" | ", entries.Select(e => $"{e.Group}: {e.Game}")));
+Check("todos reconhecidos pelo Core", entries.Count == 5, string.Join(" | ", entries.Select(e => $"{e.Group}: {e.Game}")));
 Check("grupo por emulador", entries.Any(e => e.Group.Contains("RetroArch") && e.Game.Contains("FireRed")) && entries.Any(e => e.Group.Contains("Citra")));
 
 // Pagina Saves: com a busca ligada e o acesso dado, os saves dos emuladores entram na lista.

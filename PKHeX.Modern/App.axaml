@@ -2479,6 +2479,82 @@
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>
+      <!-- Analise de tipos da equipe (ViewModels/PartyPageViewModel.Types.cs, Services/TypeChart.cs) -->
+      <Border Classes="card" IsVisible="{Binding HasTypeAnalysis}" MaxWidth="1100" HorizontalAlignment="Stretch">
+        <StackPanel Spacing="12">
+          <StackPanel Spacing="2">
+            <TextBlock Text="🛡 Análise de tipos" Classes="section" />
+            <TextBlock Text="Só os tipos contam: habilidades (como Levitate), itens, Tera e golpes de dano fixo ficam de fora." Classes="muted" FontSize="12" TextWrapping="Wrap" />
+          </StackPanel>
+          <StackPanel Spacing="6">
+            <TextBlock Text="Defesa" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding DefenseSummary}" TextWrapping="Wrap" />
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+              <StackPanel Spacing="2">
+                <StackPanel Orientation="Horizontal">
+                  <Border Width="104" />
+                  <ItemsControl ItemsSource="{Binding TypeMembers}">
+                    <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                      <DataTemplate x:DataType="vm:TypeMemberViewModel">
+                        <Image Source="{Binding Sprite}" Width="48" Height="40" Stretch="Uniform" ToolTip.Tip="{Binding Name}" />
+                      </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                  <TextBlock Width="72" Text="Fracos" TextAlignment="Center" Classes="muted" FontSize="12" VerticalAlignment="Bottom"
+                             ToolTip.Tip="Quantos Pokémon da equipe levam dano dobrado (ou mais) deste tipo" />
+                  <TextBlock Width="72" Text="Resistem" TextAlignment="Center" Classes="muted" FontSize="12" VerticalAlignment="Bottom"
+                             ToolTip.Tip="Quantos Pokémon da equipe levam menos dano deste tipo ou são imunes" />
+                </StackPanel>
+                <ItemsControl ItemsSource="{Binding DefenseRows}">
+                  <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="vm:DefenseRowViewModel">
+                      <Border CornerRadius="6" Padding="0,1" Background="{Binding RowBackground}">
+                        <StackPanel Orientation="Horizontal">
+                          <Border Width="104" Padding="4,0">
+                            <Border Classes="chip" Background="{Binding Chip.Brush}" HorizontalAlignment="Left" VerticalAlignment="Center"><TextBlock Text="{Binding Chip.Name}" /></Border>
+                          </Border>
+                          <ItemsControl ItemsSource="{Binding Cells}">
+                            <ItemsControl.ItemsPanel><ItemsPanelTemplate><StackPanel Orientation="Horizontal" /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                              <DataTemplate x:DataType="vm:TypeCellViewModel">
+                                <Border Width="44" Height="24" Margin="2,1" CornerRadius="5" Background="{Binding Background}" ToolTip.Tip="{Binding Tip}">
+                                  <TextBlock Text="{Binding Text}" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" FontSize="12" />
+                                </Border>
+                              </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                          </ItemsControl>
+                          <TextBlock Width="72" Text="{Binding Weak}" TextAlignment="Center" VerticalAlignment="Center" FontWeight="SemiBold" Classes.legalBad="{Binding IsDanger}" />
+                          <TextBlock Width="72" Text="{Binding Resist}" TextAlignment="Center" VerticalAlignment="Center" />
+                        </StackPanel>
+                      </Border>
+                    </DataTemplate>
+                  </ItemsControl.ItemTemplate>
+                </ItemsControl>
+              </StackPanel>
+            </ScrollViewer>
+          </StackPanel>
+          <StackPanel Spacing="6">
+            <TextBlock Text="Ataque" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding CoverageSummary}" TextWrapping="Wrap" />
+            <TextBlock Text="{Binding CoverageGaps}" Classes="muted" TextWrapping="Wrap" IsVisible="{Binding HasCoverageGaps}" />
+            <ItemsControl ItemsSource="{Binding CoverageTiles}" IsVisible="{Binding HasCoverage}">
+              <ItemsControl.ItemsPanel><ItemsPanelTemplate><WrapPanel /></ItemsPanelTemplate></ItemsControl.ItemsPanel>
+              <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="vm:CoverageTileViewModel">
+                  <Border Width="124" Margin="0,0,6,6" Padding="6,5" CornerRadius="8" Background="{Binding Background}"
+                          BorderBrush="{DynamicResource CardBorder}" BorderThickness="1" ToolTip.Tip="{Binding Tip}">
+                    <Grid ColumnDefinitions="*,Auto">
+                      <Border Classes="chip" Background="{Binding Chip.Brush}" HorizontalAlignment="Left"><TextBlock Text="{Binding Chip.Name}" /></Border>
+                      <TextBlock Grid.Column="1" Text="{Binding Text}" FontWeight="SemiBold" VerticalAlignment="Center" Margin="6,0,0,0" />
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+          </StackPanel>
+        </StackPanel>
+      </Border>
       <Border Classes="card" IsVisible="{Binding HasDaycare}">
         <StackPanel Spacing="10">
           <TextBlock Text="🥚 Creche" Classes="section" />

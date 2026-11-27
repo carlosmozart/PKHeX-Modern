@@ -66,6 +66,8 @@ $suites = [ordered]@{
     'BoxTabs' = @{}
     'SidebarSaves' = @{}
     'Fonts' = @{}
+    'Symbols' = @{}
+    'TeamTypes' = @{}
     'GameEvents' = @{ 'sv.sav' = 'Scarlet'; 'red.sav' = 'POKEMON RED-0.sav'; 'yw.sav' = 'Yellow.sav'; 'za.sav' = 'ZA.sav'; 'sa.sav' = 'Sapphire.sav'; 'hg.sav' = 'Pokemon Heart Gold Version.sav'; 'or.sav' = 'Omega Ruby.sav'; 'fr.sav' = 'fire red.sav'; 'moon.sav' = 'moon.sav'; 'em.sav' = 'Pokemon Emerald Version.sav' }
     'Language' = @{}
     'LanguageEs' = @{}

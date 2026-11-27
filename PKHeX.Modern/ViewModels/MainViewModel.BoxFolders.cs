@@ -11,9 +11,11 @@ namespace PKHeX.Modern.ViewModels;
 public sealed partial class MainViewModel
 {
     public bool ShowBoxFolderActions => HasSave && !IsHelpOpen && CurrentPage == Boxes;
-    private bool _exportAllBoxes = true, _boxSubfolders = true, _importFirstBox, _clearImportBoxes, _overwriteImportSlots;
+    private bool _exportAllBoxes = true, _boxSubfolders = true, _exportParty = true, _importFirstBox, _clearImportBoxes, _overwriteImportSlots;
     public bool ExportAllBoxes { get => _exportAllBoxes; set => Set(ref _exportAllBoxes, value); }
     public bool BoxSubfolders { get => _boxSubfolders; set => Set(ref _boxSubfolders, value); }
+    /// <summary>Exporta a equipe junto com as caixas (pedido na issue 2 do repositorio).</summary>
+    public bool ExportParty { get => _exportParty; set => Set(ref _exportParty, value); }
     public bool ImportFirstBox { get => _importFirstBox; set => Set(ref _importFirstBox, value); }
     public bool ClearImportBoxes { get => _clearImportBoxes; set => Set(ref _clearImportBoxes, value); }
     public bool OverwriteImportSlots { get => _overwriteImportSlots; set => Set(ref _overwriteImportSlots, value); }
@@ -22,13 +24,38 @@ public sealed partial class MainViewModel
     {
         if (_sav is null || !_sav.HasBox) return 0;
         Directory.CreateDirectory(path);
-        if (ExportAllBoxes) return _sav.DumpBoxes(path, BoxSubfolders);
+        int count = ExportParty ? ExportPartyToFolder(_sav, path) : 0;
+        if (ExportAllBoxes) return count + Math.Max(0, _sav.DumpBoxes(path, BoxSubfolders));
         if (BoxSubfolders)
         {
             path = Path.Combine(path, PathUtil.CleanFileName(CoreAdapter.GetBoxName(_sav, Boxes.CurrentBox)));
             Directory.CreateDirectory(path);
         }
-        return _sav.DumpBox(path, Boxes.CurrentBox);
+        return count + Math.Max(0, _sav.DumpBox(path, Boxes.CurrentBox));
+    }
+
+    /// <summary>
+    /// Grava a equipe como as caixas (um arquivo decriptado por Pokemon, como o DumpBoxes do Core): numa subpasta
+    /// "Equipe" quando cada caixa tem a sua, senao na mesma pasta. Arquivo que ja existe fica como esta.
+    /// </summary>
+    private int ExportPartyToFolder(SaveFile sav, string path)
+    {
+        if (!sav.HasParty) return 0;
+        if (BoxSubfolders) path = Path.Combine(path, PathUtil.CleanFileName(Loc.T("Equipe")));
+        Span<byte> data = stackalloc byte[sav.SIZE_PARTY];
+        int count = 0;
+        foreach (var pk in sav.PartyData)
+        {
+            if (pk.Species == 0 || !pk.Valid) continue;
+            Directory.CreateDirectory(path);
+            var file = Path.Combine(path, PathUtil.CleanFileName(pk.FileName));
+            if (File.Exists(file)) continue;
+            pk.ForcePartyData();
+            pk.WriteDecryptedDataParty(data);
+            File.WriteAllBytes(file, data);
+            count++;
+        }
+        return count;
     }
 
     public async Task ImportBoxFolderAsync(IEnumerable<string> files)

@@ -44,6 +44,18 @@ var folder = Path.Combine(work, "export"); int count = vm.ExportBoxesToFolder(fo
 var exported = Directory.GetFiles(folder, "*", SearchOption.AllDirectories);
 Check("exporta todas em subpastas", count > 0 && count == exported.Length && Directory.GetDirectories(folder).Length > 0);
 Check("exportar novamente preserva arquivos", vm.ExportBoxesToFolder(folder) == 0);
+// Equipe junto das caixas (issue 2): subpasta Equipe; desmarcada, fica de fora; sem subpastas, vai junto
+int partyCount = source.PartyData.Count(p => p.Species > 0 && p.Valid);
+var partyFolder = Path.Combine(folder, PathUtil.CleanFileName(Loc.T("Equipe")));
+var partyFiles = Directory.Exists(partyFolder) ? Directory.GetFiles(partyFolder) : [];
+Check("exporta a equipe junto, numa subpasta", partyCount > 0 && partyFiles.Length == partyCount);
+Check("arquivos da equipe abrem como Pokémon do jogo", partyFiles.All(f => FileUtil.GetSupportedFile(f, source) is PK3 { Species: > 0 }));
+vm.ExportParty = false; var noParty = Path.Combine(work, "export-no-party");
+Check("sem a equipe quando desmarcado", vm.ExportBoxesToFolder(noParty) == count - partyCount && !Directory.Exists(Path.Combine(noParty, Path.GetFileName(partyFolder))));
+vm.ExportParty = true; vm.BoxSubfolders = false; vm.ExportAllBoxes = false; var flat = Path.Combine(work, "export-flat");
+int flatCount = vm.ExportBoxesToFolder(flat);
+Check("sem subpastas: equipe e esta caixa na mesma pasta", flatCount == partyCount + 2 && Directory.GetFiles(flat).Length == flatCount && Directory.GetDirectories(flat).Length == 0);
+vm.BoxSubfolders = true; vm.ExportAllBoxes = true;
 
 var copy = CoreAdapter.LoadSave(Path.Combine(work, "fr.sav"))!; copy.ClearBoxes();
 var target = Path.Combine(work, "target.sav"); File.WriteAllBytes(target, copy.Write().ToArray());
