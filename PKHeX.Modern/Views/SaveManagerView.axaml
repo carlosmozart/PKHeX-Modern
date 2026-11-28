@@ -187,14 +187,18 @@
                           <TextBlock Text="{Binding SourceText}" Classes="muted" FontSize="11" TextWrapping="Wrap" />
                           <TextBlock Text="{Binding Reason}" FontSize="12" />
                           <TextBlock Text="{Binding Integrity}" Classes="muted" FontSize="12" />
-                          <StackPanel Orientation="Horizontal" Spacing="6" HorizontalAlignment="Right">
+                          <WrapPanel ItemSpacing="6" LineSpacing="6" HorizontalAlignment="Right">
+                            <Button Classes="small" Content="🔍  Comparar" IsVisible="{Binding CanRestore}"
+                                    Command="{Binding $parent[UserControl].((vm:SaveManagerViewModel)DataContext).CompareCommand}"
+                                    CommandParameter="{Binding}"
+                                    ToolTip.Tip="Mostra o que muda entre este backup e o save atual: Pokémon, shinies, insígnias, Pokédex, horas de jogo e dinheiro" />
                             <Button Classes="small" Content="Restaurar como..." Click="OnRestoreAs"
                                     ToolTip.Tip="Escolhe onde gravar o backup (outro arquivo ou o save original)" />
                             <Button Classes="accent small" Content="↺  Restaurar" IsVisible="{Binding CanRestore}"
                                     Command="{Binding $parent[UserControl].((vm:SaveManagerViewModel)DataContext).RestoreCommand}"
                                     CommandParameter="{Binding}"
                                     ToolTip.Tip="Grava este backup de volta no save de origem (o arquivo atual ganha um backup antes)" />
-                          </StackPanel>
+                          </WrapPanel>
                         </StackPanel>
                       </Border>
                     </DataTemplate>

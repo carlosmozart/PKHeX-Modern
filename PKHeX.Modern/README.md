@@ -48,8 +48,8 @@ Todos estão na [versão mais recente](https://github.com/carlosmozart/PKHeX-Mod
 | ![Fábrica de ovos](docs/eggs.png) | ![Modo Hardcore](docs/hardcore.png) |
 | **Set do Showdown legalizado** | **Saves dos emuladores (Android)** |
 | ![Set do Showdown](docs/showdown.png) | ![Saves dos emuladores](docs/emulators.png) |
-| **Caçada shiny** | |
-| ![Caçada shiny](docs/shinyhunt.png) | |
+| **Caçada shiny** | **Análise de tipos da equipe** |
+| ![Caçada shiny](docs/shinyhunt.png) | ![Análise de tipos](docs/types.png) |
 
 **No Android**, com a tela deitada (a mesma interface do desktop):
 
@@ -137,7 +137,7 @@ o download no navegador.
 - **Saves dentro de .zip** (backups do JKSV): aparecem no Save Manager com o selo ZIP; ao salvar, dá para gravar de volta no zip (com backup do zip) ou como arquivo separado.
 - **Selo do jogo**: cada save mostra o Pokémon da capa nas cores da versão (Ho-Oh no HeartGold, Rayquaza no Emerald...), no Save Manager e no cartão do save aberto na barra lateral.
 - Aviso de **alterações não exportadas**: o app pergunta antes de abrir outro save ou fechar.
-- **Backup automático**: antes de salvar por cima de um save, o arquivo anterior é copiado para `%APPDATA%\PKHeX.Modern\backups` (botão "Backups" no Save Manager lista as cópias, com **Restaurar** e **Restaurar como...**; o arquivo atual ganha um backup antes de ser substituído).
+- **Backup automático**: antes de salvar por cima de um save, o arquivo anterior é copiado para `%APPDATA%\PKHeX.Modern\backups` (botão "Backups" no Save Manager lista as cópias, com **Restaurar** e **Restaurar como...**; o arquivo atual ganha um backup antes de ser substituído). **🔍 Comparar** mostra antes o que muda entre o backup e o save atual: o que só o save atual tem e se perde ao restaurar (horas de jogo, shinies, espécies, insígnias, Pokédex, dinheiro e os Pokémon, pelo nome e nível) e o que só o backup tem.
 
 **Bank local**
 - Armazenamento próprio, fora dos saves, em **bancos → caixas** (crie, renomeie e exclua). Os Pokémon ficam como arquivos `.pk*` em `%APPDATA%\PKHeX.Modern\bank`, no formato original.
@@ -174,6 +174,8 @@ o download no navegador.
 - **Ordenar caixas** por Pokédex, nome, nível, shiny, tipo, IVs ou data de captura, só a caixa aberta ou todas (também no bank).
 - **Desfazer/refazer** (Ctrl+Z / Ctrl+Y) e **Excluir** (Delete).
 - **Equipe Showdown** (botão 📋 Showdown em Equipe e Caixas): cola vários sets de uma vez nas vagas da equipe ou nos slots vazios da caixa, com conferência de cada set antes e um único desfazer; também copia a equipe ou a caixa inteira.
+- **Análise de tipos da equipe** (página Equipe): tabela de defesa com quanto cada tipo de golpe tira de cada Pokémon (4×, 2×, ½, ¼ ou 0), quantos são fracos e quantos resistem, com os pontos fracos em vermelho, e a cobertura dos golpes da equipe contra cada tipo (quem acerta super efetivo e com qual golpe). Segue a geração do save; golpes de status e de dano fixo não contam como ataque, e habilidades, itens e Tera ficam de fora.
+- **Caixas em pasta** (botão ⋯ na barra de baixo das Caixas): exporta esta caixa ou todas, com uma subpasta por caixa e, com “Incluir a equipe”, a equipe junto; importa uma pasta de arquivos de Pokémon para as caixas.
 - **Relatório CSV** das caixas e do bank (espécie, nível, shiny, natureza, IVs, EVs, golpes, treinador, legalidade), para abrir no Excel ou no Google Sheets.
 
 **Pesquisa e Edição em lote**

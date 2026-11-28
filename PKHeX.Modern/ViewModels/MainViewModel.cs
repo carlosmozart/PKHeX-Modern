@@ -54,6 +54,8 @@ public sealed partial class MainViewModel : ViewModelBase
         {
             IsOpenPath = p => FindTab(p) is not null,
             Reload = p => _ = ReloadAsync(p),
+            ShowComparison = (title, message, lines, canRestore) => ConfirmAsync(title, message, canRestore ? "↺  Restaurar..." : "OK",
+                canRestore ? "Fechar" : "", details: lines, icon: "🔍", detailsExpanded: true),
         };
         SaveManager.PropertyChanged += (_, e) =>
         {

@@ -31,7 +31,7 @@ O PKHeX original é só para Windows. O PKHeX Modern roda nos quatro sistemas, s
 
 - **Modo legal**: o editor só oferece opções legais (golpes, bolas, habilidades, formas), desfaz mudanças que deixariam o Pokémon ilegal e legaliza Pokémon de fora ao trazer para o save.
 - **Caixas, equipe e editor lado a lado**, com arrastar e soltar, desfazer/refazer, busca global (Ctrl+F) e verificação de legalidade do save inteiro.
-- **Save Manager**: todos os saves da pasta com o selo de cada jogo, saves dentro de .zip (JKSV), backups automáticos antes de salvar e restauração.
+- **Save Manager**: todos os saves da pasta com o selo de cada jogo, saves dentro de .zip (JKSV), backups automáticos antes de salvar e restauração, com **comparar o backup com o save atual** (Pokémon, shinies, insígnias, Pokédex, horas e dinheiro) antes de restaurar.
 - **Bank local** em bancos e caixas, pastas de `.pk*` como banco e um segundo save aberto para trocar Pokémon entre jogos, com conversão de geração.
 - **Pokédex centralizada** juntando todos os saves e o bank, com living dex, shiny dex, formas e gêneros, um **planejador de Living Dex** que organiza as caixas do save com prévia e um único desfazer, e **completar a Pokédex do save** (vistas, capturadas, formas, gêneros e idiomas) em um clique.
 - **Pesquisa em todos os saves e no bank**, com **auditoria de duplicados** (cópias idênticas, backups e anexados) e **Edição em lote** (inclusive legalizar vários de uma vez).
@@ -39,6 +39,7 @@ O PKHeX original é só para Windows. O PKHeX Modern roda nos quatro sistemas, s
 - **Página Jogo**: flags e valores de evento com nome, recordes, atalhos de eventos (lendários de novo, itens, títulos), Hall da Fama editável, Battle Frontier, Pokétch e Pokéwalker, medalhas do Pokéathlon, base secreta e atalhos de **liberar tudo** (O-Powers, Super Training, Zygarde Cells, Underground).
 - **Treinador completo**: nome, TID/SID, dinheiro e tempo de jogo, mais insígnias de cada região, gênero, moedas do Game Corner, BP e datas da aventura.
 - **Caçada shiny**: contador com as chances reais de cada método do jogo (Masuda, Poké Radar, pesca em corrente, SOS, surtos e sanduíche...), encontros para 50/90/99%, onde o alvo aparece com aviso de shiny lock e dos golpes que estragam a caçada, e o "Achei!" lido do save.
+- **Análise de tipos da equipe**: uma tabela com quanto cada tipo de golpe tira de cada Pokémon da equipe, os pontos fracos em vermelho e a cobertura dos golpes contra cada tipo, seguindo a geração do jogo (Gen 1 sem Dark, Steel e Fairy).
 - **Desafios e coleção**: **relatório de Nuzlocke** (primeiro encontro de cada rota, repetidos, vivos e mortos, pronto para copiar), **modo Hardcore** que desliga a edição e deixa só mover Pokémon (para desafios e RetroAchievements) e **fábrica de ovos**, que gera ovos legais de todas as espécies que faltam no save em menos de um segundo.
 - **Evolução assistida**: uma lista com todas as evoluções da espécie no jogo (nível, item, troca, felicidade, beleza, golpe, local...), com o requisito, prévia e sem precisar de um segundo jogo.
 - **Equipe Showdown e relatório CSV**: cole ou copie a equipe ou a caixa inteira no formato Showdown e exporte o save ou o bank para planilha.
@@ -61,8 +62,8 @@ O PKHeX original é só para Windows. O PKHeX Modern roda nos quatro sistemas, s
 | ![Set do Showdown](/PKHeX.Modern/docs/showdown.png) | ![Saves dos emuladores](/PKHeX.Modern/docs/emulators.png) |
 | **Relatório de Nuzlocke** | **Fábrica de ovos** |
 | ![Nuzlocke](/PKHeX.Modern/docs/nuzlocke.png) | ![Fábrica de ovos](/PKHeX.Modern/docs/eggs.png) |
-| **Caçada shiny** | |
-| ![Caçada shiny](/PKHeX.Modern/docs/shinyhunt.png) | |
+| **Caçada shiny** | **Análise de tipos da equipe** |
+| ![Caçada shiny](/PKHeX.Modern/docs/shinyhunt.png) | ![Análise de tipos](/PKHeX.Modern/docs/types.png) |
 
 **No Android**, com a mesma interface:
 
@@ -80,7 +81,7 @@ Mais capturas, a lista completa de funções, como compilar e a arquitetura est�
 
 ## English
 
-**PKHeX Modern** is a modern UI for the [PKHeX](https://github.com/kwsch/PKHeX) Pokémon save editor, running on **Windows, Linux, macOS and Android** (the original PKHeX is Windows-only). It is built on top of the unmodified `PKHeX.Core`, so save handling and legality checks are the same as PKHeX. Features include a legal mode, drag and drop between boxes and party, a save manager, a local bank, a combined Pokédex, encounter and event databases (with every encounter of the save's game, filtered by location), event flag editors, an editable Hall of Fame, Battle Frontier, Pokéathlon and secret base editors, trainer badges, one-click Pokédex completion, a Nuzlocke report, a Hardcore mode (move only, for challenges and RetroAchievements), an egg factory, a shiny hunt counter with real odds per method, game-inspired themes, legal Pokémon from pasted Showdown sets, automatic emulator save detection on Android and automatic updates. The interface is available in Portuguese, English, Spanish and Simplified Chinese (🌐 at the bottom of the sidebar). [Download the latest release](https://github.com/carlosmozart/PKHeX-Modern/releases/latest) or visit the [project site](https://allgenwiki.com/pkhex/).
+**PKHeX Modern** is a modern UI for the [PKHeX](https://github.com/kwsch/PKHeX) Pokémon save editor, running on **Windows, Linux, macOS and Android** (the original PKHeX is Windows-only). It is built on top of the unmodified `PKHeX.Core`, so save handling and legality checks are the same as PKHeX. Features include a legal mode, drag and drop between boxes and party, a save manager, a local bank, a combined Pokédex, encounter and event databases (with every encounter of the save's game, filtered by location), event flag editors, an editable Hall of Fame, Battle Frontier, Pokéathlon and secret base editors, trainer badges, one-click Pokédex completion, a Nuzlocke report, a Hardcore mode (move only, for challenges and RetroAchievements), an egg factory, a shiny hunt counter with real odds per method, a party type analysis (weaknesses, resistances and move coverage), backup comparison before restoring, game-inspired themes, legal Pokémon from pasted Showdown sets, automatic emulator save detection on Android and automatic updates. The interface is available in Portuguese, English, Spanish and Simplified Chinese (🌐 at the bottom of the sidebar). [Download the latest release](https://github.com/carlosmozart/PKHeX-Modern/releases/latest) or visit the [project site](https://allgenwiki.com/pkhex/).
 
 **Bugs, translation fixes and ideas:** [open an issue](https://github.com/carlosmozart/PKHeX-Modern/issues/new/choose) (attach the app's diagnostics from Help › About › 📋) or start a [discussion](https://github.com/carlosmozart/PKHeX-Modern/discussions). Portuguese, English, Spanish or Chinese are all fine.
 

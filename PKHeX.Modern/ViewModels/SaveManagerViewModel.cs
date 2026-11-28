@@ -38,6 +38,7 @@ public sealed class SaveManagerViewModel : PageViewModel
         OpenBackupsFolderCommand = new RelayCommand(() => OpenInExplorer(SaveBackup.Folder));
         RestoreCommand = new RelayCommand(p => { if (p is BackupEntryViewModel b && b.Source is { } src) _ = RestoreToAsync(b, src); });
         DeleteBackupCommand = new RelayCommand(p => { if (p is BackupEntryViewModel b) _ = DeleteBackupAsync(b); });
+        CompareCommand = new RelayCommand(p => { if (p is BackupEntryViewModel b) _ = CompareAsync(b); });
         OpenCommand = new RelayCommand(p => { if (p is SaveEntryViewModel e) _open(e.Path); });
         SearchEmulatorsCommand = new RelayCommand(() => _ = SearchEmulatorsAsync());
     }
@@ -127,6 +128,54 @@ public sealed class SaveManagerViewModel : PageViewModel
     public RelayCommand OpenBackupsFolderCommand { get; }
     public RelayCommand RestoreCommand { get; }
     public RelayCommand DeleteBackupCommand { get; }
+    public RelayCommand CompareCommand { get; }
+
+    /// <summary>Janela do "Comparar" (titulo, mensagem, linhas, pode restaurar) → true quando escolhe Restaurar.</summary>
+    public Func<string, string, IReadOnlyList<string>, bool, Task<bool>>? ShowComparison { get; init; }
+
+    /// <summary>
+    /// Compara o backup com o arquivo de origem como está gravado (Services/BackupCompare.cs): o que só o save atual
+    /// tem (e se perde ao restaurar) e o que só o backup tem. Da janela dá para seguir para o Restaurar.
+    /// </summary>
+    public async Task CompareAsync(BackupEntryViewModel backup)
+    {
+        if (backup.Source is not { } target || !ZipSaves.Exists(target))
+        {
+            _status("O save de origem deste backup não existe mais: não há com o que comparar.");
+            return;
+        }
+        BackupCompare.Result? result = null;
+        try
+        {
+            result = await Task.Run(() => CoreAdapter.LoadSave(backup.Info.Path) is { } old && CoreAdapter.LoadSave(target) is { } now
+                ? BackupCompare.Compare(old, now) : null);
+        }
+        catch (Exception) { result = null; }
+        if (result is null)
+        {
+            _status("Não foi possível ler o backup ou o save atual para comparar.");
+            return;
+        }
+        var name = System.IO.Path.GetFileName(ZipSaves.FileOf(target));
+        var message = result.Same
+            ? Loc.T($"O backup de {backup.When} e “{name}” têm o mesmo progresso: horas de jogo, Pokémon, Pokédex, insígnias e dinheiro iguais.")
+            : Loc.T($"Backup de {backup.When} comparado com “{name}” como está gravado.");
+        if (IsOpen(target))
+            message += " " + Loc.T("Alterações ainda não salvas no app ficam de fora.");
+        var lines = new List<string>();
+        if (result.OnlyCurrent.Count > 0)
+        {
+            lines.Add(Loc.T("Só no save atual (perde ao restaurar):"));
+            lines.AddRange(result.OnlyCurrent.Select(l => "• " + l));
+        }
+        if (result.OnlyBackup.Count > 0)
+        {
+            lines.Add(Loc.T("Só no backup (volta ao restaurar):"));
+            lines.AddRange(result.OnlyBackup.Select(l => "• " + l));
+        }
+        if (ShowComparison is { } show && await show("Comparar com o save atual", message, lines, !result.Same))
+            await RestoreToAsync(backup, target);
+    }
 
     // Backups
     private bool _showBackups;
