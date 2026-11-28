@@ -5,7 +5,7 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
-## Next version
+## 0.5.7 — 2026-11-28
 
 ### 📦 Boxes and party
 - **Party type analysis:** the Party page gained the “🛡 Type analysis” card. Under Defense, a chart shows how much each move type deals to each Pokémon (4×, 2×, ½, ¼ or 0), how many are weak and how many resist, with the party's weak spots in red. Under Attack, each type shows the best the party's moves do against it and who hits super effectively. The chart follows the save's generation (Gen 1 without Dark, Steel and Fairy, with Ghost not affecting Psychic; Fairy from Gen 6 on), and status and fixed-damage moves don't count as attacks.

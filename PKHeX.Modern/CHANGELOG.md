@@ -7,7 +7,7 @@ As traduções ficam em CHANGELOG-en.md, CHANGELOG-es.md e CHANGELOG-zh-Hans.md:
 Formato: "## versão — data", "### seção", "- item".
 -->
 
-## Próxima versão
+## 0.5.7 — 2026-11-28
 
 ### 📦 Caixas e equipe
 - **Análise de tipos da equipe:** a página Equipe ganhou o cartão “🛡 Análise de tipos”. Em Defesa, uma tabela mostra quanto cada tipo de golpe tira de cada Pokémon (4×, 2×, ½, ¼ ou 0), quantos são fracos e quantos resistem, com os pontos fracos da equipe em vermelho. Em Ataque, cada tipo mostra o melhor que os golpes da equipe fazem contra ele e quem acerta super efetivo. A tabela segue a geração do save (Gen 1 sem Dark, Steel e Fairy, com o Ghost que não afeta Psychic; Fairy a partir da Gen 6), e golpes de status e de dano fixo não contam como ataque.

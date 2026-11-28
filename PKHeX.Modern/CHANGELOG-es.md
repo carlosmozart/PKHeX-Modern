@@ -5,7 +5,7 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
-## Próxima versión
+## 0.5.7 — 2026-11-28
 
 ### 📦 Cajas y equipo
 - **Análisis de tipos del equipo:** la página Equipo ganó la tarjeta “🛡 Análisis de tipos”. En Defensa, una tabla muestra cuánto daño hace cada tipo de movimiento a cada Pokémon (4×, 2×, ½, ¼ o 0), cuántos son débiles y cuántos resisten, con los puntos débiles del equipo en rojo. En Ataque, cada tipo muestra lo mejor que hacen los movimientos del equipo contra él y quién acierta súper eficaz. La tabla sigue la generación de la partida (Gen 1 sin Dark, Steel ni Fairy, con Ghost sin efecto en Psychic; Fairy desde la Gen 6), y los movimientos de estado y de daño fijo no cuentan como ataque.

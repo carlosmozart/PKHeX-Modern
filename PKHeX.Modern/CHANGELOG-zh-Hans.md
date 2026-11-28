@@ -5,7 +5,7 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
-## 下一版本
+## 0.5.7 — 2026-11-28
 
 ### 📦 盒子与同行
 - **同行宝可梦属性分析：** 同行页面新增“🛡 属性分析”卡片。在“防守”中，表格显示每种招式属性对每只宝可梦造成多少伤害（4×、2×、½、¼ 或 0）、有多少只怕它、有多少只能抵抗，队伍的弱点以红色标出。在“进攻”中，每种属性显示队伍招式对它的最佳效果以及谁能造成效果绝佳的伤害。表格依据存档的世代（第1世代没有 Dark、Steel 和 Fairy，且 Ghost 对 Psychic 无效；Fairy 从第6世代开始），变化招式和固定伤害招式不计为攻击。
