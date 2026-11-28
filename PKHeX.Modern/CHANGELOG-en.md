@@ -5,6 +5,11 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
+## Next version
+
+### 💬 Community
+- **Support the project:** in Help › About, “☕ Buy me a coffee” opens the author's Buy Me a Coffee page. It's optional: the app stays free and complete, with no paid features.
+
 ## 0.5.7 — 2026-11-28
 
 ### 📦 Boxes and party

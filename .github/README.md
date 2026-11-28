@@ -79,11 +79,17 @@ Mais capturas, a lista completa de funções, como compilar e a arquitetura est�
 - **Dúvidas, sugestões ou algo para mostrar?** Use as [Discussions](https://github.com/carlosmozart/PKHeX-Modern/discussions).
 - Pode escrever em português, inglês, espanhol ou chinês. O app também tem os dois botões em Ajuda › Sobre.
 
+## Apoie o projeto
+
+O PKHeX Modern é gratuito e de código aberto. Se ele te ajudou, você pode [pagar um café](https://buymeacoffee.com/carlosmozart) para o autor. É opcional: o app continua gratuito e completo.
+
 ## English
 
 **PKHeX Modern** is a modern UI for the [PKHeX](https://github.com/kwsch/PKHeX) Pokémon save editor, running on **Windows, Linux, macOS and Android** (the original PKHeX is Windows-only). It is built on top of the unmodified `PKHeX.Core`, so save handling and legality checks are the same as PKHeX. Features include a legal mode, drag and drop between boxes and party, a save manager, a local bank, a combined Pokédex, encounter and event databases (with every encounter of the save's game, filtered by location), event flag editors, an editable Hall of Fame, Battle Frontier, Pokéathlon and secret base editors, trainer badges, one-click Pokédex completion, a Nuzlocke report, a Hardcore mode (move only, for challenges and RetroAchievements), an egg factory, a shiny hunt counter with real odds per method, a party type analysis (weaknesses, resistances and move coverage), backup comparison before restoring, game-inspired themes, legal Pokémon from pasted Showdown sets, automatic emulator save detection on Android and automatic updates. The interface is available in Portuguese, English, Spanish and Simplified Chinese (🌐 at the bottom of the sidebar). [Download the latest release](https://github.com/carlosmozart/PKHeX-Modern/releases/latest) or visit the [project site](https://allgenwiki.com/pkhex/).
 
 **Bugs, translation fixes and ideas:** [open an issue](https://github.com/carlosmozart/PKHeX-Modern/issues/new/choose) (attach the app's diagnostics from Help › About › 📋) or start a [discussion](https://github.com/carlosmozart/PKHeX-Modern/discussions). Portuguese, English, Spanish or Chinese are all fine.
+
+**Support the project:** PKHeX Modern is free. If it helped you, you can [buy me a coffee](https://buymeacoffee.com/carlosmozart). It's optional: the app stays free and complete.
 
 **macOS:** the app is free and not notarized by Apple. The first time, open it once, then go to **System Settings › Privacy & Security** and click **Open Anyway**. If macOS says the app “is damaged and can't be opened”, run `xattr -dr com.apple.quarantine "/Applications/PKHeX Modern.app"` in Terminal and open it again.
 

@@ -5,6 +5,11 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
+## 下一版本
+
+### 💬 社区
+- **支持项目：** 在“帮助 › 关于”中，“☕ 请我喝杯咖啡”会打开作者的 Buy Me a Coffee 页面。完全自愿：应用依然免费且功能完整，没有任何付费功能。
+
 ## 0.5.7 — 2026-11-28
 
 ### 📦 盒子与同行

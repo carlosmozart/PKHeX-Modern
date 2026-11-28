@@ -30,6 +30,8 @@ public static class UpdateChecker
     /// <summary>Escolha do modelo de issue (erro ou correcao de traducao), em .github/ISSUE_TEMPLATE.</summary>
     public const string IssuesUrl = "https://github.com/" + Repo + "/issues/new/choose";
     public const string DiscussionsUrl = "https://github.com/" + Repo + "/discussions";
+    /// <summary>Perfil do autor no Buy Me a Coffee (apoio opcional; o app continua gratuito).</summary>
+    public const string CoffeeUrl = "https://buymeacoffee.com/carlosmozart";
     private const string TagPrefix = "modern-v";
 
     /// <summary>Versao deste executavel (do &lt;Version&gt; do csproj).</summary>

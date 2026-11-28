@@ -7,6 +7,11 @@ As traduções ficam em CHANGELOG-en.md, CHANGELOG-es.md e CHANGELOG-zh-Hans.md:
 Formato: "## versão — data", "### seção", "- item".
 -->
 
+## Próxima versão
+
+### 💬 Comunidade
+- **Apoiar o projeto:** em Ajuda › Sobre, “☕ Pagar um café” abre o perfil do autor no Buy Me a Coffee. É opcional: o app continua gratuito e completo, sem nenhuma função paga.
+
 ## 0.5.7 — 2026-11-28
 
 ### 📦 Caixas e equipe

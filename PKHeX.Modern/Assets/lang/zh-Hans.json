@@ -2701,5 +2701,10 @@
   "Mostra o que muda entre este backup e o save atual: Pokémon, shinies, insígnias, Pokédex, horas de jogo e dinheiro": "显示此备份与当前存档之间的变化：宝可梦、发光宝可梦、徽章、图鉴、游戏时间和金钱",
   "O save de origem deste backup não existe mais: não há com o que comparar.": "此备份的原存档已不存在：没有可比较的对象。",
   "Não foi possível ler o backup ou o save atual para comparar.": "无法读取备份或当前存档进行比较。",
-  "No Save Manager, o botão “Backups” lista as cópias automáticas. “🔍 Comparar” mostra o que muda entre o backup e o save atual: o que só o save atual tem e se perde ao restaurar (horas de jogo, shinies, espécies, insígnias, Pokédex, dinheiro e os Pokémon, pelo nome e nível) e o que só o backup tem; da mesma janela dá para restaurar. “Restaurar” volta o backup para o arquivo de origem (o arquivo atual ganha um backup antes); “Restaurar como...” grava em outro lugar.": "在 Save Manager 中，“备份”按钮会列出自动生成的副本。“🔍 比较”会显示备份与当前存档之间的变化：只有当前存档有、恢复后会丢失的内容（游戏时间、发光宝可梦、物种、徽章、图鉴、金钱以及按名称和等级列出的宝可梦），以及只有备份有的内容；在同一窗口中即可恢复。“恢复”会把备份放回原文件（当前文件会先备份）；“恢复为...”会写到其他位置。"
+  "No Save Manager, o botão “Backups” lista as cópias automáticas. “🔍 Comparar” mostra o que muda entre o backup e o save atual: o que só o save atual tem e se perde ao restaurar (horas de jogo, shinies, espécies, insígnias, Pokédex, dinheiro e os Pokémon, pelo nome e nível) e o que só o backup tem; da mesma janela dá para restaurar. “Restaurar” volta o backup para o arquivo de origem (o arquivo atual ganha um backup antes); “Restaurar como...” grava em outro lugar.": "在 Save Manager 中，“备份”按钮会列出自动生成的副本。“🔍 比较”会显示备份与当前存档之间的变化：只有当前存档有、恢复后会丢失的内容（游戏时间、发光宝可梦、物种、徽章、图鉴、金钱以及按名称和等级列出的宝可梦），以及只有备份有的内容；在同一窗口中即可恢复。“恢复”会把备份放回原文件（当前文件会先备份）；“恢复为...”会写到其他位置。",
+  "O PKHeX Modern é gratuito. Se ele te ajudou, você pode apoiar o projeto pagando um café.": "PKHeX Modern 是免费的。如果它帮到了你，可以请作者喝杯咖啡来支持这个项目。",
+  "☕  Pagar um café": "☕  请我喝杯咖啡",
+  "Abre o perfil do autor no Buy Me a Coffee. É opcional: o app continua gratuito e completo.": "打开作者的 Buy Me a Coffee 页面。完全自愿：应用依然免费且功能完整。",
+  "Apoiar o projeto": "支持项目",
+  "Em Ajuda › Sobre, “☕ Pagar um café” abre o perfil do autor no Buy Me a Coffee, para quem quiser apoiar o projeto. É opcional: o app continua gratuito e completo, sem nenhuma função paga.": "在“帮助 › 关于”中，“☕ 请我喝杯咖啡”会打开作者的 Buy Me a Coffee 页面，供想支持这个项目的人使用。完全自愿：应用依然免费且功能完整，没有任何付费功能。"
 }

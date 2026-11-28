@@ -218,7 +218,7 @@ o download no navegador.
 - Tudo com desfazer/refazer próprio e gravado só com Salvar.
 
 **Ajuda e atualizações**
-- Página **Ajuda** (F1 ou "❔ Ajuda e novidades"): todas as funções explicadas, com busca; **Novidades** com o changelog de cada versão; **Sobre** com a versão instalada, o diagnóstico e os botões **Relatar um problema** ([Issues](https://github.com/carlosmozart/PKHeX-Modern/issues/new/choose), com modelos para erros e correções de tradução) e **Dúvidas e ideias** ([Discussions](https://github.com/carlosmozart/PKHeX-Modern/discussions)).
+- Página **Ajuda** (F1 ou "❔ Ajuda e novidades"): todas as funções explicadas, com busca; **Novidades** com o changelog de cada versão; **Sobre** com a versão instalada, o diagnóstico e os botões **Relatar um problema** ([Issues](https://github.com/carlosmozart/PKHeX-Modern/issues/new/choose), com modelos para erros e correções de tradução) e **Dúvidas e ideias** ([Discussions](https://github.com/carlosmozart/PKHeX-Modern/discussions)), e **Pagar um café** ([Buy Me a Coffee](https://buymeacoffee.com/carlosmozart), apoio opcional).
 - **Atualização automática**: ao abrir, o app verifica se saiu uma versão nova no GitHub e mostra as novidades com “Atualizar agora” e “Depois”. Ao confirmar, baixa o ZIP da plataforma, confere o SHA-256 informado pelo GitHub e troca a instalação (a cópia antiga vira `.old` e é apagada na abertura seguinte). A versão nova vale ao reiniciar pelo botão 🔄 da barra lateral, que pergunta antes se houver alterações não salvas e reabre o save. Dá para desligar em Ajuda › Sobre. Vale para os pacotes publicados de Windows, Linux e macOS (rodando pelo código, mostra o link).
 
 **Outros**

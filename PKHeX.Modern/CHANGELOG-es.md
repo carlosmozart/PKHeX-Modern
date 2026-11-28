@@ -5,6 +5,11 @@ Traducao do CHANGELOG.md (mesmas versoes, secoes e itens, na mesma ordem; as sui
 Formato: "## versao — data", "### secao", "- item".
 -->
 
+## Próxima versión
+
+### 💬 Comunidad
+- **Apoyar el proyecto:** en Ayuda › Acerca de, “☕ Invitar a un café” abre la página del autor en Buy Me a Coffee. Es opcional: la app sigue siendo gratuita y completa, sin ninguna función de pago.
+
 ## 0.5.7 — 2026-11-28
 
 ### 📦 Cajas y equipo

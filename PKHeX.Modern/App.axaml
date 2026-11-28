@@ -2805,6 +2805,9 @@
                     <Button Classes="small" Content="💬  Dúvidas e ideias" Command="{Binding OpenDiscussionsCommand}"
                             ToolTip.Tip="Abre as Discussions do GitHub, para perguntas, sugestões e para mostrar o que você fez" />
                   </WrapPanel>
+                  <TextBlock TextWrapping="Wrap" Classes="muted" Text="O PKHeX Modern é gratuito. Se ele te ajudou, você pode apoiar o projeto pagando um café." />
+                  <Button Classes="small" Content="☕  Pagar um café" Command="{Binding OpenCoffeeCommand}"
+                          ToolTip.Tip="Abre o perfil do autor no Buy Me a Coffee. É opcional: o app continua gratuito e completo." />
                 </StackPanel>
               </Border>
               <Border Classes="card">
